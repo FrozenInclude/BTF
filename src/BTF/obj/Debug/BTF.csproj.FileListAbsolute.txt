@@ -14,3 +14,19 @@ C:\Users\Administrator\Documents\Visual Studio 2015\Projects\BTF\BTF\obj\Debug\B
 C:\Users\Administrator\Documents\Visual Studio 2015\Projects\BTF\BTF\obj\Debug\BTF.pdb
 C:\Users\Administrator\Documents\Visual Studio 2015\Projects\BTF\BTF\obj\Debug\Simple Styles.baml
 C:\Users\Administrator\Documents\Visual Studio 2015\Projects\BTF\BTF\obj\Debug\App.baml
+C:\Users\Administrator\Documents\Visual Studio 2015\Projects\BTF\src\BTF\bin\Debug\BTF.exe.config
+C:\Users\Administrator\Documents\Visual Studio 2015\Projects\BTF\src\BTF\obj\Debug\BTF.exe
+C:\Users\Administrator\Documents\Visual Studio 2015\Projects\BTF\src\BTF\obj\Debug\BTF.pdb
+C:\Users\Administrator\Documents\Visual Studio 2015\Projects\BTF\src\BTF\bin\Debug\BTF.exe
+C:\Users\Administrator\Documents\Visual Studio 2015\Projects\BTF\src\BTF\bin\Debug\BTF.pdb
+C:\Users\Administrator\Documents\Visual Studio 2015\Projects\BTF\src\BTF\obj\Debug\BTF.csprojResolveAssemblyReference.cache
+C:\Users\Administrator\Documents\Visual Studio 2015\Projects\BTF\src\BTF\obj\Debug\Simple Styles.baml
+C:\Users\Administrator\Documents\Visual Studio 2015\Projects\BTF\src\BTF\obj\Debug\MainWindow.g.cs
+C:\Users\Administrator\Documents\Visual Studio 2015\Projects\BTF\src\BTF\obj\Debug\App.g.cs
+C:\Users\Administrator\Documents\Visual Studio 2015\Projects\BTF\src\BTF\obj\Debug\BTF_MarkupCompile.cache
+C:\Users\Administrator\Documents\Visual Studio 2015\Projects\BTF\src\BTF\obj\Debug\BTF_MarkupCompile.lref
+C:\Users\Administrator\Documents\Visual Studio 2015\Projects\BTF\src\BTF\obj\Debug\App.baml
+C:\Users\Administrator\Documents\Visual Studio 2015\Projects\BTF\src\BTF\obj\Debug\MainWindow.baml
+C:\Users\Administrator\Documents\Visual Studio 2015\Projects\BTF\src\BTF\obj\Debug\BTF.g.resources
+C:\Users\Administrator\Documents\Visual Studio 2015\Projects\BTF\src\BTF\obj\Debug\BTF.Properties.Resources.resources
+C:\Users\Administrator\Documents\Visual Studio 2015\Projects\BTF\src\BTF\obj\Debug\BTF.csproj.GenerateResource.Cache

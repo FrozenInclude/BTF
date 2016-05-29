@@ -26,7 +26,7 @@ namespace BTF
     {
         string filePath = "Example.bf";
         int lastLinenum = 0;
-        const int memsize = 500000000;
+        const int memsize = 5000;
         int time = 0;
         InterPreter BrainFuck;
         System.Threading.CancellationTokenSource cts;
@@ -137,16 +137,16 @@ namespace BTF
 
             CodeInput.TextChanged += this.textChanged;
         }
-        void highlightEvent()
+        void highlightEvent(RichTextBox textBox)
         {
-            if (CodeInput.Document == null)
+            if (textBox.Document == null)
                 return;
 
-            TextRange documentRange = new TextRange(CodeInput.Document.ContentStart, CodeInput.Document.ContentEnd);
+            TextRange documentRange = new TextRange(textBox.Document.ContentStart, textBox.Document.ContentEnd);
             documentRange.ClearAllProperties();
 
-            TextPointer navigator = CodeInput.Document.ContentStart;
-            while (navigator.CompareTo(CodeInput.Document.ContentEnd) < 0)
+            TextPointer navigator = textBox.Document.ContentStart;
+            while (navigator.CompareTo(textBox.Document.ContentEnd) < 0)
             {
                 TextPointerContext context = navigator.GetPointerContext(LogicalDirection.Backward);
                 if (context == TextPointerContext.ElementStart && navigator.Parent is Run)
@@ -183,7 +183,7 @@ namespace BTF
         }
         private async void textChanged(object sender, TextChangedEventArgs e)
         {
-            highlightEvent();
+            highlightEvent(this.CodeInput);
             await Task.Run(() => {
                 NumLineEvent();
             });
@@ -230,6 +230,20 @@ namespace BTF
                     CodeOutput.Document.Blocks.Clear();
                     CodeOutput.Document.Blocks.Add(new Paragraph(new Run(BrainFuck.output)));
                     GC.Collect();
+                }
+                else if (comboBox.Text == "Javascript")
+                {
+                    번역.IsEnabled = false;
+                    BrainFuck = new JsParser(textRange.Text, memsize);
+                    await Task.Run(() =>
+                    {
+                        BrainFuck.RunCode();
+                        ButtonEnable();
+                    });
+                    CodeOutput.Document.Blocks.Clear();
+                    CodeOutput.Document.Blocks.Add(new Paragraph(new Run(BrainFuck.output)));
+                    GC.Collect();
+                    highlightEvent(this.CodeOutput);
                 }
             }
 

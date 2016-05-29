@@ -20,6 +20,13 @@ namespace highlight
         {
             string[] strs = {
                 "Anchor",
+                    "console",
+                        "log",
+                            "for",
+                                "while",
+                                 "Array"
+                                 ,"new","String","fromCharCode",
+                "var",
                 @".",
                 @"[",
                 @"]",
@@ -29,11 +36,13 @@ namespace highlight
 
             tags = new List<string>(strs);
             char[] chrs = {
+                '(',
+                '=',
                 '<',
                 '>',
                 '+',
                 '-',
-                ';',
+                '.',
                 '\n',
                 '\t'
             };
