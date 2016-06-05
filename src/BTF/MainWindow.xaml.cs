@@ -245,6 +245,34 @@ namespace BTF
                     GC.Collect();
                     highlightEvent(this.CodeOutput);
                 }
+                else if (comboBox.Text == "C#")
+                {
+                    번역.IsEnabled = false;
+                    BrainFuck = new CsParser(textRange.Text, memsize);
+                    await Task.Run(() =>
+                    {
+                        BrainFuck.RunCode();
+                        ButtonEnable();
+                    });
+                    CodeOutput.Document.Blocks.Clear();
+                    CodeOutput.Document.Blocks.Add(new Paragraph(new Run(BrainFuck.output)));
+                    GC.Collect();
+                    highlightEvent(this.CodeOutput);
+                }
+                else if (comboBox.Text == "C++")
+                {
+                    번역.IsEnabled = false;
+                    BrainFuck = new CppParser(textRange.Text, memsize);
+                    await Task.Run(() =>
+                    {
+                        BrainFuck.RunCode();
+                        ButtonEnable();
+                    });
+                    CodeOutput.Document.Blocks.Clear();
+                    CodeOutput.Document.Blocks.Add(new Paragraph(new Run(BrainFuck.output)));
+                    GC.Collect();
+                    highlightEvent(this.CodeOutput);
+                }
             }
 
         }

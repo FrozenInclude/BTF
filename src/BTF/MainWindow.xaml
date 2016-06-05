@@ -43,10 +43,10 @@
                 </LinearGradientBrush>
             </ComboBox.Background>
             <Label Content="인간언어"/>
-            <Label Content="C/C++"/>
+            <Label Content="Assembly"/>
             <Label Content="Ook!"/>
+            <Label Content="C++"/>
             <Label Content="C#"/>
-            <Label Content="Ook"/>
             <Label Content="Javascript"/>
         </ComboBox>
         <RichTextBox Name="CodeInput" HorizontalAlignment="Left" Width="474" Margin="41,44,0,24" ScrollViewer.CanContentScroll="True" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto" BorderThickness="0"  AcceptsReturn="True" Background="#FF1F1C1C"  TextChanged="textChanged" BorderBrush="#FF0B0B0C" Grid.Row="1" FontFamily="Mono sans" Foreground="White" FontSize="13.333" 

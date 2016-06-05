@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace BTF
 {
-    public class JsParser : InterPreter
+    public class CsParser : InterPreter
     {
         private int ptrsize;
-        private int plusCounter=0;
+        private int plusCounter = 0;
         private int minusCounter = 0;
         private int plusCounters = 0;
         private int minusCounters = 0;
         private int loop { get; set; }
         private string command;
-        public JsParser(string code, int ptrsize) : base(code, ptrsize)
+        public CsParser(string code, int ptrsize) : base(code, ptrsize)
         {
             this.ptrsize = ptrsize;
         }
@@ -42,147 +42,171 @@ namespace BTF
                             case '<':
                                 if (plusCounter > 0)
                                 {
-                                    output += $"memory+={plusCounter + ";" + Environment.NewLine}";
+                                    output += $"          memory+={plusCounter + ";" + Environment.NewLine}";
                                     plusCounter = 0;
                                 }
                                 if (minusCounters > 0)
                                 {
-                                    output += $"ptr[memory]-={minusCounters + ";" + Environment.NewLine}";
+                                    output += $"          ptr[memory]-={minusCounters + ";" + Environment.NewLine})";
                                     minusCounters = 0;
                                 }
                                 if (plusCounters > 0)
                                 {
-                                    output += $"ptr[memory]+={plusCounters + ";" + Environment.NewLine}";
+                                    output += $"          ptr[memory]+={plusCounters + ";" + Environment.NewLine}";
                                     plusCounters = 0;
                                 }
                                 minusCounter++;
-                              //  output += "--memory;\n";
+                                //  output += "--memory;\n";
                                 break;
                             case '>'://>
                                 if (minusCounter > 0)
                                 {
-                                    output += $"memory-={minusCounter + ";" + Environment.NewLine}";
+                                    output += $"          memory-={minusCounter + ";" + Environment.NewLine}";
                                     minusCounter = 0;
                                 }
                                 if (minusCounters > 0)
                                 {
-                                    output += $"ptr[memory]-={minusCounters + ";" + Environment.NewLine}";
+                                    output += $"          ptr[memory]-={minusCounters + ";" + Environment.NewLine}";
                                     minusCounters = 0;
                                 }
                                 if (plusCounters > 0)
                                 {
-                                    output += $"ptr[memory]+={plusCounters+ ";" + Environment.NewLine}";
+                                    output += $"          ptr[memory]+={plusCounters + ";" + Environment.NewLine}";
                                     plusCounters = 0;
                                 }
                                 plusCounter++;
-                               // output +="++memory;\n";
+                                output += $"{"          ptr.Add(0);" + Environment.NewLine}";
+                                // output +="++memory;\n";
                                 break;
                             case '+'://+    
                                 if (plusCounter > 0)
                                 {
-                                    output += $"memory+={plusCounter + ";" + Environment.NewLine}";
+                                    output += $"          memory+={plusCounter + ";" + Environment.NewLine}";
                                     plusCounter = 0;
                                 }
                                 if (minusCounter > 0)
                                 {
-                                    output += $"memory-={minusCounter + ";" + Environment.NewLine}";
+                                    output += $"         memory-={minusCounter + ";" + Environment.NewLine}";
                                     minusCounter = 0;
                                 }
                                 if (minusCounters > 0)
                                 {
-                                    output += $"ptr[memory]-={minusCounter + ";" + Environment.NewLine}";
+                                    output += $"          ptr[memory]-={minusCounter + ";" + Environment.NewLine}";
                                     minusCounters = 0;
                                 }
-                               plusCounters++;
+                                plusCounters++;
                                 //output +="ptr[memory]++;\n";
                                 break;
                             case '-'://-  
                                 if (plusCounter > 0)
                                 {
-                                    output += $"memory+={plusCounter + ";" + Environment.NewLine}";
+                                    output += $"          memory+={plusCounter + ";" + Environment.NewLine}";
                                     plusCounter = 0;
                                 }
                                 if (minusCounter > 0)
                                 {
-                                    output += $"memory-={minusCounter + ";" + Environment.NewLine}";
+                                    output += $"          memory-={minusCounter + ";" + Environment.NewLine}";
                                     minusCounter = 0;
                                 }
                                 if (plusCounters > 0)
                                 {
-                                    output += $"ptr[memory]+={plusCounters + ";" + Environment.NewLine}";
+                                    output += $"          ptr[memory]+={plusCounters + ";" + Environment.NewLine}";
                                     plusCounters = 0;
                                 }
-                               minusCounters++;
+                                minusCounters++;
                                 // output +=" ptr[memory]--;\n";
                                 break;
                             case '.':
                                 if (plusCounter > 0)
                                 {
-                                    output += $"memory+={plusCounter + ";" + Environment.NewLine}";
+                                    output += $"          memory+={plusCounter + ";" + Environment.NewLine}";
                                     plusCounter = 0;
                                 }
                                 if (minusCounter > 0)
                                 {
-                                    output += $"memory-={minusCounter + ";" + Environment.NewLine}";
+                                    output += $"          memory-={minusCounter + ";" + Environment.NewLine}";
                                     minusCounter = 0;
                                 }
                                 if (minusCounters > 0)
                                 {
-                                    output += $"ptr[memory]-={minusCounters + ";" + Environment.NewLine}";
+                                    output += $"          ptr[memory]-={minusCounters + ";" + Environment.NewLine}";
                                     minusCounters = 0;
                                 }
                                 if (plusCounters > 0)
                                 {
-                                    output += $"ptr[memory]+={plusCounters + ";" + Environment.NewLine}";
+                                    output += $"          ptr[memory]+={plusCounters + ";" + Environment.NewLine}";
                                     plusCounters = 0;
                                 }
-                                output +=$"console.log(String.fromCharCode(ptr[memory]));\n";
+                                output += $"          Console.Write((char)ptr[memory]);\n";
+                                break;
+                            case ',':
+                                if (plusCounter > 0)
+                                {
+                                    output += $"          memory+={plusCounter + ";" + Environment.NewLine}";
+                                    plusCounter = 0;
+                                }
+                                if (minusCounter > 0)
+                                {
+                                    output += $"          memory-={minusCounter + ";" + Environment.NewLine}";
+                                    minusCounter = 0;
+                                }
+                                if (minusCounters > 0)
+                                {
+                                    output += $"          ptr[memory]-={minusCounters + ";" + Environment.NewLine}";
+                                    minusCounters = 0;
+                                }
+                                if (plusCounters > 0)
+                                {
+                                    output += $"          ptr[memory]+={plusCounters + ";" + Environment.NewLine}";
+                                    plusCounters = 0;
+                                }
+                                output += $"          Console.Read((char)ptr[memory]);\n";
                                 break;
                             case '[':
                                 if (plusCounter > 0)
                                 {
-                                    output += $"memory+={plusCounter + ";" + Environment.NewLine}";
+                                    output += $"          memory+={plusCounter + ";" + Environment.NewLine}";
                                     plusCounter = 0;
                                 }
                                 if (minusCounter > 0)
                                 {
-                                    output += $"memory-={minusCounter + ";" + Environment.NewLine}";
+                                    output += $"          memory-={minusCounter + ";" + Environment.NewLine}";
                                     minusCounter = 0;
                                 }
                                 if (minusCounters > 0)
                                 {
-                                    output += $"ptr[memory]-={minusCounters + ";" + Environment.NewLine}";
+                                    output += $"          ptr[memory]-={minusCounters + ";" + Environment.NewLine}";
                                     minusCounters = 0;
                                 }
                                 if (plusCounters > 0)
                                 {
-                                    output += $"ptr[memory]+={plusCounters + ";" + Environment.NewLine}";
+                                    output += $"          ptr[memory]+={plusCounters + ";" + Environment.NewLine}";
                                     plusCounters = 0;
                                 }
-                                output += $"while(ptr[memory]){{\n";
+                                output += $"             while(ptr[memory]!=0){{\n";
                                 break;
                             case ']':
                                 if (plusCounter > 0)
                                 {
-                                    output += $"memory+={plusCounter + ";" + Environment.NewLine}";
+                                    output += $"          memory+={plusCounter + ";" + Environment.NewLine}";
                                     plusCounter = 0;
                                 }
                                 if (minusCounter > 0)
                                 {
-                                    output += $"memory-={minusCounter + ";" + Environment.NewLine}";
+                                    output += $"          memory-={minusCounter + ";" + Environment.NewLine}";
                                     minusCounter = 0;
                                 }
                                 if (minusCounters > 0)
                                 {
-                                    output += $"ptr[memory]-={minusCounters + ";" + Environment.NewLine}";
+                                    output += $"          ptr[memory]-={minusCounters + ";" + Environment.NewLine}";
                                     minusCounters = 0;
                                 }
                                 if (plusCounters > 0)
                                 {
-                                    output += $"ptr[memory]+={plusCounters + ";" + Environment.NewLine}";
+                                    output += $"          ptr[memory]+={plusCounters + ";" + Environment.NewLine}";
                                     plusCounters = 0;
                                 }
-                                output += $"}}{Environment.NewLine}";
+                                output += $"         }}{Environment.NewLine}";
                                 break;
                         }
                         loop++;
@@ -193,11 +217,26 @@ namespace BTF
                         return;
                     }
                 }
-                output = $@"var ptr=new Array();!var memory=0;!for(var i=0;i<{ptrsize};i++){{!ptr[i]=0;!}}!{output}";
-                output=output.Replace("!", Environment.NewLine);
+                output = $@"using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace BTF
+{{
+    public class Brainfuck
+    {{
+ static void Main()
+        {{
+            List<byte> ptr=new List<byte>(); 
+            ptr.Add(0);
+            int memory=0;
+            {output}
+        }}
+}}
+}}";
             }
         }
     }
-    }
-
-
+}

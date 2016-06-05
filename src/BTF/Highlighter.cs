@@ -25,7 +25,7 @@ namespace highlight
                             "for",
                                 "while",
                                  "Array"
-                                 ,"new","String","fromCharCode",
+                                 ,"new","String","fromCharCode","using","Write","Read","List","static","void","byte","public","class","int","char","Add","namespace","unsigned",@"iostream",
                 "var",
                 @".",
                 @"[",
@@ -38,13 +38,16 @@ namespace highlight
             char[] chrs = {
                 '(',
                 '=',
+                '*',
                 '<',
                 '>',
                 '+',
                 '-',
                 '.',
                 '\n',
-                '\t'
+                '\t',
+                ')'
+
             };
             specials = new List<char>(chrs);
         }

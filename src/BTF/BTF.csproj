@@ -66,6 +66,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="CppParser.cs" />
+    <Compile Include="CsParser.cs" />
     <Compile Include="Highlighter.cs" />
     <Compile Include="HumanParser.cs" />
     <Compile Include="Interpreter.cs" />

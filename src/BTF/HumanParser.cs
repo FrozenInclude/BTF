@@ -10,8 +10,58 @@ namespace BTF
     {
         private int ptrsize;
         private int loop { get; set; }
-        private int memory;
+        private int memory=0;
         private string command;
+        public int Loop(string str, int start, bool boo=true)
+        {
+            if (boo == true)
+            {
+                int c = 0;
+                for (int i = start + 1; i < str.Length; ++i)
+                {
+                    if (str[i] == '[')
+                    {
+                        c++;
+                    }
+                    if (str[i] == ']')
+                    {
+                        if (c == 0)
+                        {
+                            return i;
+                        }
+                        else
+                        {
+                            c--;
+                        }
+                    }
+                }
+                return -1;
+            }else if (boo == false) {
+                int c = 0;
+                string rev = new string(str.Reverse().ToArray());
+                int rev_start = str.Length - start - 1;
+                for (int i = rev_start + 1; i < rev.Length; ++i)
+                {
+                    if (rev[i] == ']')
+                    {
+                        c++;
+                    }
+                    if (rev[i] == '[')
+                    {
+                        if (c == 0)
+                        {
+                            return str.Length - i - 1;
+                        }
+                        else
+                        {
+                            c--;
+                        }
+                    }
+                }
+                return -1;
+            }
+            return 0;
+        }
         public HumanParser(string code, int ptrsize) : base(code, ptrsize)
         {
             this.ptrsize = ptrsize;
@@ -41,16 +91,26 @@ namespace BTF
                                 break;
                             case '>'://>
                                 ++memory;
+                                ptr.Add(0);
                                 break;
                             case '+'://+
-                                ptr[memory]++;
+                                if (memory >-1)
+                                {
+                                    ++ptr[memory];
+                                }
                                 break;
                             case '-'://-
-                                ptr[memory]--;
+                                if (memory >-1)
+                                {
+                                    --ptr[memory];
+                                }
                                 break;
                             case '.':
-                                char st = (char)ptr[memory];
-                                output += st.ToString();
+                                if (memory >=0)
+                                {
+                                    char st = (char)ptr[memory];
+                                    output += st.ToString();
+                                }
                                 break;
                             case ',':
                                 try
@@ -77,7 +137,7 @@ namespace BTF
                                 if (ptr[memory] == 0)
                                 {
                                     var backloop = loop;
-                                    loop = LoopD(command, loop);
+                                    loop = Loop(command, loop);
                                     if (loop == -1)
                                     {
                                         output = $"{backloop + 1}번째  문법오류:']'가필요합니다.";
@@ -90,7 +150,7 @@ namespace BTF
                                 if (ptr[memory] != 0)
                                 {
                                     var backloop = loop;
-                                    loop = LoopS(command, loop);
+                                    loop = Loop(command, loop,false);
                                     if (loop == -1)
                                     {
                                         output = $"{backloop}번째  문법오류:'['가필요합니다.";
@@ -104,7 +164,7 @@ namespace BTF
                     }
                     catch (Exception E)
                     {
-                        output = "Overflow Error!!";
+                        output = "Overflow Error!!"+E.ToString()+memory;
                         return;
                     }
                 }
