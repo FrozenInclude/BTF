@@ -71,6 +71,7 @@
     <Compile Include="Highlighter.cs" />
     <Compile Include="HumanParser.cs" />
     <Compile Include="Interpreter.cs" />
+    <Compile Include="JavaParser.cs" />
     <Compile Include="JsParser.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

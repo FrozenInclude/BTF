@@ -14,27 +14,31 @@ namespace highlight
     class Highlighter
     {
         static List<string> tags = new List<string>();
+        static List<string> tag = new List<string>();
         static List<char> specials = new List<char>();
+        static List<char> special = new List<char>();
         #region ctor
         static Highlighter()
         {
-            string[] strs = {
+            string[] str = {
                 "Anchor",
                     "console",
                         "log",
                             "for",
                                 "while",
                                  "Array"
-                                 ,"new","String","fromCharCode","using","Write","Read","List","static","void","byte","public","class","int","char","Add","namespace","unsigned",@"iostream",
-                "var",
+                                 ,"new","String","fromCharCode","using","Write","Read","List","static","void","byte","public","class","int","char","Add","namespace","unsigned",@"#include<iostream>","import","String",@"'%d'",
+                "var",          
+             };
+            string[] strs = {
                 @".",
                 @"[",
                 @"]",
                 @",",
-                
-             };
 
+             };
             tags = new List<string>(strs);
+            tag = new List<string>(str);
             char[] chrs = {
                 '(',
                 '=',
@@ -46,16 +50,33 @@ namespace highlight
                 '.',
                 '\n',
                 '\t',
+                ',',
                 ')'
 
             };
+            char[] chr = {
+                '[',
+                ']',
+                '(',
+                '=',
+                ')',
+                '.',
+                '{',
+                '}',
+                '*'
+            };
             specials = new List<char>(chrs);
+            special = new List<char>(chr);
         }
 
         #endregion
         public static List<char> GetSpecials
         {
             get { return specials; }
+        }
+        public static List<char> GetSpecial
+        {
+            get { return special; }
         }
         public static List<string> GetTags
         {
@@ -64,6 +85,10 @@ namespace highlight
         public static bool IsKnownTag(string tag)
         {
             return tags.Exists(delegate (string s) { return s.ToLower().Equals(tag.ToLower()); });
+        }
+        public static bool IsKnown(string tag)
+        {
+            return Highlighter.tag.Exists(delegate (string s) { return s.ToLower().Equals(tag.ToLower()); });
         }
         public static List<string> GetJSProvider(string tag)
         {

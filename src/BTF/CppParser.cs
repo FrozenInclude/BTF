@@ -39,7 +39,7 @@ namespace BTF
                     {
                         switch (command[loop])
                         {
-                            case '<':
+                            case (char)Opcode.DecreasePointer:
                                 if (plusCounter > 0)
                                 {
                                     output += $"          ptr+={plusCounter + ";" + Environment.NewLine}";
@@ -58,7 +58,7 @@ namespace BTF
                                 minusCounter++;
                                 //  output += "--memory;\n";
                                 break;
-                            case '>'://>
+                            case (char)Opcode.IncreasePointer://>
                                 if (minusCounter > 0)
                                 {
                                     output += $"          ptr-={minusCounter + ";" + Environment.NewLine}";
@@ -77,7 +77,7 @@ namespace BTF
                                 plusCounter++;
                                 // output +="++memory;\n";
                                 break;
-                            case '+'://+    
+                            case (char)Opcode.IncreaseDataPointer://+    
                                 if (plusCounter > 0)
                                 {
                                     output += $"          ptr+={plusCounter + ";" + Environment.NewLine}";
@@ -96,7 +96,7 @@ namespace BTF
                                 plusCounters++;
                                 //output +="*ptr++;\n";
                                 break;
-                            case '-'://-  
+                            case (char)Opcode.DecreaseDataPointer://-  
                                 if (plusCounter > 0)
                                 {
                                     output += $"          ptr+={plusCounter + ";" + Environment.NewLine}";
@@ -115,7 +115,7 @@ namespace BTF
                                 minusCounters++;
                                 // output +=" *ptr--;\n";
                                 break;
-                            case '.':
+                            case (char)Opcode.Output:
                                 if (plusCounter > 0)
                                 {
                                     output += $"          ptr+={plusCounter + ";" + Environment.NewLine}";
@@ -138,7 +138,7 @@ namespace BTF
                                 }
                                 output += $"          cout<<*ptr;\n";
                                 break;
-                            case ',':
+                            case (char)Opcode.Input:
                                 if (plusCounter > 0)
                                 {
                                     output += $"          ptr+={plusCounter + ";" + Environment.NewLine}";
@@ -161,7 +161,7 @@ namespace BTF
                                 }
                                 output += $"          cin>>*ptr;\n";
                                 break;
-                            case '[':
+                            case (char)Opcode.Openloop:
                                 if (plusCounter > 0)
                                 {
                                     output += $"          ptr+={plusCounter + ";" + Environment.NewLine}";
@@ -184,7 +184,7 @@ namespace BTF
                                 }
                                 output += $"             while(*ptr){{\n";
                                 break;
-                            case ']':
+                            case (char)Opcode.Closeloop:
                                 if (plusCounter > 0)
                                 {
                                     output += $"          ptr+={plusCounter + ";" + Environment.NewLine}";

@@ -21,9 +21,9 @@
                     <DropShadowEffect BlurRadius="10" Direction="-90" RenderingBias="Quality" ShadowDepth="0"/>
                 </Menu.Effect>
                 <MenuItem Header="   파일" Height="55.667" Foreground="White" Width="68" FontFamily="Noto Sans CJK KR Medium" Focusable="False" Name="menus" RenderTransformOrigin="0.5243,0.348"  Cursor="Hand" FontSize="14.667" FontWeight="Bold">
-                    <MenuItem Header="불러오기" BorderThickness="0" Foreground="#FF040404" FontFamily="맑은 고딕" FontWeight="Normal" FontSize="12" Click="MenuItem_Click" />
-                    <MenuItem Header="저장"  Foreground="Black" FontWeight="Normal" FontFamily="맑은 고딕" FontSize="12"/>
-                    <MenuItem Header="다른이름으로저장"  Foreground="#FF0A0A0A" FontFamily="맑은 고딕" FontWeight="Normal" FontSize="12"/>
+                    <MenuItem Header="불러오기" BorderThickness="0" Foreground="#FF040404" FontFamily="맑은 고딕" FontWeight="Normal" FontSize="12" Click="Load" />
+                    <MenuItem Header="저장"  Foreground="Black" FontWeight="Normal" FontFamily="맑은 고딕" FontSize="12" Click="Save"/>
+                    <MenuItem Header="다른이름으로저장"  Foreground="#FF0A0A0A" FontFamily="맑은 고딕" FontWeight="Normal" FontSize="12" Click="OtherNameSave"/>
                     <Separator />
                     <MenuItem Header="최근사용한파일" Foreground="#FF080808" FontFamily="맑은 고딕" FontWeight="Normal" FontSize="12">Noto Sans CJK KR Medium
                         <MenuItem Header="ReadMe.txt"/>
@@ -43,7 +43,7 @@
                 </LinearGradientBrush>
             </ComboBox.Background>
             <Label Content="인간언어"/>
-            <Label Content="Assembly"/>
+            <Label Content="Java"/>
             <Label Content="Ook!"/>
             <Label Content="C++"/>
             <Label Content="C#"/>

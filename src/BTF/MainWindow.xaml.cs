@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.IO;
 using System.Windows.Threading;
 using highlight;
 using System.Diagnostics;
@@ -19,9 +20,6 @@ using Microsoft.Win32;
 
 namespace BTF
 {
-    /// <summary>
-    /// MainWindow.xaml에 대한 상호 작용 논리
-    /// </summary>
     public partial class MainWindow : Window
     {
         string filePath = "Example.bf";
@@ -40,13 +38,28 @@ namespace BTF
 
         }
 
+        async void checkStart()//파일연결
+        {
+            if (Environment.GetCommandLineArgs().Length == 2)
+            {
+                if (Environment.GetCommandLineArgs()[1] != null)
+                {
+                    filePath = Environment.GetCommandLineArgs()[1];
+                    System.IO.StreamReader sr = new System.IO.StreamReader(filePath);
+                    string reading = await sr.ReadLineAsync();
+                    string filename = filePath;
+                    CodeInput.Document.Blocks.Add(new Paragraph(new Run(reading)));
 
+                }
+            }
+        }
 
         void Loade(object sender, RoutedEventArgs e)
         {
             Timer.Interval = TimeSpan.FromMilliseconds(1);
             Timer.Tick += new EventHandler(setTimerEvent);
             Timer.Start();
+            checkStart();
         }
         public MainWindow()
         {
@@ -82,48 +95,89 @@ namespace BTF
             Environment.Exit(0);
         }
 
-        
+
         static List<Tag> m_tags = new List<Tag>();
-        static void CheckWordsInRun(Run run)
+        static void CheckWordsInRun(Run run, bool isBF)
         {
-            string text = run.Text;
-
-            int sIndex = 0;
-            int eIndex = 0;
-            for (int i = 0; i < text.Length; i++)
+            if (isBF)
             {
-                if (Char.IsWhiteSpace(text[i]) | Highlighter.GetSpecials.Contains(text[i]))
-                {
-                    if (i > 0 && !(Char.IsWhiteSpace(text[i - 1]) | Highlighter.GetSpecials.Contains(text[i - 1])))
-                    {
-                        eIndex = i - 1;
-                        string word = text.Substring(sIndex, eIndex - sIndex + 1);
+                string text = run.Text;
 
-                        if (Highlighter.IsKnownTag(word))
+                int sIndex = 0;
+                int eIndex = 0;
+                for (int i = 0; i < text.Length; i++)
+                {
+                    if (Char.IsWhiteSpace(text[i]) | Highlighter.GetSpecials.Contains(text[i]))
+                    {
+                        if (i > 0 && !(Char.IsWhiteSpace(text[i - 1]) | Highlighter.GetSpecials.Contains(text[i - 1])))
                         {
-                            Tag t = new Tag();
-                            t.StartPosition = run.ContentStart.GetPositionAtOffset(sIndex, LogicalDirection.Forward);
-                            t.EndPosition = run.ContentStart.GetPositionAtOffset(eIndex + 1, LogicalDirection.Backward);
-                            t.Word = word;
-                            m_tags.Add(t);
+                            eIndex = i - 1;
+                            string word = text.Substring(sIndex, eIndex - sIndex + 1);
+
+                            if (Highlighter.IsKnownTag(word))
+                            {
+                                Tag t = new Tag();
+                                t.StartPosition = run.ContentStart.GetPositionAtOffset(sIndex, LogicalDirection.Forward);
+                                t.EndPosition = run.ContentStart.GetPositionAtOffset(eIndex + 1, LogicalDirection.Backward);
+                                t.Word = word;
+                                m_tags.Add(t);
+                            }
                         }
+                        sIndex = i + 1;
                     }
-                    sIndex = i + 1;
+                }
+
+
+                string lastWord = text.Substring(sIndex, text.Length - sIndex);
+                if (Highlighter.IsKnownTag(lastWord))
+                {
+                    Tag t = new Tag();
+                    t.StartPosition = run.ContentStart.GetPositionAtOffset(sIndex, LogicalDirection.Forward);
+                    t.EndPosition = run.ContentStart.GetPositionAtOffset(eIndex + 1, LogicalDirection.Backward);
+                    t.Word = lastWord;
+                    m_tags.Add(t);
+                }
+            } else if (!isBF)
+            {
+                string text = run.Text;
+
+                int sIndex = 0;
+                int eIndex = 0;
+                for (int i = 0; i < text.Length; i++)
+                {
+                    if (Char.IsWhiteSpace(text[i]) | Highlighter.GetSpecial.Contains(text[i]))
+                    {
+                        if (i > 0 && !(Char.IsWhiteSpace(text[i - 1]) | Highlighter.GetSpecial.Contains(text[i - 1])))
+                        {
+                            eIndex = i - 1;
+                            string word = text.Substring(sIndex, eIndex - sIndex + 1);
+
+                            if (Highlighter.IsKnown(word))
+                            {
+                                Tag t = new Tag();
+                                t.StartPosition = run.ContentStart.GetPositionAtOffset(sIndex, LogicalDirection.Forward);
+                                t.EndPosition = run.ContentStart.GetPositionAtOffset(eIndex + 1, LogicalDirection.Backward);
+                                t.Word = word;
+                                m_tags.Add(t);
+                            }
+                        }
+                        sIndex = i + 1;
+                    }
+                }
+
+
+                string lastWord = text.Substring(sIndex, text.Length - sIndex);
+                if (Highlighter.IsKnown(lastWord))
+                {
+                    Tag t = new Tag();
+                    t.StartPosition = run.ContentStart.GetPositionAtOffset(sIndex, LogicalDirection.Forward);
+                    t.EndPosition = run.ContentStart.GetPositionAtOffset(eIndex + 1, LogicalDirection.Backward);
+                    t.Word = lastWord;
+                    m_tags.Add(t);
                 }
             }
-
-
-            string lastWord = text.Substring(sIndex, text.Length - sIndex);
-            if (Highlighter.IsKnownTag(lastWord))
-            {
-                Tag t = new Tag();
-                t.StartPosition = run.ContentStart.GetPositionAtOffset(sIndex, LogicalDirection.Forward);
-                t.EndPosition = run.ContentStart.GetPositionAtOffset(eIndex + 1, LogicalDirection.Backward);
-                t.Word = lastWord;
-                m_tags.Add(t);
-            }
         }
-     
+
         void Format()
         {
             CodeInput.TextChanged -= this.textChanged;
@@ -137,8 +191,13 @@ namespace BTF
 
             CodeInput.TextChanged += this.textChanged;
         }
-        void highlightEvent(RichTextBox textBox)
+        void highlightEvent(RichTextBox textBox, bool isBF)
         {
+            if (!Dispatcher.CheckAccess())
+            {
+                Dispatcher.Invoke(new Invoker(highlightEventAsync));
+                return;
+            }
             if (textBox.Document == null)
                 return;
 
@@ -151,13 +210,17 @@ namespace BTF
                 TextPointerContext context = navigator.GetPointerContext(LogicalDirection.Backward);
                 if (context == TextPointerContext.ElementStart && navigator.Parent is Run)
                 {
-                    CheckWordsInRun((Run)navigator.Parent);
+                    CheckWordsInRun((Run)navigator.Parent, isBF);
 
                 }
                 navigator = navigator.GetNextContextPosition(LogicalDirection.Forward);
             }
 
             Format();
+        }
+        void highlightEventAsync()
+        {
+            highlightEvent(CodeInput, true);
         }
         void NumLineEvent()
         {
@@ -183,15 +246,15 @@ namespace BTF
         }
         private async void textChanged(object sender, TextChangedEventArgs e)
         {
-            highlightEvent(this.CodeInput);
-            await Task.Run(() => {
+            await Task.Run(() => {//하이라이팅이벤트 비동기처리
                 NumLineEvent();
+                //  highlightEvent(CodeInput,true);
             });
-    }
-        private void setTimerEvent(object sender, EventArgs e)
+        }
+        private void setTimerEvent(object sender, EventArgs e)//줄및문자수 세기용
         {
             TextRange textRange = new TextRange(CodeInput.Document.ContentStart, CodeInput.Document.ContentEnd);
-            Lineinfo.Content = $"줄:{GetLineNumber(CodeInput) + 1}   문자:{textRange.Text.Length - 2}   {filePath}";
+            Lineinfo.Content = $"줄:{GetLineNumber(CodeInput) + 1}   문자:{textRange.Text.Length - 2}   {System.IO.Path.GetFileName(filePath)}";
         }
         private async void 번역하기()
         {
@@ -243,7 +306,7 @@ namespace BTF
                     CodeOutput.Document.Blocks.Clear();
                     CodeOutput.Document.Blocks.Add(new Paragraph(new Run(BrainFuck.output)));
                     GC.Collect();
-                    highlightEvent(this.CodeOutput);
+                    highlightEvent(this.CodeOutput, false);
                 }
                 else if (comboBox.Text == "C#")
                 {
@@ -257,7 +320,7 @@ namespace BTF
                     CodeOutput.Document.Blocks.Clear();
                     CodeOutput.Document.Blocks.Add(new Paragraph(new Run(BrainFuck.output)));
                     GC.Collect();
-                    highlightEvent(this.CodeOutput);
+                    highlightEvent(this.CodeOutput, false);
                 }
                 else if (comboBox.Text == "C++")
                 {
@@ -271,7 +334,21 @@ namespace BTF
                     CodeOutput.Document.Blocks.Clear();
                     CodeOutput.Document.Blocks.Add(new Paragraph(new Run(BrainFuck.output)));
                     GC.Collect();
-                    highlightEvent(this.CodeOutput);
+                    highlightEvent(this.CodeOutput, false);
+                }
+                else if (comboBox.Text == "Java")
+                {
+                    번역.IsEnabled = false;
+                    BrainFuck = new JavaParser(textRange.Text, memsize);
+                    await Task.Run(() =>
+                    {
+                        BrainFuck.RunCode();
+                        ButtonEnable();
+                    });
+                    CodeOutput.Document.Blocks.Clear();
+                    CodeOutput.Document.Blocks.Add(new Paragraph(new Run(BrainFuck.output)));
+                    GC.Collect();
+                    highlightEvent(this.CodeOutput, false);
                 }
             }
 
@@ -296,7 +373,7 @@ namespace BTF
             Clipboard.SetText(textRange.Text);
         }
 
-     private async void CodeInput_KeyDown(object sender, KeyEventArgs e)
+        private async void CodeInput_KeyDown(object sender, KeyEventArgs e)
         {
 
 
@@ -309,22 +386,74 @@ namespace BTF
             textToSync.ScrollToHorizontalOffset(e.HorizontalOffset);
         }
 
-        private async void MenuItem_Click(object sender, RoutedEventArgs e)//파일불러오기
+        private async void Load(object sender, RoutedEventArgs e)//파일불러오기
         {
+            CodeInput.Focus();
             OpenFileDialog dlg = new OpenFileDialog();
-            dlg.DefaultExt = ".btf";
-            dlg.Filter = "BTF Files (*.btf)|";
+            dlg.Filter = "BTF Files (*.btf)|*.btf";
             bool? result = dlg.ShowDialog();
             if (result == true)
             {
                 using (System.IO.StreamReader sr = new System.IO.StreamReader(dlg.FileName))
                 {
-              string reading =await sr.ReadLineAsync();
-                string filename = dlg.SafeFileName;
-                filePath = filename;
-                CodeInput.Document.Blocks.Add(new Paragraph(new Run(reading)));
+                    string reading = await sr.ReadLineAsync();
+                    filePath = dlg.FileName;
+                    CodeInput.Document.Blocks.Clear();
+                    CodeInput.Document.Blocks.Add(new Paragraph(new Run(reading)));
+                }
             }
         }
-    }
-    }
+        private async void OtherNameSave(object sender, RoutedEventArgs e)
+        {
+            TextRange textRange = new TextRange(CodeInput.Document.ContentStart, CodeInput.Document.ContentEnd);
+            SaveFileDialog Savecode = new SaveFileDialog();
+            string dir = "";
+            Savecode.FileName = "untitled";
+            Savecode.DefaultExt = ".btf";
+            Savecode.Filter = "BTF Files(*.btf)|*.btf";
+            bool? result = Savecode.ShowDialog();
+            if (result == true)
+            {
+                dir = Savecode.FileName;
+                FileStream fs = new FileStream(dir, FileMode.Create, FileAccess.Write);
+                StreamWriter sw = new StreamWriter(fs);
+                await sw.WriteLineAsync(textRange.Text); // 파일 저장
+                filePath = Savecode.FileName;
+                sw.Flush();
+                sw.Close();
+                fs.Close();
+            }
+        }
+        private async void Save(object sender, RoutedEventArgs e)
+        {
+            TextRange textRange = new TextRange(CodeInput.Document.ContentStart, CodeInput.Document.ContentEnd);
+            if (filePath == "Example.bf")
+            {
+                SaveFileDialog Savecode = new SaveFileDialog();
+                string dir = "";
+                Savecode.FileName = "untitled";
+                Savecode.DefaultExt = ".btf";
+                Savecode.Filter = "BTF Files(*.btf)|*.btf";
+                bool? result = Savecode.ShowDialog();
+                if (result == true)
+                {
+                    dir = Savecode.FileName;
+                    FileStream fs = new FileStream(dir, FileMode.Create, FileAccess.Write);
+                    StreamWriter sw = new StreamWriter(fs);
+                    await sw.WriteLineAsync(textRange.Text); // 파일 저장
+                    filePath = Savecode.FileName;
+                    sw.Flush();
+                    sw.Close();
+                    fs.Close();
+                }
+            }else 
+            {
+                TextRange textRangeS = new TextRange(CodeInput.Document.ContentStart, CodeInput.Document.ContentEnd);
+                StreamWriter sw = new StreamWriter(filePath,false);
+           await sw.WriteAsync(textRangeS.Text); // 파일 저장
+        sw.Flush();
+                sw.Close();
+            }
+        }
+}
 }

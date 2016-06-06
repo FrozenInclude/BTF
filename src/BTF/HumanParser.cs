@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
 
 namespace BTF
 {
@@ -66,18 +67,94 @@ namespace BTF
         {
             this.ptrsize = ptrsize;
         }
-        public object getPtrValue
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private void Action(Opcode command)
         {
-            get
+            if (command == Opcode.DecreasePointer)
             {
-                return base.ptr;
+                --memory;
             }
-        }
+            else if (command == Opcode.IncreasePointer)
+            {
+                ++memory;
+                ptr.Add(0);
+            }
+            else if (command == Opcode.IncreaseDataPointer)
+            {
+                if (memory > -1)
+                {
+                    ++ptr[memory];
+                }
+            }
+            else if (command == Opcode.DecreaseDataPointer)
+            {
+                if (memory > -1)
+                {
+                    --ptr[memory];
+                }
+            }
+            else if (command == Opcode.Input)
+            {
+                try
+                {
+                    char[] part = Microsoft.VisualBasic.Interaction.InputBox(@"INPUT(첫번째 첫문자로 짤립니다.) 입력종료는 '0'을써주세요", "포인터 입력", "").ToCharArray();
+                    if (part[0] == '0')
+                    {
+                        ptr[memory] = 0;
+                    }
+                    else
+                    {
+                        ptr[memory] = (byte)part[0];
+                    }
 
+                }
+                catch (Exception E)
+                {
+                    var backloop = loop;
+                    output = $"{backloop + 1}번째  문법오류:잘못된 입력입니다.";
+                    return;
+                }
+            }
+            else if (command == Opcode.Output)
+            {
+                if (memory >= 0)
+                {
+                    char st = (char)ptr.ElementAt(memory);
+                    output += st.ToString();
+                }
+            }
+            else if (command == Opcode.Openloop)
+            {
+                if (ptr[memory] == 0)
+                {
+                    var backloop = loop;
+                    loop = Loop(code, loop);
+                    if (loop == -1)
+                    {
+                        output = $"{backloop + 1}번째  문법오류:']'가필요합니다.";
+                        error = true;
+                        return;
+                    }
+                }
+            }
+            else if (command == Opcode.Closeloop)
+            {
+                if (ptr[memory] != 0)
+                {
+                    var backloop = loop;
+                    loop = Loop(code, loop, false);
+                    if (loop == -1)
+                    {
+                        output = $"{backloop}번째  문법오류:'['가필요합니다.";
+                        error = true;
+                        return;
+                    }
+                }
+            }
+            }
         public override void RunCode()
         {
             command = code;
-
             if (code != null)
             {
                 while (loop < code.Length)
@@ -86,78 +163,29 @@ namespace BTF
                     {
                         switch (command[loop])
                         {
-                            case '<':
-                                --memory;
+                            case (char)Opcode.DecreasePointer:
+                                Action(Opcode.DecreasePointer);
                                 break;
-                            case '>'://>
-                                ++memory;
-                                ptr.Add(0);
+                            case (char)Opcode.IncreasePointer://>
+                                Action(Opcode.IncreasePointer);
                                 break;
-                            case '+'://+
-                                if (memory >-1)
-                                {
-                                    ++ptr[memory];
-                                }
+                            case (char)Opcode.IncreaseDataPointer://+
+                                Action(Opcode.IncreaseDataPointer);
                                 break;
-                            case '-'://-
-                                if (memory >-1)
-                                {
-                                    --ptr[memory];
-                                }
+                            case (char)Opcode.DecreaseDataPointer://-
+                                Action(Opcode.DecreaseDataPointer);
                                 break;
-                            case '.':
-                                if (memory >=0)
-                                {
-                                    char st = (char)ptr[memory];
-                                    output += st.ToString();
-                                }
+                            case (char)Opcode.Output:
+                                Action(Opcode.Output);
                                 break;
-                            case ',':
-                                try
-                                {
-                                    char[] part = Microsoft.VisualBasic.Interaction.InputBox(@"INPUT(첫번째 첫문자로 짤립니다.) 입력종료는 '0'을써주세요", "포인터 입력", "").ToCharArray();
-                                    if (part[0] == '0')
-                                    {
-                                        ptr[memory] = 0;
-                                    }
-                                    else
-                                    {
-                                        ptr[memory] = (byte)part[0];
-                                    }
-
-                                }
-                                catch (Exception E)
-                                {
-                                    var backloop = loop;
-                                    output = $"{backloop + 1}번째  문법오류:잘못된 입력입니다.";
-                                    return;
-                                }
+                            case (char)Opcode.Input:
+                                Action(Opcode.Input);
                                 break;
-                            case '[':
-                                if (ptr[memory] == 0)
-                                {
-                                    var backloop = loop;
-                                    loop = Loop(command, loop);
-                                    if (loop == -1)
-                                    {
-                                        output = $"{backloop + 1}번째  문법오류:']'가필요합니다.";
-                                        error = true;
-                                        return;
-                                    }
-                                }
+                            case (char)Opcode.Openloop:
+                                Action(Opcode.Openloop);
                                 break;
-                            case ']':
-                                if (ptr[memory] != 0)
-                                {
-                                    var backloop = loop;
-                                    loop = Loop(command, loop,false);
-                                    if (loop == -1)
-                                    {
-                                        output = $"{backloop}번째  문법오류:'['가필요합니다.";
-                                        error = true;
-                                        return;
-                                    }
-                                }
+                            case (char)Opcode.Closeloop:
+                                Action(Opcode.Closeloop);
                                 break;
                         }
                         loop++;

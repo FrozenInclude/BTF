@@ -22,30 +22,30 @@ namespace BTF
                 {
                     switch (command[loop])
                     {
-                        case '<':
+                        case (char)Opcode.DecreasePointer:
                             output += "Ook? Ook.";
                             break;
-                        case '>'://>
+                        case (char)Opcode.IncreasePointer://>
                             output += "Ook. Ook?";
                             break;
-                        case '+'://+
+                        case (char)Opcode.IncreaseDataPointer://+
                             output += "Ook.Ook.";
                             break;
-                        case '-'://-
+                        case (char)Opcode.DecreaseDataPointer://-
                             output += "Ook! Ook!";
                             break;
-                        case '.':
+                        case (char)Opcode.Output:
                             // Console.Write(ptr[memory]);
                             output += "Ook! Ook.";
                             break;
 
-                        case ',':
+                        case (char)Opcode.Input:
                             output += "Ook. Ook!";
                             break;
-                        case '[':
+                        case (char)Opcode.Openloop:
                             output += "Ook! Ook?";
                             break;
-                        case ']':
+                        case (char)Opcode.Closeloop:
                             output += "Ook? Ook!";
                             break;
                     }
