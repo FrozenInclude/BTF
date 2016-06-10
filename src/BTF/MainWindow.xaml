@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BTF"
         mc:Ignorable="d"
-         Title=" 브레인퍽 번역기" Height="550.5" Width="1004"  Background="White" AllowsTransparency="true" WindowStyle="None"  BorderBrush="#FF1F1C1C" BorderThickness="1" Padding="4" Loaded="Loade" Icon="resource/brainfuck.png" KeyDown="CodeInput_KeyDown">
+         Title=" 브레인퍽 번역기" Height="550.5" Width="1004"  Background="White" AllowsTransparency="true" WindowStyle="None"  BorderBrush="#FF1F1C1C" BorderThickness="1" Padding="4" Loaded="Loade" Icon="resource/brainfuck.png">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="20*"/>
@@ -50,7 +50,14 @@
             <Label Content="Javascript"/>
         </ComboBox>
         <RichTextBox Name="CodeInput" HorizontalAlignment="Left" Width="474" Margin="41,44,0,24" ScrollViewer.CanContentScroll="True" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto" BorderThickness="0"  AcceptsReturn="True" Background="#FF1F1C1C"  TextChanged="textChanged" BorderBrush="#FF0B0B0C" Grid.Row="1" FontFamily="Mono sans" Foreground="White" FontSize="13.333" 
-                 ScrollViewer.ScrollChanged="RichTextBox_ScrollC" KeyDown="CodeInput_KeyDown">
+              AllowDrop="True" DragOver="CodeInput_DragOver"  ScrollViewer.ScrollChanged="RichTextBox_ScrollC">
+            <RichTextBox.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="잘라내기" Command="ApplicationCommands.Cut"/>
+                    <MenuItem Header="복사" Command="ApplicationCommands.Copy"/>
+                    <MenuItem Header="붙혀넣기" Click="PasteEvent"/>
+                </ContextMenu>
+            </RichTextBox.ContextMenu>
             <RichTextBox.Resources>
                 <Style TargetType="{x:Type Paragraph}">
                     <Setter Property="Margin" Value="0"/>
@@ -80,5 +87,6 @@
                 <Paragraph/>
             </FlowDocument>
         </RichTextBox>
+        <Button x:Name="EXEoutput" Content=".exe로 내보내기" HorizontalAlignment="Left" Margin="325,19,0,0" Grid.Row="1" VerticalAlignment="Top" Width="95" Click="exeOutput" BorderBrush="Black" Background="White" BorderThickness="1" Foreground="Black"/>
     </Grid>
 </Window>

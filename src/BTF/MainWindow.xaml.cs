@@ -17,20 +17,23 @@ using System.Windows.Threading;
 using highlight;
 using System.Diagnostics;
 using Microsoft.Win32;
+using System.CodeDom.Compiler;
+using System.Text.RegularExpressions;
 
 namespace BTF
 {
     public partial class MainWindow : Window
     {
-        string filePath = "Example.bf";
-        int lastLinenum = 0;
-        const int memsize = 5000;
-        int time = 0;
-        InterPreter BrainFuck;
-        System.Threading.CancellationTokenSource cts;
-        delegate void Invoker();
-        public DispatcherTimer Timer = new DispatcherTimer();
-        new struct Tag
+        private string lastFileText = "";
+        private string filePath = "Example.bf";
+        private int lastLinenum = 0;
+        private const int memsize = 5000;
+        private int time = 0;
+        private InterPreter BrainFuck;
+        private System.Threading.CancellationTokenSource cts;
+        private delegate void Invoker();
+        private DispatcherTimer Timer = new DispatcherTimer();
+        private new struct Tag
         {
             public TextPointer StartPosition;
             public TextPointer EndPosition;
@@ -38,7 +41,7 @@ namespace BTF
 
         }
 
-        async void checkStart()//파일연결
+        private async void checkStart()//파일연결
         {
             if (Environment.GetCommandLineArgs().Length == 2)
             {
@@ -53,8 +56,44 @@ namespace BTF
                 }
             }
         }
-
-        void Loade(object sender, RoutedEventArgs e)
+     private  void SaveCheck(bool tryExit)
+        {
+            TextRange textRange = new TextRange(CodeInput.Document.ContentStart, CodeInput.Document.ContentEnd);
+            if (textRange.Text != lastFileText) {
+              MessageBoxResult result = MessageBox.Show("저장하시겠습니까?", "알림", MessageBoxButton.YesNoCancel);
+                if (result == MessageBoxResult.Cancel)
+                {
+                    return;
+                }
+                else if (result == MessageBoxResult.Yes)
+                {
+                    SaveFile();
+                    if (tryExit)
+                    {
+                        Environment.Exit(0);
+                    }
+                }
+                else if (result == MessageBoxResult.No)
+                {
+                    if (tryExit)
+                    {
+                        Environment.Exit(0);
+                    }
+                    return;
+                } else if (result == MessageBoxResult.None)
+                {
+                    return;
+                }
+            }
+            else
+            {
+                if (tryExit)
+                {
+                    Environment.Exit(0);
+                }
+            }
+        }
+       private void Loade(object sender, RoutedEventArgs e)
         {
             Timer.Interval = TimeSpan.FromMilliseconds(1);
             Timer.Tick += new EventHandler(setTimerEvent);
@@ -92,12 +131,12 @@ namespace BTF
 
         private void closethis(object sender, RoutedEventArgs e)
         {
-            Environment.Exit(0);
+            SaveCheck(true);
         }
 
 
-        static List<Tag> m_tags = new List<Tag>();
-        static void CheckWordsInRun(Run run, bool isBF)
+        private List<Tag> m_tags = new List<Tag>();
+        private void CheckWordsInRun(Run run, bool isBF)
         {
             if (isBF)
             {
@@ -137,7 +176,8 @@ namespace BTF
                     t.Word = lastWord;
                     m_tags.Add(t);
                 }
-            } else if (!isBF)
+            }
+            else if (!isBF)
             {
                 string text = run.Text;
 
@@ -178,7 +218,7 @@ namespace BTF
             }
         }
 
-        void Format()
+      private void Format()
         {
             CodeInput.TextChanged -= this.textChanged;
 
@@ -191,7 +231,7 @@ namespace BTF
 
             CodeInput.TextChanged += this.textChanged;
         }
-        void highlightEvent(RichTextBox textBox, bool isBF)
+        private void highlightEvent(RichTextBox textBox, bool isBF)
         {
             if (!Dispatcher.CheckAccess())
             {
@@ -218,11 +258,11 @@ namespace BTF
 
             Format();
         }
-        void highlightEventAsync()
+        private void highlightEventAsync()
         {
             highlightEvent(CodeInput, true);
         }
-        void NumLineEvent()
+        private void NumLineEvent()
         {
             if (!Dispatcher.CheckAccess())
             {
@@ -244,9 +284,44 @@ namespace BTF
                 lastLinenum = lines.Length;
             }
         }
+        private String GetFullPathWithoutExtension(String path)
+        {
+            return System.IO.Path.Combine(System.IO.Path.GetDirectoryName(path), System.IO.Path.GetFileNameWithoutExtension(path));
+        }
+        private void outputExE(string Csharpcode, string outputpath, ref string output)
+        {
+            CodeDomProvider codeDom = CodeDomProvider.CreateProvider("CSharp");
+
+            // 컴파일러 파라미터 옵션 지정
+            CompilerParameters cparams = new CompilerParameters();
+            cparams.GenerateExecutable = true;
+
+            cparams.OutputAssembly = outputpath + ".exe";
+
+            // 소스코드를 컴파일해서 EXE 생성
+            CompilerResults results = codeDom.CompileAssemblyFromSource(cparams, Csharpcode);
+
+            // 컴파일 에러 있는 경우 표시
+            if (results.Errors.Count > 0)
+            {
+                foreach (var err in results.Errors)
+                {
+                    Console.WriteLine(err.ToString());
+                }
+                return;
+            }
+            string filepaths = GetFullPathWithoutExtension(filePath);
+            File.Copy(outputpath + ".exe", filepaths + ".exe", true);
+            File.Delete(outputpath + ".exe");
+            if (File.Exists(filepaths + ".exe"))
+            {
+                Process.Start(filepaths + ".exe");
+            }
+        }
         private async void textChanged(object sender, TextChangedEventArgs e)
         {
-            await Task.Run(() => {//하이라이팅이벤트 비동기처리
+            await Task.Run(() =>
+            {//하이라이팅이벤트 비동기처리
                 NumLineEvent();
                 //  highlightEvent(CodeInput,true);
             });
@@ -357,6 +432,29 @@ namespace BTF
         {
             번역하기();
         }
+        private async void exeOutput(object sender, RoutedEventArgs e)
+        {
+            if (filePath != "Example.bf")
+            {
+                string Erroutput = "";
+                bool success = false;
+                SaveFile();
+                TextRange textRange = new TextRange(CodeInput.Document.ContentStart, CodeInput.Document.ContentEnd);
+                EXEoutput.IsEnabled = false;
+                번역.IsEnabled = false;
+                await Task.Run(() =>
+                {
+                    BrainFuck = new CsParser(textRange.Text, memsize);
+                    BrainFuck.RunCode();
+                    outputExE(BrainFuck.output, System.IO.Path.GetFileNameWithoutExtension(filePath), ref Erroutput);
+                    ButtonEnable();
+                });
+            }
+            else
+            {
+                MessageBox.Show("소스파일을 먼저 저장하세요.");
+            }
+        }
 
         private void ButtonEnable()
         {
@@ -366,6 +464,7 @@ namespace BTF
                 return;
             }
             번역.IsEnabled = true;
+            EXEoutput.IsEnabled = true;
         }
         private void 번역_Copy_Click(object sender, RoutedEventArgs e)
         {
@@ -373,11 +472,7 @@ namespace BTF
             Clipboard.SetText(textRange.Text);
         }
 
-        private async void CodeInput_KeyDown(object sender, KeyEventArgs e)
-        {
 
-
-        }
         private void RichTextBox_ScrollC(object sender, ScrollChangedEventArgs e)
         {
             var textToSync = (sender == CodeInput) ? LineNumLabel : CodeInput;
@@ -394,12 +489,15 @@ namespace BTF
             bool? result = dlg.ShowDialog();
             if (result == true)
             {
+                SaveCheck(false);
                 using (System.IO.StreamReader sr = new System.IO.StreamReader(dlg.FileName))
                 {
-                    string reading = await sr.ReadLineAsync();
+                    string reading = await sr.ReadToEndAsync();
                     filePath = dlg.FileName;
                     CodeInput.Document.Blocks.Clear();
                     CodeInput.Document.Blocks.Add(new Paragraph(new Run(reading)));
+                   TextRange textRange = new TextRange(CodeInput.Document.ContentStart, CodeInput.Document.ContentEnd);
+                    lastFileText = textRange.Text;
                 }
             }
         }
@@ -424,9 +522,11 @@ namespace BTF
                 fs.Close();
             }
         }
-        private async void Save(object sender, RoutedEventArgs e)
+
+        private async void SaveFile()
         {
             TextRange textRange = new TextRange(CodeInput.Document.ContentStart, CodeInput.Document.ContentEnd);
+           // MessageBox.Show(textRange.Text);
             if (filePath == "Example.bf")
             {
                 SaveFileDialog Savecode = new SaveFileDialog();
@@ -446,14 +546,49 @@ namespace BTF
                     sw.Close();
                     fs.Close();
                 }
-            }else 
+            }
+            else
             {
                 TextRange textRangeS = new TextRange(CodeInput.Document.ContentStart, CodeInput.Document.ContentEnd);
-                StreamWriter sw = new StreamWriter(filePath,false);
-           await sw.WriteAsync(textRangeS.Text); // 파일 저장
-        sw.Flush();
+                StreamWriter sw = new StreamWriter(filePath, false);
+                await sw.WriteAsync(textRangeS.Text); // 파일 저장
+                sw.Flush();
                 sw.Close();
             }
         }
-}
+        private void Save(object sender, RoutedEventArgs e)
+        {
+            SaveFile();
+        }
+
+
+
+        private void PasteEvent(object sender, RoutedEventArgs e)
+        {
+            CodeInput.Paste();
+        }
+
+        private void CodeInput_DragOver(object sender, DragEventArgs e)
+        {
+            base.OnDragOver(e);
+            e.Effects = DragDropEffects.None;
+            if (e.Data.GetDataPresent(DataFormats.StringFormat))
+            {
+                string dataString = (string)e.Data.GetData(DataFormats.StringFormat);
+                BrushConverter converter = new BrushConverter();
+                if (converter.IsValid(dataString))
+                {
+                    if (e.KeyStates.HasFlag(DragDropKeyStates.ControlKey))
+                    {
+                        e.Effects = DragDropEffects.Copy;
+                    }
+                    else
+                    {
+                        e.Effects = DragDropEffects.Move;
+                    }
+                }
+            }
+            e.Handled = true;
+        }
+    }
 }

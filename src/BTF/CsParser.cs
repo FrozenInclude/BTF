@@ -47,7 +47,7 @@ namespace BTF
                                 }
                                 if (minusCounters > 0)
                                 {
-                                    output += $"          ptr[memory]-={minusCounters + ";" + Environment.NewLine})";
+                                    output += $"          ptr[memory]-={minusCounters + ";" + Environment.NewLine}";
                                     minusCounters = 0;
                                 }
                                 if (plusCounters > 0)
@@ -160,7 +160,7 @@ namespace BTF
                                     output += $"          ptr[memory]+={plusCounters + ";" + Environment.NewLine}";
                                     plusCounters = 0;
                                 }
-                                output += $"          Console.Read((char)ptr[memory]);\n";
+                                output += $"          ptr[memory]=(byte)Console.Read();\n";
                                 break;
                             case (char)Opcode.Openloop:
                                 if (plusCounter > 0)
@@ -219,7 +219,6 @@ namespace BTF
                 }
                 output = $@"using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
