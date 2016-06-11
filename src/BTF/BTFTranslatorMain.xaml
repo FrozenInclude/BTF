@@ -1,12 +1,12 @@
-﻿<Window x:Class="BTF.MainWindow"
+﻿<Window x:Class="BTF.BTFTranslator"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BTF"
         mc:Ignorable="d"
-         Title=" 브레인퍽 번역기" Height="550.5" Width="1004"  Background="White" AllowsTransparency="true" WindowStyle="None"  BorderBrush="#FF1F1C1C" BorderThickness="1" Padding="4" Loaded="Loade" Icon="resource/brainfuck.png">
-    <Grid>
+         Title=" 브레인퍽 번역기" Height="550.5" Width="1004"  Background="White" AllowsTransparency="true" WindowStyle="None"  BorderBrush="#FF1F1C1C" BorderThickness="1" Padding="4" Loaded="Loade" Icon="resource/brainfuck.png" AllowDrop="True">
+    <Grid AllowDrop="True">
         <Grid.RowDefinitions>
             <RowDefinition Height="20*"/>
             <RowDefinition Height="117*"/>
@@ -49,8 +49,7 @@
             <Label Content="C#"/>
             <Label Content="Javascript"/>
         </ComboBox>
-        <RichTextBox Name="CodeInput" HorizontalAlignment="Left" Width="474" Margin="41,44,0,24" ScrollViewer.CanContentScroll="True" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto" BorderThickness="0"  AcceptsReturn="True" Background="#FF1F1C1C"  TextChanged="textChanged" BorderBrush="#FF0B0B0C" Grid.Row="1" FontFamily="Mono sans" Foreground="White" FontSize="13.333" 
-              AllowDrop="True" DragOver="CodeInput_DragOver"  ScrollViewer.ScrollChanged="RichTextBox_ScrollC">
+        <RichTextBox Name="CodeInput" HorizontalAlignment="Left" Width="474" Margin="41,44,0,24" ScrollViewer.CanContentScroll="True" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto" BorderThickness="0"  AcceptsReturn="True" Background="#FF1F1C1C"  TextChanged="textChanged" BorderBrush="#FF0B0B0C" Grid.Row="1" FontFamily="Mono sans" Foreground="White" FontSize="13.333"  ScrollViewer.ScrollChanged="RichTextBox_ScrollC">
             <RichTextBox.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="잘라내기" Command="ApplicationCommands.Cut"/>

@@ -22,15 +22,13 @@ using System.Text.RegularExpressions;
 
 namespace BTF
 {
-    public partial class MainWindow : Window
+    public partial class BTFTranslator : Window
     {
         private string lastFileText = "";
         private string filePath = "Example.bf";
         private int lastLinenum = 0;
         private const int memsize = 5000;
-        private int time = 0;
         private InterPreter BrainFuck;
-        private System.Threading.CancellationTokenSource cts;
         private delegate void Invoker();
         private DispatcherTimer Timer = new DispatcherTimer();
         private new struct Tag
@@ -51,16 +49,16 @@ namespace BTF
                     System.IO.StreamReader sr = new System.IO.StreamReader(filePath);
                     string reading = await sr.ReadLineAsync();
                     string filename = filePath;
-                    CodeInput.Document.Blocks.Add(new Paragraph(new Run(reading)));
-
+                    SetTextBoxText(CodeInput, reading);
                 }
             }
         }
-     private  void SaveCheck(bool tryExit)
+        private void SaveCheck(bool tryExit)
         {
             TextRange textRange = new TextRange(CodeInput.Document.ContentStart, CodeInput.Document.ContentEnd);
-            if (textRange.Text != lastFileText) {
-              MessageBoxResult result = MessageBox.Show("저장하시겠습니까?", "알림", MessageBoxButton.YesNoCancel);
+            if (textRange.Text != lastFileText)
+            {
+                MessageBoxResult result = MessageBox.Show("저장하시겠습니까?", "알림", MessageBoxButton.YesNoCancel);
                 if (result == MessageBoxResult.Cancel)
                 {
                     return;
@@ -80,7 +78,8 @@ namespace BTF
                         Environment.Exit(0);
                     }
                     return;
-                } else if (result == MessageBoxResult.None)
+                }
+                else if (result == MessageBoxResult.None)
                 {
                     return;
                 }
@@ -93,14 +92,14 @@ namespace BTF
                 }
             }
         }
-       private void Loade(object sender, RoutedEventArgs e)
+        private void Loade(object sender, RoutedEventArgs e)
         {
             Timer.Interval = TimeSpan.FromMilliseconds(1);
             Timer.Tick += new EventHandler(setTimerEvent);
             Timer.Start();
             checkStart();
         }
-        public MainWindow()
+        public BTFTranslator()
         {
             InitializeComponent();
             Paragraph p = CodeOutput.Document.Blocks.FirstBlock as Paragraph;
@@ -218,7 +217,7 @@ namespace BTF
             }
         }
 
-      private void Format()
+        private void Format()
         {
             CodeInput.TextChanged -= this.textChanged;
 
@@ -283,6 +282,11 @@ namespace BTF
                 }
                 lastLinenum = lines.Length;
             }
+        }
+        private void SetTextBoxText(RichTextBox textbox, string appendText)
+        {
+            textbox.Document.Blocks.Clear();
+            textbox.Document.Blocks.Add(new Paragraph(new Run(appendText)));
         }
         private String GetFullPathWithoutExtension(String path)
         {
@@ -349,81 +353,88 @@ namespace BTF
                         ButtonEnable();
                     });
                     sw.Stop();
-                    CodeOutput.Document.Blocks.Clear();
-                    CodeOutput.Document.Blocks.Add(new Paragraph(new Run(BrainFuck.output)));
+                    SetTextBoxText(CodeOutput, BrainFuck.output);
                     TextRange rangeOfText1 = new TextRange(CodeOutput.Document.ContentEnd, CodeOutput.Document.ContentEnd);
                     rangeOfText1.Text = "\nRun time:" + sw.ElapsedMilliseconds.ToString() + "ms";
                     rangeOfText1.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.LightSkyBlue);
                     GC.Collect();
                 }
-                else if (comboBox.Text == "Ook!")
+                else
                 {
-                    번역.IsEnabled = false;
-                    BrainFuck = new OokParser(textRange.Text, memsize);
+                    BrainFuck = new HumanParser(textRange.Text, memsize);
                     await Task.Run(() =>
                     {
                         BrainFuck.RunCode();
-                        ButtonEnable();
                     });
-                    CodeOutput.Document.Blocks.Clear();
-                    CodeOutput.Document.Blocks.Add(new Paragraph(new Run(BrainFuck.output)));
-                    GC.Collect();
-                }
-                else if (comboBox.Text == "Javascript")
-                {
-                    번역.IsEnabled = false;
-                    BrainFuck = new JsParser(textRange.Text, memsize);
-                    await Task.Run(() =>
+                    if (BrainFuck.error == true)
                     {
-                        BrainFuck.RunCode();
-                        ButtonEnable();
-                    });
-                    CodeOutput.Document.Blocks.Clear();
-                    CodeOutput.Document.Blocks.Add(new Paragraph(new Run(BrainFuck.output)));
-                    GC.Collect();
-                    highlightEvent(this.CodeOutput, false);
-                }
-                else if (comboBox.Text == "C#")
-                {
-                    번역.IsEnabled = false;
-                    BrainFuck = new CsParser(textRange.Text, memsize);
-                    await Task.Run(() =>
+                        SetTextBoxText(CodeOutput, BrainFuck.output);
+                        return;
+                    }
+                    else if (comboBox.Text == "Ook!")
                     {
-                        BrainFuck.RunCode();
-                        ButtonEnable();
-                    });
-                    CodeOutput.Document.Blocks.Clear();
-                    CodeOutput.Document.Blocks.Add(new Paragraph(new Run(BrainFuck.output)));
-                    GC.Collect();
-                    highlightEvent(this.CodeOutput, false);
-                }
-                else if (comboBox.Text == "C++")
-                {
-                    번역.IsEnabled = false;
-                    BrainFuck = new CppParser(textRange.Text, memsize);
-                    await Task.Run(() =>
+                        번역.IsEnabled = false;
+                        BrainFuck = new OokParser(textRange.Text, memsize);
+                        await Task.Run(() =>
+                        {
+                            BrainFuck.RunCode();
+                            ButtonEnable();
+                        });
+                        SetTextBoxText(CodeOutput, BrainFuck.output);
+                        GC.Collect();
+                    }
+                    else if (comboBox.Text == "Javascript")
                     {
-                        BrainFuck.RunCode();
-                        ButtonEnable();
-                    });
-                    CodeOutput.Document.Blocks.Clear();
-                    CodeOutput.Document.Blocks.Add(new Paragraph(new Run(BrainFuck.output)));
-                    GC.Collect();
-                    highlightEvent(this.CodeOutput, false);
-                }
-                else if (comboBox.Text == "Java")
-                {
-                    번역.IsEnabled = false;
-                    BrainFuck = new JavaParser(textRange.Text, memsize);
-                    await Task.Run(() =>
+                        번역.IsEnabled = false;
+                        BrainFuck = new JsParser(textRange.Text, memsize);
+                        await Task.Run(() =>
+                        {
+                            BrainFuck.RunCode();
+                            ButtonEnable();
+                        });
+                        SetTextBoxText(CodeOutput, BrainFuck.output);
+                        GC.Collect();
+                        highlightEvent(this.CodeOutput, false);
+                    }
+                    else if (comboBox.Text == "C#")
                     {
-                        BrainFuck.RunCode();
-                        ButtonEnable();
-                    });
-                    CodeOutput.Document.Blocks.Clear();
-                    CodeOutput.Document.Blocks.Add(new Paragraph(new Run(BrainFuck.output)));
-                    GC.Collect();
-                    highlightEvent(this.CodeOutput, false);
+                        번역.IsEnabled = false;
+                        BrainFuck = new CsParser(textRange.Text, memsize);
+                        await Task.Run(() =>
+                        {
+                            BrainFuck.RunCode();
+                            ButtonEnable();
+                        });
+                        SetTextBoxText(CodeOutput, BrainFuck.output);
+                        GC.Collect();
+                        highlightEvent(this.CodeOutput, false);
+                    }
+                    else if (comboBox.Text == "C++")
+                    {
+                        번역.IsEnabled = false;
+                        BrainFuck = new CppParser(textRange.Text, memsize);
+                        await Task.Run(() =>
+                        {
+                            BrainFuck.RunCode();
+                            ButtonEnable();
+                        });
+                        SetTextBoxText(CodeOutput, BrainFuck.output);
+                        GC.Collect();
+                        highlightEvent(this.CodeOutput, false);
+                    }
+                    else if (comboBox.Text == "Java")
+                    {
+                        번역.IsEnabled = false;
+                        BrainFuck = new JavaParser(textRange.Text, memsize);
+                        await Task.Run(() =>
+                        {
+                            BrainFuck.RunCode();
+                            ButtonEnable();
+                        });
+                        SetTextBoxText(CodeOutput, BrainFuck.output);
+                        GC.Collect();
+                        highlightEvent(this.CodeOutput, false);
+                    }
                 }
             }
 
@@ -437,7 +448,6 @@ namespace BTF
             if (filePath != "Example.bf")
             {
                 string Erroutput = "";
-                bool success = false;
                 SaveFile();
                 TextRange textRange = new TextRange(CodeInput.Document.ContentStart, CodeInput.Document.ContentEnd);
                 EXEoutput.IsEnabled = false;
@@ -494,9 +504,8 @@ namespace BTF
                 {
                     string reading = await sr.ReadToEndAsync();
                     filePath = dlg.FileName;
-                    CodeInput.Document.Blocks.Clear();
-                    CodeInput.Document.Blocks.Add(new Paragraph(new Run(reading)));
-                   TextRange textRange = new TextRange(CodeInput.Document.ContentStart, CodeInput.Document.ContentEnd);
+                    SetTextBoxText(CodeInput, reading);
+                    TextRange textRange = new TextRange(CodeInput.Document.ContentStart, CodeInput.Document.ContentEnd);
                     lastFileText = textRange.Text;
                 }
             }
@@ -526,7 +535,7 @@ namespace BTF
         private async void SaveFile()
         {
             TextRange textRange = new TextRange(CodeInput.Document.ContentStart, CodeInput.Document.ContentEnd);
-           // MessageBox.Show(textRange.Text);
+            // MessageBox.Show(textRange.Text);
             if (filePath == "Example.bf")
             {
                 SaveFileDialog Savecode = new SaveFileDialog();
@@ -561,34 +570,9 @@ namespace BTF
             SaveFile();
         }
 
-
-
         private void PasteEvent(object sender, RoutedEventArgs e)
         {
             CodeInput.Paste();
-        }
-
-        private void CodeInput_DragOver(object sender, DragEventArgs e)
-        {
-            base.OnDragOver(e);
-            e.Effects = DragDropEffects.None;
-            if (e.Data.GetDataPresent(DataFormats.StringFormat))
-            {
-                string dataString = (string)e.Data.GetData(DataFormats.StringFormat);
-                BrushConverter converter = new BrushConverter();
-                if (converter.IsValid(dataString))
-                {
-                    if (e.KeyStates.HasFlag(DragDropKeyStates.ControlKey))
-                    {
-                        e.Effects = DragDropEffects.Copy;
-                    }
-                    else
-                    {
-                        e.Effects = DragDropEffects.Move;
-                    }
-                }
-            }
-            e.Handled = true;
         }
     }
 }

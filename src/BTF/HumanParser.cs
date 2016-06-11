@@ -123,34 +123,6 @@ namespace BTF
                     output += st.ToString();
                 }
             }
-            else if (command == Opcode.Openloop)
-            {
-                if (ptr[memory] == 0)
-                {
-                    var backloop = loop;
-                    loop = Loop(code, loop);
-                    if (loop == -1)
-                    {
-                        output = $"{backloop + 1}번째  문법오류:']'가필요합니다.";
-                        error = true;
-                        return;
-                    }
-                }
-            }
-            else if (command == Opcode.Closeloop)
-            {
-                if (ptr[memory] != 0)
-                {
-                    var backloop = loop;
-                    loop = Loop(code, loop, false);
-                    if (loop == -1)
-                    {
-                        output = $"{backloop}번째  문법오류:'['가필요합니다.";
-                        error = true;
-                        return;
-                    }
-                }
-            }
             }
         public override void RunCode()
         {
@@ -181,11 +153,31 @@ namespace BTF
                             case (char)Opcode.Input:
                                 Action(Opcode.Input);
                                 break;
-                            case (char)Opcode.Openloop:
-                                Action(Opcode.Openloop);
+                            case (char)Opcode.Openloop://반복문은 따로생각.
+                                if (ptr[memory] == 0)
+                                {
+                                    var backloop = loop;
+                                    loop = Loop(code, loop);
+                                    if (loop == -1)
+                                    {
+                                        output = $"{backloop + 1}번째  문법오류:']'가필요합니다.";
+                                        error = true;
+                                        return;
+                                    }
+                                }
                                 break;
                             case (char)Opcode.Closeloop:
-                                Action(Opcode.Closeloop);
+                                if (ptr[memory] != 0)
+                                {
+                                    var backloop = loop;
+                                    loop = Loop(code, loop, false);
+                                    if (loop == -1)
+                                    {
+                                        output = $"{backloop}번째  문법오류:'['가필요합니다.";
+                                        error = true;
+                                        return;
+                                    }
+                                }
                                 break;
                         }
                         loop++;
