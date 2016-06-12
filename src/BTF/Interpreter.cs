@@ -26,5 +26,6 @@ namespace BTF
         //    ptr = new byte[size];
         }
         public abstract void RunCode();
+        protected abstract void Action(Opcode command);
     }
 }

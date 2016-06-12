@@ -1,0 +1,15 @@
+C:\Users\Administrator\Documents\Visual Studio 2015\Projects\BTF\src\BTF\bin\x64\Release\BTF.exe.config
+C:\Users\Administrator\Documents\Visual Studio 2015\Projects\BTF\src\BTF\bin\x64\Release\BTF.exe
+C:\Users\Administrator\Documents\Visual Studio 2015\Projects\BTF\src\BTF\bin\x64\Release\BTF.pdb
+C:\Users\Administrator\Documents\Visual Studio 2015\Projects\BTF\src\BTF\obj\x64\Release\Simple Styles.baml
+C:\Users\Administrator\Documents\Visual Studio 2015\Projects\BTF\src\BTF\obj\x64\Release\BTFTranslatorMain.g.cs
+C:\Users\Administrator\Documents\Visual Studio 2015\Projects\BTF\src\BTF\obj\x64\Release\App.g.cs
+C:\Users\Administrator\Documents\Visual Studio 2015\Projects\BTF\src\BTF\obj\x64\Release\BTF_MarkupCompile.cache
+C:\Users\Administrator\Documents\Visual Studio 2015\Projects\BTF\src\BTF\obj\x64\Release\BTF_MarkupCompile.lref
+C:\Users\Administrator\Documents\Visual Studio 2015\Projects\BTF\src\BTF\obj\x64\Release\App.baml
+C:\Users\Administrator\Documents\Visual Studio 2015\Projects\BTF\src\BTF\obj\x64\Release\BTFTranslatorMain.baml
+C:\Users\Administrator\Documents\Visual Studio 2015\Projects\BTF\src\BTF\obj\x64\Release\BTF.g.resources
+C:\Users\Administrator\Documents\Visual Studio 2015\Projects\BTF\src\BTF\obj\x64\Release\BTF.Properties.Resources.resources
+C:\Users\Administrator\Documents\Visual Studio 2015\Projects\BTF\src\BTF\obj\x64\Release\BTF.csproj.GenerateResource.Cache
+C:\Users\Administrator\Documents\Visual Studio 2015\Projects\BTF\src\BTF\obj\x64\Release\BTF.exe
+C:\Users\Administrator\Documents\Visual Studio 2015\Projects\BTF\src\BTF\obj\x64\Release\BTF.pdb

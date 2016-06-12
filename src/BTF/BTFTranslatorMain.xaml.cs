@@ -435,6 +435,32 @@ namespace BTF
                         GC.Collect();
                         highlightEvent(this.CodeOutput, false);
                     }
+                    else if (comboBox.Text == "Swift")
+                    {
+                        번역.IsEnabled = false;
+                        BrainFuck = new SwiftParser(textRange.Text, memsize);
+                        await Task.Run(() =>
+                        {
+                            BrainFuck.RunCode();
+                            ButtonEnable();
+                        });
+                        SetTextBoxText(CodeOutput, BrainFuck.output);
+                        GC.Collect();
+                        highlightEvent(this.CodeOutput, false);
+                    }
+                    else if (comboBox.Text == "As3.0")
+                    {
+                        번역.IsEnabled = false;
+                        BrainFuck = new AsParser(textRange.Text, memsize);
+                        await Task.Run(() =>
+                        {
+                            BrainFuck.RunCode();
+                            ButtonEnable();
+                        });
+                        SetTextBoxText(CodeOutput, BrainFuck.output);
+                        GC.Collect();
+                        highlightEvent(this.CodeOutput, false);
+                    }
                 }
             }
 

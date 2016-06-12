@@ -27,8 +27,9 @@ namespace highlight
                             "for",
                                 "while",
                                  "Array"
-                                 ,"new","String","fromCharCode","using","Write","Read","List","static","void","byte","public","class","int","char","Add","namespace","unsigned",@"#include<iostream>","import","String",@"'%d'",
-                "var",          
+                                 ,"new","String","fromCharCode","using","Write","Read","List","static","void","byte","public","class","int","char","Add","namespace","unsigned",@"#include<iostream>","import","String",@"'%d'","byte",
+                "var", 
+                "trace",         
              };
             string[] strs = {
                 @".",

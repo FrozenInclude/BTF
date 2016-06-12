@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
 
 namespace BTF
 {
@@ -19,11 +20,185 @@ namespace BTF
         {
             this.ptrsize = ptrsize;
         }
-        public object getPtrValue
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        protected override void Action(Opcode command)
         {
-            get
+            if (command == Opcode.DecreasePointer)
             {
-                return base.ptr;
+                if (plusCounter > 0)
+                {
+                    output += $"          memory+={plusCounter + ";" + Environment.NewLine}";
+                    plusCounter = 0;
+                }
+                if (minusCounters > 0)
+                {
+                    output += $"          ptr[memory]-={minusCounters + ";" + Environment.NewLine}";
+                    minusCounters = 0;
+                }
+                if (plusCounters > 0)
+                {
+                    output += $"          ptr[memory]+={plusCounters + ";" + Environment.NewLine}";
+                    plusCounters = 0;
+                }
+                minusCounter++;
+            }
+            else if (command == Opcode.IncreasePointer)
+            {
+                if (minusCounter > 0)
+                {
+                    output += $"memory-={minusCounter + ";" + Environment.NewLine}";
+                    minusCounter = 0;
+                }
+                if (minusCounters > 0)
+                {
+                    output += $"          ptr[memory]-={minusCounters + ";" + Environment.NewLine}";
+                    minusCounters = 0;
+                }
+                if (plusCounters > 0)
+                {
+                    output += $"          ptr[memory]+={plusCounters + ";" + Environment.NewLine}";
+                    plusCounters = 0;
+                }
+                plusCounter++;
+            }
+            else if (command == Opcode.IncreaseDataPointer)
+            {
+                if (plusCounter > 0)
+                {
+                    output += $"          memory+={plusCounter + ";" + Environment.NewLine}";
+                    plusCounter = 0;
+                }
+                if (minusCounter > 0)
+                {
+                    output += $"          memory-={minusCounter + ";" + Environment.NewLine}";
+                    minusCounter = 0;
+                }
+                if (minusCounters > 0)
+                {
+                    output += $"         ptr[memory]-={minusCounter + ";" + Environment.NewLine}";
+                    minusCounters = 0;
+                }
+                plusCounters++;
+            }
+            else if (command == Opcode.DecreaseDataPointer)
+            {
+                if (plusCounter > 0)
+                {
+                    output += $"         memory+={plusCounter + ";" + Environment.NewLine}";
+                    plusCounter = 0;
+                }
+                if (minusCounter > 0)
+                {
+                    output += $"         memory-={minusCounter + ";" + Environment.NewLine}";
+                    minusCounter = 0;
+                }
+                if (plusCounters > 0)
+                {
+                    output += $"         ptr[memory]+={plusCounters + ";" + Environment.NewLine}";
+                    plusCounters = 0;
+                }
+                minusCounters++;
+            }
+            else if (command == Opcode.Input)
+            {
+                if (plusCounter > 0)
+                {
+                    output += $"          memory+={plusCounter + ";" + Environment.NewLine}";
+                    plusCounter = 0;
+                }
+                if (minusCounter > 0)
+                {
+                    output += $"          memory-={minusCounter + ";" + Environment.NewLine}";
+                    minusCounter = 0;
+                }
+                if (minusCounters > 0)
+                {
+                    output += $"          ptr[memory]-={minusCounters + ";" + Environment.NewLine}";
+                    minusCounters = 0;
+                }
+                if (plusCounters > 0)
+                {
+                    output += $"          ptr[memory]+={plusCounters + ";" + Environment.NewLine}";
+                    plusCounters = 0;
+                }
+                output += $@"           try{{
+      ptr[memory] = (char)System.in.read();
+                        }} catch (IOException e)
+                    {{
+                        e.printStackTrace();
+                    }}\n";
+            }
+            else if (command == Opcode.Output)
+            {
+                if (plusCounter > 0)
+                {
+                    output += $"        memory+={plusCounter + ";" + Environment.NewLine}";
+                    plusCounter = 0;
+                }
+                if (minusCounter > 0)
+                {
+                    output += $"        memory-={minusCounter + ";" + Environment.NewLine}";
+                    minusCounter = 0;
+                }
+                if (minusCounters > 0)
+                {
+                    output += $"         ptr[memory]-={minusCounters + ";" + Environment.NewLine}";
+                    minusCounters = 0;
+                }
+                if (plusCounters > 0)
+                {
+                    output += $"        ptr[memory]+={plusCounters + ";" + Environment.NewLine}";
+                    plusCounters = 0;
+                }
+                output += $"            System.out.println((char)ptr[memory]);\n";
+            }
+            else if (command == Opcode.Openloop)
+            {
+                if (plusCounter > 0)
+                {
+                    output += $"          memory+={plusCounter + ";" + Environment.NewLine}";
+                    plusCounter = 0;
+                }
+                if (minusCounter > 0)
+                {
+                    output += $"          memory-={minusCounter + ";" + Environment.NewLine}";
+                    minusCounter = 0;
+                }
+                if (minusCounters > 0)
+                {
+                    output += $"          ptr[memory]-={minusCounters + ";" + Environment.NewLine}";
+                    minusCounters = 0;
+                }
+                if (plusCounters > 0)
+                {
+                    output += $"          ptr[memory]+={plusCounters + ";" + Environment.NewLine}";
+                    plusCounters = 0;
+                }
+                output += $"              while(ptr[memory]!=0){{\n";
+            }
+            if (command == Opcode.Closeloop)
+            {
+                if (plusCounter > 0)
+                {
+                    output += $"         memory+={plusCounter + ";" + Environment.NewLine}";
+                    plusCounter = 0;
+                }
+                if (minusCounter > 0)
+                {
+                    output += $"            memory-={minusCounter + ";" + Environment.NewLine}";
+                    minusCounter = 0;
+                }
+                if (minusCounters > 0)
+                {
+                    output += $"           ptr[memory]-={minusCounters + ";" + Environment.NewLine}";
+                    minusCounters = 0;
+                }
+                if (plusCounters > 0)
+                {
+                    output += $"          ptr[memory]+={plusCounters + ";" + Environment.NewLine}";
+                    plusCounters = 0;
+                }
+                output += $"          }}{Environment.NewLine}";
             }
         }
 
@@ -40,177 +215,31 @@ namespace BTF
                         switch (command[loop])
                         {
                             case (char)Opcode.DecreasePointer:
-                                if (plusCounter > 0)
-                                {
-                                    output += $"          memory+={plusCounter + ";" + Environment.NewLine}";
-                                    plusCounter = 0;
-                                }
-                                if (minusCounters > 0)
-                                {
-                                    output += $"          ptr[memory]-={minusCounters + ";" + Environment.NewLine}";
-                                    minusCounters = 0;
-                                }
-                                if (plusCounters > 0)
-                                {
-                                    output += $"          ptr[memory]+={plusCounters + ";" + Environment.NewLine}";
-                                    plusCounters = 0;
-                                }
-                                minusCounter++;
+                                Action(Opcode.DecreasePointer);
                                 //  output += "--memory;\n";
                                 break;
                             case (char)Opcode.IncreasePointer://>
-                                if (minusCounter > 0)
-                                {
-                                    output +=           $"memory-={minusCounter + ";" + Environment.NewLine}";
-                                    minusCounter = 0;
-                                }
-                                if (minusCounters > 0)
-                                {
-                                    output += $"          ptr[memory]-={minusCounters + ";" + Environment.NewLine}";
-                                    minusCounters = 0;
-                                }
-                                if (plusCounters > 0)
-                                {
-                                    output += $"          ptr[memory]+={plusCounters + ";" + Environment.NewLine}";
-                                    plusCounters = 0;
-                                }
-                                plusCounter++;
-                                // output +="++memory;\n";
+                                Action(Opcode.IncreasePointer);
                                 break;
                             case (char)Opcode.IncreaseDataPointer://+    
-                                if (plusCounter > 0)
-                                {
-                                    output += $"          memory+={plusCounter + ";" + Environment.NewLine}";
-                                    plusCounter = 0;
-                                }
-                                if (minusCounter > 0)
-                                {
-                                    output += $"          memory-={minusCounter + ";" + Environment.NewLine}";
-                                    minusCounter = 0;
-                                }
-                                if (minusCounters > 0)
-                                {
-                                    output += $"         ptr[memory]-={minusCounter + ";" + Environment.NewLine}";
-                                    minusCounters = 0;
-                                }
-                                plusCounters++;
-                                //output +="ptr[memory]++;\n";
+                                Action(Opcode.IncreaseDataPointer);
+                                //output +="*ptr++;\n";
                                 break;
                             case (char)Opcode.DecreaseDataPointer://-  
-                                if (plusCounter > 0)
-                                {
-                                    output += $"         memory+={plusCounter + ";" + Environment.NewLine}";
-                                    plusCounter = 0;
-                                }
-                                if (minusCounter > 0)
-                                {
-                                    output += $"         memory-={minusCounter + ";" + Environment.NewLine}";
-                                    minusCounter = 0;
-                                }
-                                if (plusCounters > 0)
-                                {
-                                    output += $"         ptr[memory]+={plusCounters + ";" + Environment.NewLine}";
-                                    plusCounters = 0;
-                                }
-                                minusCounters++;
-                                // output +=" ptr[memory]--;\n";
+                                Action(Opcode.DecreaseDataPointer);
+                                // output +=" *ptr--;\n";
                                 break;
                             case (char)Opcode.Output:
-                                if (plusCounter > 0)
-                                {
-                                    output += $"        memory+={plusCounter + ";" + Environment.NewLine}";
-                                    plusCounter = 0;
-                                }
-                                if (minusCounter > 0)
-                                {
-                                    output += $"        memory-={minusCounter + ";" + Environment.NewLine}";
-                                    minusCounter = 0;
-                                }
-                                if (minusCounters > 0)
-                                {
-                                    output += $"         ptr[memory]-={minusCounters + ";" + Environment.NewLine}";
-                                    minusCounters = 0;
-                                }
-                                if (plusCounters > 0)
-                                {
-                                    output += $"        ptr[memory]+={plusCounters + ";" + Environment.NewLine}";
-                                    plusCounters = 0;
-                                }
-                                output += $"            System.out.println((char)ptr[memory]);\n";
+                                Action(Opcode.Output);
                                 break;
                             case (char)Opcode.Input:
-                                if (plusCounter > 0)
-                                {
-                                    output += $"          memory+={plusCounter + ";" + Environment.NewLine}";
-                                    plusCounter = 0;
-                                }
-                                if (minusCounter > 0)
-                                {
-                                    output += $"          memory-={minusCounter + ";" + Environment.NewLine}";
-                                    minusCounter = 0;
-                                }
-                                if (minusCounters > 0)
-                                {
-                                    output += $"          ptr[memory]-={minusCounters + ";" + Environment.NewLine}";
-                                    minusCounters = 0;
-                                }
-                                if (plusCounters > 0)
-                                {
-                                    output += $"          ptr[memory]+={plusCounters + ";" + Environment.NewLine}";
-                                    plusCounters = 0;
-                                }
-                                output += $@"           try{{
-      ptr[memory] = (char)System.in.read();
-                        }} catch (IOException e)
-                    {{
-                        e.printStackTrace();
-                    }}\n";
+                                Action(Opcode.Input);
                                 break;
                             case (char)Opcode.Openloop:
-                                if (plusCounter > 0)
-                                {
-                                    output += $"          memory+={plusCounter + ";" + Environment.NewLine}";
-                                    plusCounter = 0;
-                                }
-                                if (minusCounter > 0)
-                                {
-                                    output += $"          memory-={minusCounter + ";" + Environment.NewLine}";
-                                    minusCounter = 0;
-                                }
-                                if (minusCounters > 0)
-                                {
-                                    output += $"          ptr[memory]-={minusCounters + ";" + Environment.NewLine}";
-                                    minusCounters = 0;
-                                }
-                                if (plusCounters > 0)
-                                {
-                                    output += $"          ptr[memory]+={plusCounters + ";" + Environment.NewLine}";
-                                    plusCounters = 0;
-                                }
-                                output += $"              while(ptr[memory]!=0){{\n";
+                                Action(Opcode.Openloop);
                                 break;
                             case (char)Opcode.Closeloop:
-                                if (plusCounter > 0)
-                                {
-                                    output += $"         memory+={plusCounter + ";" + Environment.NewLine}";
-                                    plusCounter = 0;
-                                }
-                                if (minusCounter > 0)
-                                {
-                                    output += $"            memory-={minusCounter + ";" + Environment.NewLine}";
-                                    minusCounter = 0;
-                                }
-                                if (minusCounters > 0)
-                                {
-                                    output += $"           ptr[memory]-={minusCounters + ";" + Environment.NewLine}";
-                                    minusCounters = 0;
-                                }
-                                if (plusCounters > 0)
-                                {
-                                    output += $"          ptr[memory]+={plusCounters + ";" + Environment.NewLine}";
-                                    plusCounters = 0;
-                                }
-                                output += $"          }}{Environment.NewLine}";
+                                Action(Opcode.Closeloop);
                                 break;
                         }
                         loop++;

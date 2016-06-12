@@ -4,7 +4,7 @@
 winexe
 C#
 .cs
-C:\Users\Administrator\Documents\Visual Studio 2015\Projects\BTF\src\BTF\obj\Release\
+C:\Users\Administrator\Documents\Visual Studio 2015\Projects\BTF\src\BTF\obj\x64\Release\
 BTF
 none
 false
@@ -12,9 +12,9 @@ TRACE
 C:\Users\Administrator\Documents\Visual Studio 2015\Projects\BTF\src\BTF\App.xaml
 22127301120
 
-15-2018685628
+19-1177729710
 16963202503
 BTFTranslatorMain.xaml;Simple Styles.xaml;
 
-False
+True
 

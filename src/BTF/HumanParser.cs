@@ -68,7 +68,7 @@ namespace BTF
             this.ptrsize = ptrsize;
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private void Action(Opcode command)
+        protected override void Action(Opcode command)
         {
             if (command == Opcode.DecreasePointer)
             {
@@ -123,7 +123,7 @@ namespace BTF
                     output += st.ToString();
                 }
             }
-            }
+        }
         public override void RunCode()
         {
             command = code;
