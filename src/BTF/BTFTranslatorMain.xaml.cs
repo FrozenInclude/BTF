@@ -99,6 +99,7 @@ namespace BTF
         }
         private void Loade(object sender, RoutedEventArgs e)
         {
+            mediaElement1.Source=new Uri(Directory.GetCurrentDirectory()+@"\sound\complete.mp3");
             Timer.Interval = TimeSpan.FromMilliseconds(1);
             Timer.Tick += new EventHandler(setTimerEvent);
             Timer.Start();
@@ -516,7 +517,8 @@ namespace BTF
                     }
                 }
             }
-
+            mediaElement1.Position = TimeSpan.Zero;
+            mediaElement1.Play();
         }
         private void 번역_Click(object sender, RoutedEventArgs e)
         {

@@ -99,13 +99,7 @@ namespace BTF
                         return;
                     }
                 }
-                output = $@"#include<iostream>
-using namespace std;
-     int main(void)
-        {{
-         unsigned char * ptr=(unsigned char*)calloc('%d',1);
-            {output}
-        }}";
+                output = $@"{ output}";
             }
         }
     }

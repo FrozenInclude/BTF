@@ -47,3 +47,4 @@ C:\Users\Administrator\Downloads\BTF\BTF\src\BTF\obj\Release\BTFTranslatorMain.b
 C:\Users\Administrator\Downloads\BTF\BTF\src\BTF\obj\Release\BTF.g.resources
 C:\Users\Administrator\Downloads\BTF\BTF\src\BTF\obj\Release\BTF.Properties.Resources.resources
 C:\Users\Administrator\Downloads\BTF\BTF\src\BTF\obj\Release\BTF.csproj.GenerateResource.Cache
+C:\Users\Administrator\Downloads\BTF\BTF\src\BTF\obj\Release\BTF_Content.g.cs
