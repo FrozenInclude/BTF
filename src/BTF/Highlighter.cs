@@ -8,7 +8,6 @@ using System.Windows.Documents;
 using System.Windows.Media;
 using System.Text.RegularExpressions;
 using System.Windows;
-//words for Highlighting
 namespace highlight
 {
     class Highlighter
@@ -27,15 +26,16 @@ namespace highlight
                             "for",
                                 "while",
                                  "Array"
-                                 ,"new","String","fromCharCode","using","Write","Read","List","static","void","byte","public","class","int","char","Add","namespace","unsigned",@"#include<iostream>","import","String",@"'%d'","byte",
-                "var", 
-                "trace",         
+                                 ,"new","String","fromCharCode","using","Write","Read","List","static","void","byte","public","class","int","char","Add","namespace","unsigned",@"#include<iostream>","import","String","'%d'","byte","chr","print",
+                "var",
+                "trace",
              };
             string[] strs = {
                 @".",
                 @"[",
                 @"]",
                 @",",
+                @"("
 
              };
             tags = new List<string>(strs);
@@ -64,7 +64,9 @@ namespace highlight
                 '.',
                 '{',
                 '}',
-                '*'
+                '*',
+                ','
+
             };
             specials = new List<char>(chrs);
             special = new List<char>(chr);
@@ -97,4 +99,3 @@ namespace highlight
         }
     }
 }
-      

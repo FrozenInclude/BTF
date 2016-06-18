@@ -31,3 +31,19 @@ C:\Users\Administrator\Documents\Visual Studio 2015\Projects\BTF\src\BTF\obj\Rel
 C:\Users\Administrator\Documents\Visual Studio 2015\Projects\BTF\src\BTF\obj\Release\BTFTranslatorMain.g.cs
 C:\Users\Administrator\Documents\Visual Studio 2015\Projects\BTF\src\BTF\obj\Release\BTFTranslatorMain.baml
 C:\Users\Administrator\Documents\Visual Studio 2015\Projects\BTF\src\BTF\obj\Release\GeneratedInternalTypeHelper.g.cs
+C:\Users\Administrator\Downloads\BTF\BTF\src\BTF\bin\Release\BTF.exe.config
+C:\Users\Administrator\Downloads\BTF\BTF\src\BTF\obj\Release\BTF.exe
+C:\Users\Administrator\Downloads\BTF\BTF\src\BTF\obj\Release\BTF.pdb
+C:\Users\Administrator\Downloads\BTF\BTF\src\BTF\bin\Release\BTF.exe
+C:\Users\Administrator\Downloads\BTF\BTF\src\BTF\bin\Release\BTF.pdb
+C:\Users\Administrator\Downloads\BTF\BTF\src\BTF\obj\Release\BTF.csprojResolveAssemblyReference.cache
+C:\Users\Administrator\Downloads\BTF\BTF\src\BTF\obj\Release\Simple Styles.baml
+C:\Users\Administrator\Downloads\BTF\BTF\src\BTF\obj\Release\BTFTranslatorMain.g.cs
+C:\Users\Administrator\Downloads\BTF\BTF\src\BTF\obj\Release\App.g.cs
+C:\Users\Administrator\Downloads\BTF\BTF\src\BTF\obj\Release\BTF_MarkupCompile.cache
+C:\Users\Administrator\Downloads\BTF\BTF\src\BTF\obj\Release\BTF_MarkupCompile.lref
+C:\Users\Administrator\Downloads\BTF\BTF\src\BTF\obj\Release\App.baml
+C:\Users\Administrator\Downloads\BTF\BTF\src\BTF\obj\Release\BTFTranslatorMain.baml
+C:\Users\Administrator\Downloads\BTF\BTF\src\BTF\obj\Release\BTF.g.resources
+C:\Users\Administrator\Downloads\BTF\BTF\src\BTF\obj\Release\BTF.Properties.Resources.resources
+C:\Users\Administrator\Downloads\BTF\BTF\src\BTF\obj\Release\BTF.csproj.GenerateResource.Cache

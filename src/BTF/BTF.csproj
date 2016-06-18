@@ -82,8 +82,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AsParser.cs" />
-    <Compile Include="SwiftParser.cs" />
+    <Compile Include="Parser\AsParser.cs" />
+    <Compile Include="Parser\PyParser.cs" />
+    <Compile Include="Parser\SwiftParser.cs" />
     <Page Include="BTFTranslatorMain.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -92,13 +93,13 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="CppParser.cs" />
-    <Compile Include="CsParser.cs" />
+    <Compile Include="Parser\CppParser.cs" />
+    <Compile Include="Parser\CsParser.cs" />
     <Compile Include="Highlighter.cs" />
-    <Compile Include="HumanParser.cs" />
-    <Compile Include="Interpreter.cs" />
-    <Compile Include="JavaParser.cs" />
-    <Compile Include="JsParser.cs" />
+    <Compile Include="Parser\HumanParser.cs" />
+    <Compile Include="Parser\Interpreter.cs" />
+    <Compile Include="Parser\JavaParser.cs" />
+    <Compile Include="Parser\JsParser.cs" />
     <Compile Include="BTFTranslatorMain.xaml.cs">
       <DependentUpon>BTFTranslatorMain.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -109,7 +110,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="OokParser.cs" />
+    <Compile Include="Parser\OokParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -138,6 +139,21 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="resource\brainfuck.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resource\close.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resource\File.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resource\Run.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resource\copy.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resource\ic_computer_white_24dp_1x.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

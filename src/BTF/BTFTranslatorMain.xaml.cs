@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Threading;
 using System.IO;
 using System.Windows.Threading;
 using highlight;
@@ -28,8 +29,12 @@ namespace BTF
         private string filePath = "Example.bf";
         private int lastLinenum = 0;
         private const int memsize = 5000;
+
         private InterPreter BrainFuck;
+
         private delegate void Invoker();
+        private delegate void HilightDelegate(RichTextBox codeinput, bool isBF);
+
         private DispatcherTimer Timer = new DispatcherTimer();
         private new struct Tag
         {
@@ -38,7 +43,7 @@ namespace BTF
             public string Word;
 
         }
-
+        CancellationTokenSource cts=new CancellationTokenSource();
         private async void checkStart()//파일연결
         {
             if (Environment.GetCommandLineArgs().Length == 2)
@@ -230,13 +235,36 @@ namespace BTF
 
             CodeInput.TextChanged += this.textChanged;
         }
-        private void highlightEvent(RichTextBox textBox, bool isBF)
+        private void highlightEventAsync(RichTextBox textBox, bool isBF)
         {
-            if (!Dispatcher.CheckAccess())
-            {
-                Dispatcher.Invoke(new Invoker(highlightEventAsync));
-                return;
-            }
+            if (textBox.Dispatcher.CheckAccess())
+                highlightDelegate(textBox, isBF);
+            else
+                textBox.Dispatcher.BeginInvoke(new Action(() => {highlightDelegate(textBox, isBF);})); 
+        }
+        private void highlightEvent(RichTextBox textBox, bool isBF)
+        { 
+          if (textBox.Document == null)
+                    return;
+
+                TextRange documentRange = new TextRange(textBox.Document.ContentStart, textBox.Document.ContentEnd);
+                documentRange.ClearAllProperties();
+
+                TextPointer navigator = textBox.Document.ContentStart;
+                while (navigator.CompareTo(textBox.Document.ContentEnd) < 0)
+                {
+                    TextPointerContext context = navigator.GetPointerContext(LogicalDirection.Backward);
+                    if (context == TextPointerContext.ElementStart && navigator.Parent is Run)
+                    {
+                        CheckWordsInRun((Run)navigator.Parent, isBF);
+
+                    }
+                    navigator = navigator.GetNextContextPosition(LogicalDirection.Forward);
+                }
+            Format();
+        }
+        private void highlightDelegate(RichTextBox textBox, bool isBF)
+        {
             if (textBox.Document == null)
                 return;
 
@@ -254,12 +282,6 @@ namespace BTF
                 }
                 navigator = navigator.GetNextContextPosition(LogicalDirection.Forward);
             }
-
-            Format();
-        }
-        private void highlightEventAsync()
-        {
-            highlightEvent(CodeInput, true);
         }
         private void NumLineEvent()
         {
@@ -324,11 +346,16 @@ namespace BTF
         }
         private async void textChanged(object sender, TextChangedEventArgs e)
         {
+            if (cts != null)
+            {
+                cts.Cancel();
+            }
             await Task.Run(() =>
             {//하이라이팅이벤트 비동기처리
-                NumLineEvent();
-                //  highlightEvent(CodeInput,true);
+              NumLineEvent();
+              highlightEventAsync(CodeInput,true);
             });
+            Format();
         }
         private void setTimerEvent(object sender, EventArgs e)//줄및문자수 세기용
         {
@@ -452,6 +479,19 @@ namespace BTF
                     {
                         번역.IsEnabled = false;
                         BrainFuck = new AsParser(textRange.Text, memsize);
+                        await Task.Run(() =>
+                        {
+                            BrainFuck.RunCode();
+                            ButtonEnable();
+                        });
+                        SetTextBoxText(CodeOutput, BrainFuck.output);
+                        GC.Collect();
+                        highlightEvent(this.CodeOutput, false);
+                    }
+                    else if (comboBox.Text == "Python")
+                    {
+                        번역.IsEnabled = false;
+                        BrainFuck = new PyParser(textRange.Text, memsize);
                         await Task.Run(() =>
                         {
                             BrainFuck.RunCode();
