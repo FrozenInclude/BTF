@@ -21,7 +21,7 @@
                     <DropShadowEffect BlurRadius="10" Direction="-90" RenderingBias="Quality" ShadowDepth="0"/>
                 </Menu.Effect>
 
-                <MenuItem  Height="24" Foreground="White" Width="24" FontFamily="Noto Sans CJK KR Medium" Focusable="False" Name="menus" RenderTransformOrigin="0.5243,0.348"  Cursor="Hand" FontSize="10.667" FontWeight="Bold" Margin="14,0,0,0">
+                <MenuItem Height="24" Foreground="White" Width="24" FontFamily="Noto Sans CJK KR Medium" Focusable="False" Name="menus" RenderTransformOrigin="0.5243,0.348"  Cursor="Hand" FontSize="10.667" FontWeight="Bold" Margin="14,2,0,0">
                     <MenuItem.Icon>
                         <Image Source="resource\File.png"/>
                     </MenuItem.Icon>
