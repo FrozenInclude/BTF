@@ -38,13 +38,7 @@
 
         </DockPanel>
         <Label x:Name="LineNum" Content="" Height="458" VerticalAlignment="Top" Margin="0,66,961,0" Background="#FF252121" Grid.RowSpan="2"/>
-        <ComboBox x:Name="comboBox" Width="102" Height="21" Margin="0,33,384,0" VerticalAlignment="Top" HorizontalAlignment="Right" BorderBrush="#FF080808">
-            <ComboBox.Background>
-                <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
-                    <GradientStop Color="#FFF0F0F0" Offset="0"/>
-                    <GradientStop Color="White" Offset="1"/>
-                </LinearGradientBrush>
-            </ComboBox.Background>
+        <ComboBox x:Name="comboBox" Width="102" Height="21" Margin="0,33,384,0" VerticalAlignment="Top" HorizontalAlignment="Right" BorderBrush="#FF080808" Background="White">
             <Label Content="인간언어"/>
             <Label Content="Java"/>
             <Label Content="Ook!"/>
@@ -54,6 +48,7 @@
             <Label Content="As3.0"/>
             <Label Content="Swift"/>
             <Label Content="Python"/>
+            <Label Content="VB.NET"/>
         </ComboBox>
         <RichTextBox Name="CodeInput" HorizontalAlignment="Left" Width="474" Margin="41,66,0,24" ScrollViewer.CanContentScroll="True" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto" BorderThickness="0"  AcceptsReturn="True" Background="#FF1F1C1C"  TextChanged="textChanged" BorderBrush="#FF0B0B0C" FontFamily="Mono sans" Foreground="White" FontSize="13.333"  ScrollViewer.ScrollChanged="RichTextBox_ScrollC" Grid.RowSpan="2">
             <RichTextBox.ContextMenu>
@@ -86,12 +81,12 @@
             </Button.Template>
         </Button>
         <Label Name="Lineinfo" Content="줄:47   열:4   문자:500" Foreground="White" BorderBrush="#FF0B0B0C" Background="#FF252121" Margin="0,444,0,-2" FontFamily="맑은 고딕" Grid.Row="1" HorizontalAlignment="Right" Width="1002"/>
-        <Button Style="{StaticResource MyButtonStyle}" x:Name="번역" Content="" HorizontalAlignment="Left" Margin="625,32,0,0" VerticalAlignment="Top" Width="23" Click="번역_Click" BorderBrush="Black" BorderThickness="0" Foreground="Black" Height="23" RenderTransformOrigin="0.522,0.652">
+        <Button Style="{StaticResource MyButtonStyle}" x:Name="번역" Content="" HorizontalAlignment="Left" Margin="625,32,0,0" VerticalAlignment="Top" Width="23" Click="번역_Click" BorderBrush="Black" BorderThickness="0" Foreground="Black" Height="23" RenderTransformOrigin="0.522,0.652" Cursor="Hand">
             <Button.Background>
                 <ImageBrush ImageSource="resource/Run.png"/>
             </Button.Background>
         </Button>
-        <Button Style="{StaticResource MyButtonStyle}" x:Name="번역_Copy"  HorizontalAlignment="Left" VerticalAlignment="Top"  Click="번역_Copy_Click" Margin="686,32,0,0" BorderBrush="Black" Width="23" Height="23" BorderThickness="0">
+        <Button Style="{StaticResource MyButtonStyle}" x:Name="번역_Copy"  HorizontalAlignment="Left" VerticalAlignment="Top"  Click="번역_Copy_Click" Margin="686,32,0,0" BorderBrush="Black" Width="23" Height="23" BorderThickness="0" Cursor="Hand">
             <Button.Background>
                 <ImageBrush ImageSource="resource/copy.png"/>
             </Button.Background>
@@ -106,7 +101,7 @@
                 <Paragraph/>
             </FlowDocument>
         </RichTextBox>
-        <Button Style="{StaticResource MyButtonStyle}" x:Name="EXEoutput" HorizontalAlignment="Left" Margin="655,32,0,0" VerticalAlignment="Top" Width="23" Height="23" Click="exeOutput" BorderBrush="Black" BorderThickness="0" Foreground="Black">
+        <Button Style="{StaticResource MyButtonStyle}" x:Name="EXEoutput" HorizontalAlignment="Left" Margin="655,32,0,0" VerticalAlignment="Top" Width="23" Height="23" Click="exeOutput" BorderBrush="Black" BorderThickness="0" Foreground="Black" Cursor="Hand">
             <Button.Background>
                 <ImageBrush ImageSource="resource/ic_computer_white_24dp_1x.png"/>
             </Button.Background>

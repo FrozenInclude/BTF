@@ -26,7 +26,9 @@ namespace highlight
                             "for",
                                 "while",
                                  "Array"
-                                 ,"new","String","fromCharCode","using","Write","Read","List","static","void","byte","public","class","int","char","Add","namespace","unsigned",@"#include<iostream>","import","String","'%d'","byte","chr","print",
+                                 ,"new",
+                "String","fromCharCode","using","Write","Read","List","static","void","byte","public","class","int","char","Add","namespace","unsigned",@"#include<iostream>","import","String","'%d'","byte","chr","print","Dim","New","Integer",
+                "AS","Imports","Module","Sub","List","While","Byte","Add","Char","End","Of","CByte",
                 "var",
                 "trace",
              };

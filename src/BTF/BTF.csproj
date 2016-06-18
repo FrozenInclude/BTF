@@ -85,6 +85,7 @@
     <Compile Include="Parser\AsParser.cs" />
     <Compile Include="Parser\PyParser.cs" />
     <Compile Include="Parser\SwiftParser.cs" />
+    <Compile Include="Parser\VBparser.cs" />
     <Page Include="BTFTranslatorMain.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
