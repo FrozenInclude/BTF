@@ -38,7 +38,7 @@
 
         </DockPanel>
         <Label x:Name="LineNum" Content="" Height="458" VerticalAlignment="Top" Margin="0,66,961,0" Background="#FF252121" Grid.RowSpan="2"/>
-        <ComboBox x:Name="comboBox" Width="102" Height="21" Margin="0,33,384,0" VerticalAlignment="Top" HorizontalAlignment="Right" BorderBrush="#FF080808" Background="White">
+        <ComboBox x:Name="comboBox" Width="102" Height="21" Margin="0,33,384,0" VerticalAlignment="Top" HorizontalAlignment="Right" BorderBrush="#FF080808" Background="White" Style="{DynamicResource SimpleComboBox}" BorderThickness="0">
             <Label Content="인간언어"/>
             <Label Content="Java"/>
             <Label Content="Ook!"/>

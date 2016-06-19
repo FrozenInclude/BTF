@@ -27,17 +27,16 @@ namespace highlight
                                 "while",
                                  "Array"
                                  ,"new",
-                "String","fromCharCode","using","Write","Read","List","static","void","byte","public","class","int","char","Add","namespace","unsigned",@"#include<iostream>","import","String","'%d'","byte","chr","print","Dim","New","Integer",
+                "String","fromCharCode","using","Write","Read","List","static","void","byte","public","class","int","char","Add","namespace","unsigned",@"#include","import","String","'%d'","byte","chr","print","Dim","New","Integer","iostream",
                 "AS","Imports","Module","Sub","List","While","Byte","Add","Char","End","Of","CByte",
                 "var",
-                "trace",
+                "trace"
              };
             string[] strs = {
                 @".",
                 @"[",
                 @"]",
                 @",",
-                @"("
 
              };
             tags = new List<string>(strs);
@@ -64,6 +63,8 @@ namespace highlight
                 '=',
                 ')',
                 '.',
+                '<',
+                '>',
                 '{',
                 '}',
                 '*',
