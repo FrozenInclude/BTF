@@ -30,7 +30,7 @@ namespace highlight
                 "String","fromCharCode","using","Write","Read","List","static","void","byte","public","class","int","char","Add","namespace","unsigned",@"#include","import","String","'%d'","byte","chr","print","Dim","New","Integer","iostream",
                 "AS","Imports","Module","Sub","List","While","Byte","Add","Char","End","Of","CByte",
                 "var",
-                "trace"
+                "trace","fmt","func","package"
              };
             string[] strs = {
                 @".",
