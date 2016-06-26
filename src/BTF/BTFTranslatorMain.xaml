@@ -44,6 +44,7 @@
             <Label Content="Ook!"/>
             <Label Content="C++"/>
             <Label Content="C#"/>
+            <Label Content="F#"/>
             <Label Content="Javascript"/>
             <Label Content="As3.0"/>
             <Label Content="Swift"/>

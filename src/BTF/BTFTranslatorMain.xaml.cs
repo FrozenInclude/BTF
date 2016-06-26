@@ -528,6 +528,19 @@ namespace BTF
                         GC.Collect();
                         highlightEvent(this.CodeOutput, false);
                     }
+                    else if (comboBox.Text == "F#")
+                    {
+                        번역.IsEnabled = false;
+                        BrainFuck = new FsParser(textRange.Text, memsize);
+                        await Task.Run(() =>
+                        {
+                            BrainFuck.RunCode();
+                            ButtonEnable();
+                        });
+                        SetTextBoxText(CodeOutput, BrainFuck.output);
+                        GC.Collect();
+                        highlightEvent(this.CodeOutput, false);
+                    }
                 }
             }
             mediaElement1.Position = TimeSpan.Zero;
