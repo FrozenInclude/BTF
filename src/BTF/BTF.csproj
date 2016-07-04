@@ -82,10 +82,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Parser\LuaParser.cs" />
     <Compile Include="Parser\AsParser.cs" />
     <Compile Include="Parser\FsParser.cs" />
     <Compile Include="Parser\GoParser.cs" />
     <Compile Include="Parser\PyParser.cs" />
+    <Compile Include="Parser\Rust.cs" />
     <Compile Include="Parser\SwiftParser.cs" />
     <Compile Include="Parser\VBparser.cs" />
     <Page Include="BTFTranslatorMain.xaml">
