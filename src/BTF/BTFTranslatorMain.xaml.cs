@@ -223,14 +223,14 @@ namespace BTF
             }
         }
 
-        private void Format()
+        private void Format(Color color)
         {
             CodeInput.TextChanged -= this.textChanged;
 
             for (int i = 0; i < m_tags.Count; i++)
             {
                 TextRange range = new TextRange(m_tags[i].StartPosition, m_tags[i].EndPosition);
-                range.ApplyPropertyValue(TextElement.ForegroundProperty, new SolidColorBrush(Colors.LightSkyBlue));
+                range.ApplyPropertyValue(TextElement.ForegroundProperty, new SolidColorBrush(color));
             }
             m_tags.Clear();
 
@@ -262,7 +262,7 @@ namespace BTF
                     }
                     navigator = navigator.GetNextContextPosition(LogicalDirection.Forward);
                 }
-            Format();
+            //Format();
         }
         private void highlightDelegate(RichTextBox textBox, bool isBF)
         {
@@ -356,7 +356,7 @@ namespace BTF
               NumLineEvent();
               highlightEventAsync(CodeInput,true);
             });
-            Format();
+            Format(Colors.LightSkyBlue);
         }
         private void setTimerEvent(object sender, EventArgs e)//줄및문자수 세기용
         {
@@ -554,8 +554,22 @@ namespace BTF
                         GC.Collect();
                         highlightEvent(this.CodeOutput, false);
                     }
+                    else if (comboBox.Text == "Rust")
+                    {
+                        번역.IsEnabled = false;
+                        BrainFuck = new RustParser(textRange.Text, memsize);
+                        await Task.Run(() =>
+                        {
+                            BrainFuck.RunCode();
+                            ButtonEnable();
+                        });
+                        SetTextBoxText(CodeOutput, BrainFuck.output);
+                        GC.Collect();
+                        highlightEvent(this.CodeOutput, false);
+                    }
                 }
             }
+            Format(Colors.Aqua);
             mediaElement1.Position = TimeSpan.Zero;
             mediaElement1.Play();
         }

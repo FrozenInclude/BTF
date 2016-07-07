@@ -28,9 +28,9 @@ namespace highlight
                                  "Array"
                                  ,"new",
                 "String","fromCharCode","using","Write","Read","List","static","void","byte","public","class","int","char","Add","namespace","unsigned",@"#include","import","String","'%d'","byte","chr","print","Dim","New","Integer","iostream",
-                "AS","Imports","Module","Sub","List","While","Byte","Add","Char","End","Of","CByte",
+                "AS","Imports","Module","Sub","List","While","Byte","Add","Char","End","Of","CByte","fn",
                 "var",
-                "trace","fmt","func","package","mutable","let","open","do","end"
+                "trace","fmt","func","package","mutable","let","open","do","end","use","std","mut","u8","i32","match",@"""""",@"""{}""",@"""{:?}""",@"""fmt"""
              };
             string[] strs = {
                 @".",
@@ -65,11 +65,9 @@ namespace highlight
                 '.',
                 '<',
                 '>',
-                '{',
-                '}',
                 '*',
-                ','
-
+                ',',
+                ':'
             };
             specials = new List<char>(chrs);
             special = new List<char>(chr);

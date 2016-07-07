@@ -52,6 +52,7 @@
             <Label Content="VB.NET"/>
             <Label Content="Go"/>
             <Label Content="Lua"/>
+            <Label Content="Rust"/>
         </ComboBox>
         <RichTextBox Name="CodeInput" HorizontalAlignment="Left" Width="474" Margin="41,66,0,24" ScrollViewer.CanContentScroll="True" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto" BorderThickness="0"  AcceptsReturn="True" Background="#FF1F1C1C"  TextChanged="textChanged" BorderBrush="#FF0B0B0C" FontFamily="Mono sans" Foreground="White" FontSize="13.333"  ScrollViewer.ScrollChanged="RichTextBox_ScrollC" Grid.RowSpan="2">
             <RichTextBox.ContextMenu>
@@ -85,7 +86,7 @@
         </Button>
         <MediaElement Height="0" Margin="10,143,108,0" LoadedBehavior="Manual" Name="mediaElement1" VerticalAlignment="Top" Grid.Row="1" Visibility="Hidden"/>
         <Label Name="Lineinfo" Content="줄:47   열:4   문자:500" Foreground="White" BorderBrush="#FF0B0B0C" Background="#FF252121" Margin="0,444,0,-2" FontFamily="맑은 고딕" Grid.Row="1" HorizontalAlignment="Right" Width="1002"/>
-        <Button Style="{StaticResource MyButtonStyle}" x:Name="번역" Content="" HorizontalAlignment="Left" Margin="625,32,0,0" VerticalAlignment="Top" Width="23" Click="번역_Click" BorderBrush="Black" BorderThickness="0" Foreground="Black" Height="23" RenderTransformOrigin="0.522,0.652" Cursor="Hand">
+        <Button Style="{StaticResource MyButtonStyle}" x:Name="번역" Content="" HorizontalAlignment="Left" Margin="625,32,0,0" VerticalAlignment="Top" Width="23" Click="번역_Click" BorderBrush="Black" BorderThickness="0" Foreground="Black" Height="23" RenderTransformOrigin="0.5,0.5" Cursor="Hand">
             <Button.Background>
                 <ImageBrush ImageSource="resource/Run.png"/>
             </Button.Background>

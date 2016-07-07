@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 
 namespace BTF
 {
-    public class GoParser : InterPreter
+    public class RustParser : InterPreter
     {
         private int ptrsize;
         private int plusCounter = 0;
@@ -16,7 +16,7 @@ namespace BTF
         private int minusCounters = 0;
         private int loop { get; set; }
         private string command;
-        public GoParser(string code, int ptrsize) : base(code, ptrsize)
+        public RustParser(string code, int ptrsize) : base(code, ptrsize)
         {
             this.ptrsize = ptrsize;
         }
@@ -153,7 +153,7 @@ namespace BTF
                     output += $"ptr[memory]+={plusCounters + ";" + Environment.NewLine}";
                     plusCounters = 0;
                 }
-                output += $" fmt.Println(string(ptr[memory]));{Environment.NewLine}";
+                output += $@" print!(""{{}}"", to_ascii(&ptr[memory]));{ Environment.NewLine}";
             }
             else if (command == Opcode.Openloop)
             {
@@ -177,7 +177,7 @@ namespace BTF
                     output += $"ptr[memory]+={plusCounters + ";" + Environment.NewLine}";
                     plusCounters = 0;
                 }
-                output += $"for ptr[memory]!=0 {{\n";
+                output += $"while ptr[memory]!=0 {{\n";
             }
             if (command == Opcode.Closeloop)
             {
@@ -202,27 +202,26 @@ namespace BTF
                     plusCounters = 0;
                 }
                 output += $"}}{Environment.NewLine}";
-            }
-            else if (command == Opcode.Result)
+            } else if (command == Opcode.Result)
             {
                 if (plusCounter > 0)
                 {
-                    output += $"          memory+={plusCounter + Environment.NewLine}";
+                    output += $"memory+={plusCounter + ";" + Environment.NewLine}";
                     plusCounter = 0;
                 }
                 if (minusCounter > 0)
                 {
-                    output += $"          memory-={minusCounter + Environment.NewLine}";
+                    output += $"memory-={minusCounter + ";" + Environment.NewLine}";
                     minusCounter = 0;
                 }
                 if (minusCounters > 0)
                 {
-                    output += $"          ptr(memory)-={minusCounters + Environment.NewLine}";
+                    output += $"ptr[memory]-={minusCounters + ";" + Environment.NewLine}";
                     minusCounters = 0;
                 }
                 if (plusCounters > 0)
                 {
-                    output += $"          ptr(memory)+={plusCounters + Environment.NewLine}";
+                    output += $"ptr[memory]+={plusCounters + ";" + Environment.NewLine}";
                     plusCounters = 0;
                 }
             }
@@ -291,13 +290,19 @@ namespace BTF
                         return;
                     }
                 }
-                output = $@"package main
+                output = $@"use std::io;
 
-import ""fmt""
 
-func main() {{
-var ptr[{ptrsize}]int;
-var memory=0;
+fn to_ascii(i: & i32) -> String {{
+    match * i {{
+        x@0...127 => format!(""{{:?}}"", x as u8 as char),
+        _ => """".into(),
+    }}
+}}
+
+fn main() {{
+let mut ptr=[0;{ptrsize}];
+let mut memory=0;
 {output}
 }}
                 ";

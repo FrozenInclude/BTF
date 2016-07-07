@@ -184,7 +184,7 @@ namespace BTF
                 output += $"{들여쓰기}ptr[memory]=ptr[memory]+{plusCounters + Environment.NewLine}";
                 plusCounters = 0;
             }
-            output += $@"{들여쓰기}ptr[memory]=input()";
+            output += $@"{들여쓰기}ptr[memory]=io.read()";
         }
         if (command == Opcode.Closeloop)
         {
@@ -217,7 +217,30 @@ namespace BTF
             }
                 output += $"{들여쓰기}end{Environment.NewLine}";
             }
-    }
+            else if (command == Opcode.Result)
+            {
+                if (plusCounter > 0)
+                {
+                    output += $"          memory+={plusCounter + Environment.NewLine}";
+                    plusCounter = 0;
+                }
+                if (minusCounter > 0)
+                {
+                    output += $"          memory-={minusCounter + Environment.NewLine}";
+                    minusCounter = 0;
+                }
+                if (minusCounters > 0)
+                {
+                    output += $"          ptr(memory)-={minusCounters + Environment.NewLine}";
+                    minusCounters = 0;
+                }
+                if (plusCounters > 0)
+                {
+                    output += $"          ptr(memory)+={plusCounters + Environment.NewLine}";
+                    plusCounters = 0;
+                }
+            }
+        }
 
     public override void RunCode()
     {
@@ -230,37 +253,53 @@ namespace BTF
             {
                 try
                 {
-                    switch (command[loop])
-                    {
-                        case (char)Opcode.DecreasePointer:
-                            Action(Opcode.DecreasePointer);
-                            //  output += "--memory;\n";
-                            break;
-                        case (char)Opcode.IncreasePointer://>
-                            Action(Opcode.IncreasePointer);
-                            break;
-                        case (char)Opcode.IncreaseDataPointer://+    
-                            Action(Opcode.IncreaseDataPointer);
-                            //output +="*ptr++;\n";
-                            break;
-                        case (char)Opcode.DecreaseDataPointer://-  
-                            Action(Opcode.DecreaseDataPointer);
-                            // output +=" *ptr--;\n";
-                            break;
-                        case (char)Opcode.Output:
-                            Action(Opcode.Output);
-                            break;
-                        case (char)Opcode.Input:
-                            Action(Opcode.Input);
-                            break;
-                        case (char)Opcode.Openloop:
-                            Action(Opcode.Openloop);
-                            break;
-                        case (char)Opcode.Closeloop:
-                            Action(Opcode.Closeloop);
-                            break;
-                    }
-                    loop++;
+                        switch (command[loop])
+                        {
+                            case (char)Opcode.DecreasePointer:
+                                Action(Opcode.DecreasePointer);
+                                if (loop == code.Length)
+                                    Action(Opcode.Result);
+                                //  output += "--memory;\n";
+                                break;
+                            case (char)Opcode.IncreasePointer://>
+                                Action(Opcode.IncreasePointer);
+                                if (loop == code.Length + 1)
+                                    Action(Opcode.Result);
+                                break;
+                            case (char)Opcode.IncreaseDataPointer://+    
+                                Action(Opcode.IncreaseDataPointer);
+                                if (loop == code.Length + 1)
+                                    Action(Opcode.Result);
+                                //output +="ptr[memory]++;\n";
+                                break;
+                            case (char)Opcode.DecreaseDataPointer://-  
+                                Action(Opcode.DecreaseDataPointer);
+                                if (loop == code.Length + 1)
+                                    Action(Opcode.Result);
+                                // output +=" *ptr--;\n";
+                                break;
+                            case (char)Opcode.Output:
+                                Action(Opcode.Output);
+                                if (loop == code.Length + 1)
+                                    Action(Opcode.Result);
+                                break;
+                            case (char)Opcode.Input:
+                                Action(Opcode.Input);
+                                if (loop == code.Length + 1)
+                                    Action(Opcode.Result);
+                                break;
+                            case (char)Opcode.Openloop:
+                                Action(Opcode.Openloop);
+                                if (loop == code.Length + 1)
+                                    Action(Opcode.Result);
+                                break;
+                            case (char)Opcode.Closeloop:
+                                Action(Opcode.Closeloop);
+                                if (loop == code.Length + 1)
+                                    Action(Opcode.Result);
+                                break;
+                        }
+                        loop++;
                 }
                 catch (Exception E)
                 {
