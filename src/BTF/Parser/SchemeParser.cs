@@ -7,16 +7,19 @@ using System.Runtime.CompilerServices;
 
 namespace BTF
 {
-    public class SwiftParser : InterPreter
+    public class SchemeParser : InterPreter
     {
         private int ptrsize;
+        private string 들여쓰기 = "";
+        private int nested = 0;
+        private string last들여쓰기 = "";
         private int plusCounter = 0;
         private int minusCounter = 0;
         private int plusCounters = 0;
         private int minusCounters = 0;
         private int loop { get; set; }
         private string command;
-        public SwiftParser(string code, int ptrsize) : base(code, ptrsize)
+        public SchemeParser(string code, int ptrsize) : base(code, ptrsize)
         {
             this.ptrsize = ptrsize;
         }
@@ -27,17 +30,17 @@ namespace BTF
             {
                 if (plusCounter > 0)
                 {
-                    output += $"memory+={plusCounter + ";" + Environment.NewLine}";
+                    output += $"{들여쓰기}(set! memory (+ memory {plusCounter})){Environment.NewLine}";
                     plusCounter = 0;
                 }
                 if (minusCounters > 0)
                 {
-                    output += $"ptr[memory]-={minusCounters + ";" + Environment.NewLine}";
+                    output += $"{들여쓰기}(vector-set! ptr memory (- {minusCounters} (vector-ref ptr memory))){Environment.NewLine}";
                     minusCounters = 0;
                 }
                 if (plusCounters > 0)
                 {
-                    output += $"ptr[memory]+={plusCounters + ";" + Environment.NewLine}";
+                    output += $"{들여쓰기}(vector-set! ptr memory (+ {plusCounters} (vector-ref ptr memory))){Environment.NewLine}";
                     plusCounters = 0;
                 }
                 minusCounter++;
@@ -46,17 +49,17 @@ namespace BTF
             {
                 if (minusCounter > 0)
                 {
-                    output += $"memory-={minusCounter + ";" + Environment.NewLine}";
+                    output += $"{들여쓰기}(set! memory (- memory {minusCounter})){Environment.NewLine}";
                     minusCounter = 0;
                 }
                 if (minusCounters > 0)
                 {
-                    output += $"ptr[memory]-={minusCounters + ";" + Environment.NewLine}";
+                    output += $"{들여쓰기}(vector-set! ptr memory (- {minusCounters} (vector-ref ptr memory))){Environment.NewLine}";
                     minusCounters = 0;
                 }
                 if (plusCounters > 0)
                 {
-                    output += $"ptr[memory]+={plusCounters + ";" + Environment.NewLine}";
+                    output += $"{들여쓰기}(vector-set! ptr memory (+ {plusCounters} (vector-ref ptr memory))){Environment.NewLine}";
                     plusCounters = 0;
                 }
                 plusCounter++;
@@ -66,17 +69,17 @@ namespace BTF
             {
                 if (plusCounter > 0)
                 {
-                    output += $"memory+={plusCounter + ";" + Environment.NewLine}";
+                    output += $"{들여쓰기}(set! memory (+ memory {plusCounter})){Environment.NewLine}";
                     plusCounter = 0;
                 }
                 if (minusCounter > 0)
                 {
-                    output += $"memory-={minusCounter + ";" + Environment.NewLine}";
+                    output += $"{들여쓰기}(set! memory (- memory {minusCounter})){Environment.NewLine}";
                     minusCounter = 0;
                 }
                 if (minusCounters > 0)
                 {
-                    output += $"ptr[memory]-={minusCounter + ";" + Environment.NewLine}";
+                    output += $"{들여쓰기}(vector-set! ptr memory (- {minusCounters} (vector-ref ptr memory))){Environment.NewLine}";
                     minusCounters = 0;
                 }
                 plusCounters++;
@@ -85,17 +88,17 @@ namespace BTF
             {
                 if (plusCounter > 0)
                 {
-                    output += $"memory+={plusCounter + ";" + Environment.NewLine}";
+                    output += $"{들여쓰기}(set! memory (+ memory {plusCounter})){Environment.NewLine}";
                     plusCounter = 0;
                 }
                 if (minusCounter > 0)
                 {
-                    output += $"memory-={minusCounter + ";" + Environment.NewLine}";
+                    output += $"{들여쓰기}(set! memory (- memory {minusCounter})){Environment.NewLine}";
                     minusCounter = 0;
                 }
                 if (plusCounters > 0)
                 {
-                    output += $"ptr[memory]+={plusCounters + ";" + Environment.NewLine}";
+                    output += $"{들여쓰기}(vector-set! ptr memory (+ {plusCounters} (vector-ref ptr memory))){Environment.NewLine}";
                     plusCounters = 0;
                 }
                 minusCounters++;
@@ -104,22 +107,22 @@ namespace BTF
             {
                 if (plusCounter > 0)
                 {
-                    output += $"memory+={plusCounter + ";" + Environment.NewLine}";
+                    output += $"{들여쓰기}(set! memory (+ memory {plusCounter})){Environment.NewLine}";
                     plusCounter = 0;
                 }
                 if (minusCounter > 0)
                 {
-                    output += $"memory-={minusCounter + ";" + Environment.NewLine}";
+                    output += $"{들여쓰기}(set! memory (- memory {minusCounter})){Environment.NewLine}";
                     minusCounter = 0;
                 }
                 if (minusCounters > 0)
                 {
-                    output += $"ptr[memory]-={minusCounters + ";" + Environment.NewLine}";
+                    output += $"{들여쓰기}(vector-set! ptr memory (- {minusCounters} (vector-ref ptr memory))){Environment.NewLine}";
                     minusCounters = 0;
                 }
                 if (plusCounters > 0)
                 {
-                    output += $"ptr[memory]+={plusCounters + ";" + Environment.NewLine}";
+                    output += $"{들여쓰기}(vector-set! ptr memory (+ {plusCounters} (vector-ref ptr memory))){Environment.NewLine}";
                     plusCounters = 0;
                 }
                 output += "ptr[memory]=readLine(stripNewline: true)\n";
@@ -128,94 +131,94 @@ namespace BTF
             {
                 if (plusCounter > 0)
                 {
-                    output += $"memory+={plusCounter + ";" + Environment.NewLine}";
+                    output += $"{들여쓰기}(set! memory (+ memory {plusCounter})){Environment.NewLine}";
                     plusCounter = 0;
                 }
                 if (minusCounter > 0)
                 {
-                    output += $"memory-={minusCounter + ";" + Environment.NewLine}";
+                    output += $"{들여쓰기}(set! memory (- memory {minusCounter})){Environment.NewLine}";
                     minusCounter = 0;
                 }
                 if (minusCounters > 0)
                 {
-                    output += $"ptr[memory]-={minusCounters + ";" + Environment.NewLine}";
+                    output += $"{들여쓰기}(vector-set! ptr memory (- {minusCounters} (vector-ref ptr memory))){Environment.NewLine}";
                     minusCounters = 0;
                 }
                 if (plusCounters > 0)
                 {
-                    output += $"ptr[memory]+={plusCounters + ";" + Environment.NewLine}";
+                    output += $"{들여쓰기}(vector-set! ptr memory (+ {plusCounters} (vector-ref ptr memory))){Environment.NewLine}";
                     plusCounters = 0;
                 }
-                output += $"print(Character(UnicodeScalar(ptr[memory])));\n";
+                output += $"{들여쓰기}(display (integer->char (vector-ref ptr memory)))\n";
             }
             else if (command == Opcode.Openloop)
             {
                 if (plusCounter > 0)
                 {
-                    output += $"memory+={plusCounter + ";" + Environment.NewLine}";
+                    output += $"{들여쓰기}(set! memory (+ memory {plusCounter})){Environment.NewLine}";
                     plusCounter = 0;
                 }
                 if (minusCounter > 0)
                 {
-                    output += $"memory-={minusCounter + ";" + Environment.NewLine}";
+                    output += $"{들여쓰기}(set! memory (- memory {minusCounter})){Environment.NewLine}";
                     minusCounter = 0;
                 }
                 if (minusCounters > 0)
                 {
-                    output += $"ptr[memory]-={minusCounters + ";" + Environment.NewLine}";
+                    output += $"{들여쓰기}(vector-set! ptr memory (- {minusCounters} (vector-ref ptr memory))){Environment.NewLine}";
                     minusCounters = 0;
                 }
                 if (plusCounters > 0)
                 {
-                    output += $"ptr[memory]+={plusCounters + ";" + Environment.NewLine}";
+                    output += $"{들여쓰기}(vector-set! ptr memory (+ {plusCounters} (vector-ref ptr memory))){Environment.NewLine}";
                     plusCounters = 0;
                 }
-                output += $"while ptr[memory] != 0 {{\n";
+                    output += $@"(while (not (eq? (vector-ref ptr memory) 0)){Environment.NewLine}";
             }
             if (command == Opcode.Closeloop)
             {
                 if (plusCounter > 0)
                 {
-                    output += $"memory+={plusCounter + ";" + Environment.NewLine}";
+                    output += $"{들여쓰기}(set! memory (+ memory {plusCounter})){Environment.NewLine}";
                     plusCounter = 0;
                 }
                 if (minusCounter > 0)
                 {
-                    output += $"memory-={minusCounter + ";" + Environment.NewLine}";
+                    output += $"{들여쓰기}(set! memory (- memory {minusCounter})){Environment.NewLine}";
                     minusCounter = 0;
                 }
                 if (minusCounters > 0)
                 {
-                    output += $"ptr[memory]-={minusCounters + ";" + Environment.NewLine}";
+                    output += $"{들여쓰기}(vector-set! ptr memory (- {minusCounters} (vector-ref ptr memory))){Environment.NewLine}";
                     minusCounters = 0;
                 }
                 if (plusCounters > 0)
                 {
-                    output += $"ptr[memory]+={plusCounters + ";" + Environment.NewLine}";
+                    output += $"{들여쓰기}(vector-set! ptr memory (+ {plusCounters} (vector-ref ptr memory))){Environment.NewLine}";
                     plusCounters = 0;
                 }
-                output += $"}}{Environment.NewLine}";
+                output += $@"){Environment.NewLine}";
             }
-           else if (command == Opcode.Result)
+            else if (command == Opcode.Result)
             {
                 if (plusCounter > 0)
                 {
-                    output += $"memory+={plusCounter + ";" + Environment.NewLine}";
+                    output += $"{들여쓰기}(set! memory (+ memory {plusCounter})){Environment.NewLine}";
                     plusCounter = 0;
                 }
                 if (minusCounter > 0)
                 {
-                    output += $"memory-={minusCounter + ";" + Environment.NewLine}";
+                    output += $"{들여쓰기}(set! memory (- memory {minusCounter})){Environment.NewLine}";
                     minusCounter = 0;
                 }
                 if (minusCounters > 0)
                 {
-                    output += $"ptr[memory]-={minusCounters + ";" + Environment.NewLine}";
+                    output += $"{들여쓰기}(vector-set! ptr memory (- {minusCounters} (vector-ref ptr memory))){Environment.NewLine}";
                     minusCounters = 0;
                 }
                 if (plusCounters > 0)
                 {
-                    output += $"ptr[memory]+={plusCounters + ";" + Environment.NewLine}";
+                    output += $"{들여쓰기}(vector-set! ptr memory (+ {plusCounters} (vector-ref ptr memory))){Environment.NewLine}";
                     plusCounters = 0;
                 }
             }
@@ -224,7 +227,7 @@ namespace BTF
         public override void RunCode()
         {
             command = code;
-
+            nested = 0;
             if (code != null)
             {
                 while (loop < code.Length)
@@ -288,15 +291,26 @@ namespace BTF
                         return;
                     }
                 }
-                output = $@"var ptr = [0];
-var memory = 0;
-for i in 1...{ptrsize}{{
-      ptr.append(0);
-}}
-{output}";
+                output = $@"(define ptr (make-vector {ptrsize} 0))
+(define memory 0)
+(define-syntax loop
+	(ir-macro-transformer
+		(lambda (expr inject compare)
+			(let ((body (cdr expr)))
+				`(call-with-current-continuation
+					(lambda (,(inject 'exit))
+						(let f () ,@body (f))))))))
+
+(define-syntax while
+	(ir-macro-transformer
+		(lambda (expr inject compare)
+			(let ((test (cadr expr))
+				    (body (cddr expr)))
+				`(loop
+				(if (not ,test) (,(inject 'exit) #f))
+				,@body)))))
+{ output}";
             }
         }
     }
 }
-
-

@@ -567,6 +567,19 @@ namespace BTF
                         GC.Collect();
                         highlightEvent(this.CodeOutput, false);
                     }
+                    else if (comboBox.Text == "Scheme")
+                    {
+                        번역.IsEnabled = false;
+                        BrainFuck = new SchemeParser(textRange.Text, memsize);
+                        await Task.Run(() =>
+                        {
+                            BrainFuck.RunCode();
+                            ButtonEnable();
+                        });
+                        SetTextBoxText(CodeOutput, BrainFuck.output);
+                        GC.Collect();
+                        highlightEvent(this.CodeOutput, false);
+                    }
                 }
             }
             Format(Colors.Aqua);

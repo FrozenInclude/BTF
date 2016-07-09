@@ -200,22 +200,22 @@ namespace BTF
             {
                 if (plusCounter > 0)
                 {
-                    output += $"          memory+={plusCounter + Environment.NewLine}";
+                    output += $"          memory+={plusCounter + ";" + Environment.NewLine}";
                     plusCounter = 0;
                 }
                 if (minusCounter > 0)
                 {
-                    output += $"          memory-={minusCounter + Environment.NewLine}";
+                    output += $"          memory-={minusCounter + ";" + Environment.NewLine}";
                     minusCounter = 0;
                 }
                 if (minusCounters > 0)
                 {
-                    output += $"          ptr(memory)-={minusCounters + Environment.NewLine}";
+                    output += $"          ptr[memory]-={minusCounters + ";" + Environment.NewLine}";
                     minusCounters = 0;
                 }
                 if (plusCounters > 0)
                 {
-                    output += $"          ptr(memory)+={plusCounters + Environment.NewLine}";
+                    output += $"          ptr[memory]+={plusCounters + ";" + Environment.NewLine}";
                     plusCounters = 0;
                 }
             }
@@ -235,47 +235,50 @@ namespace BTF
                         {
                             case (char)Opcode.DecreasePointer:
                                 Action(Opcode.DecreasePointer);
-                                if (loop == code.Length)
+                                if (loop == code.Length-3)
                                     Action(Opcode.Result);
                                 //  output += "--memory;\n";
                                 break;
                             case (char)Opcode.IncreasePointer://>
                                 Action(Opcode.IncreasePointer);
-                                if (loop == code.Length + 1)
+                                if (loop == code.Length-3 )
                                     Action(Opcode.Result);
                                 break;
                             case (char)Opcode.IncreaseDataPointer://+    
                                 Action(Opcode.IncreaseDataPointer);
-                                if (loop == code.Length + 1)
+                                if (loop == code.Length-3 )
                                     Action(Opcode.Result);
                                 //output +="ptr[memory]++;\n";
                                 break;
                             case (char)Opcode.DecreaseDataPointer://-  
                                 Action(Opcode.DecreaseDataPointer);
-                                if (loop == code.Length + 1)
+                                if (loop == code.Length-3 )
                                     Action(Opcode.Result);
                                 // output +=" *ptr--;\n";
                                 break;
                             case (char)Opcode.Output:
                                 Action(Opcode.Output);
-                                if (loop == code.Length + 1)
+                                if (loop == code.Length-3 )
                                     Action(Opcode.Result);
                                 break;
                             case (char)Opcode.Input:
                                 Action(Opcode.Input);
-                                if (loop == code.Length + 1)
+                                if (loop == code.Length-3 )
                                     Action(Opcode.Result);
                                 break;
                             case (char)Opcode.Openloop:
                                 Action(Opcode.Openloop);
-                                if (loop == code.Length + 1)
+                                if (loop == code.Length-3 )
                                     Action(Opcode.Result);
                                 break;
                             case (char)Opcode.Closeloop:
                                 Action(Opcode.Closeloop);
-                                if (loop == code.Length + 1)
+                                if (loop == code.Length-3 )
                                     Action(Opcode.Result);
                                 break;
+                            case ' ':
+                                Action(Opcode.Result);
+                                return;
                         }
                         loop++;
                     }

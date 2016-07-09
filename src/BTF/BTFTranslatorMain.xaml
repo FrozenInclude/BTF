@@ -48,6 +48,7 @@
             <Label Content="Javascript"/>
             <Label Content="As3.0"/>
             <Label Content="Swift"/>
+            <Label Content="Scheme"/>
             <Label Content="Python"/>
             <Label Content="VB.NET"/>
             <Label Content="Go"/>
