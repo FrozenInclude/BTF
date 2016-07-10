@@ -25,6 +25,8 @@ namespace BTF
 {
     public partial class BTFTranslator : Window
     {
+       static private Queue<string> FilePathQue = new Queue<string>();
+        private FileSystem file = new FileSystem(ref FilePathQue);
         private string lastFileText = "";
         private string filePath = "Example.bf";
         private int lastLinenum = 0;
@@ -638,78 +640,38 @@ namespace BTF
             textToSync.ScrollToHorizontalOffset(e.HorizontalOffset);
         }
 
-        private async void Load(object sender, RoutedEventArgs e)//파일불러오기
-        {
-            CodeInput.Focus();
-            OpenFileDialog dlg = new OpenFileDialog();
-            dlg.Filter = "BTF Files (*.btf)|*.btf";
-            bool? result = dlg.ShowDialog();
-            if (result == true)
-            {
-                SaveCheck(false);
-                using (System.IO.StreamReader sr = new System.IO.StreamReader(dlg.FileName))
-                {
-                    string reading = await sr.ReadToEndAsync();
-                    filePath = dlg.FileName;
-                    SetTextBoxText(CodeInput, reading);
-                    TextRange textRange = new TextRange(CodeInput.Document.ContentStart, CodeInput.Document.ContentEnd);
-                    lastFileText = textRange.Text;
-                }
-            }
-        }
-        private async void OtherNameSave(object sender, RoutedEventArgs e)
+        private void Load(object sender, RoutedEventArgs e)//파일불러오기
         {
             TextRange textRange = new TextRange(CodeInput.Document.ContentStart, CodeInput.Document.ContentEnd);
-            SaveFileDialog Savecode = new SaveFileDialog();
-            string dir = "";
-            Savecode.FileName = "untitled";
-            Savecode.DefaultExt = ".btf";
-            Savecode.Filter = "BTF Files(*.btf)|*.btf";
-            bool? result = Savecode.ShowDialog();
-            if (result == true)
-            {
-                dir = Savecode.FileName;
-                FileStream fs = new FileStream(dir, FileMode.Create, FileAccess.Write);
-                StreamWriter sw = new StreamWriter(fs);
-                await sw.WriteLineAsync(textRange.Text); // 파일 저장
-                filePath = Savecode.FileName;
-                sw.Flush();
-                sw.Close();
-                fs.Close();
-            }
+            SaveCheck(false);
+            CodeInput.Focus();
+            file.LoadFile();
+            filePath = file.GetfilePath;
+            SetTextBoxText(CodeInput, file.Getreading);
+            lastFileText = textRange.Text;
+           
+        }
+        private void OtherNameSave(object sender, RoutedEventArgs e)
+        {
+            TextRange textRange = new TextRange(CodeInput.Document.ContentStart, CodeInput.Document.ContentEnd);
+            file.SaveFile(textRange.Text, true);
+            filePath = file.GetfilePath;
         }
 
-        private async void SaveFile()
+        private void SaveFile()
         {
             TextRange textRange = new TextRange(CodeInput.Document.ContentStart, CodeInput.Document.ContentEnd);
             // MessageBox.Show(textRange.Text);
             if (filePath == "Example.bf")
             {
-                SaveFileDialog Savecode = new SaveFileDialog();
-                string dir = "";
-                Savecode.FileName = "untitled";
-                Savecode.DefaultExt = ".btf";
-                Savecode.Filter = "BTF Files(*.btf)|*.btf";
-                bool? result = Savecode.ShowDialog();
-                if (result == true)
-                {
-                    dir = Savecode.FileName;
-                    FileStream fs = new FileStream(dir, FileMode.Create, FileAccess.Write);
-                    StreamWriter sw = new StreamWriter(fs);
-                    await sw.WriteLineAsync(textRange.Text); // 파일 저장
-                    filePath = Savecode.FileName;
-                    sw.Flush();
-                    sw.Close();
-                    fs.Close();
-                }
+                file.SaveFile(textRange.Text,true);
+                filePath = file.GetfilePath;
+                lastFileText = textRange.Text;
             }
             else
             {
-                TextRange textRangeS = new TextRange(CodeInput.Document.ContentStart, CodeInput.Document.ContentEnd);
-                StreamWriter sw = new StreamWriter(filePath, false);
-                await sw.WriteAsync(textRangeS.Text); // 파일 저장
-                sw.Flush();
-                sw.Close();
+                file.SaveFile(textRange.Text, false);
+                lastFileText = textRange.Text;
             }
         }
         private void Save(object sender, RoutedEventArgs e)

@@ -82,6 +82,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="FileSystem.cs" />
     <Compile Include="Parser\LuaParser.cs" />
     <Compile Include="Parser\AsParser.cs" />
     <Compile Include="Parser\FsParser.cs" />
