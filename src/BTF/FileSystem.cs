@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Collections;
 using System.IO;
 using Microsoft.Win32;
+using System.Windows.Controls;
 
 namespace BTF
 {
@@ -14,13 +15,14 @@ namespace BTF
         private string filePath;
         private Queue<string> recentFilepath=new Queue<string>();
         private const int Qlimit=10;
-      
         private string reading;
+        private MenuItem displayMenu;
         public string Getreading { get { return this.reading; } set { value = this.reading; } }
         public string GetfilePath { get { return this.filePath; } set { value = this.filePath; } }
-        public FileSystem(ref Queue<string> fileQue)
+        public FileSystem(ref Queue<string> fileQue,ref MenuItem displayMenu)
         {
             fileQue=recentFilepath;
+            this.displayMenu = displayMenu;
         }
         public async void LoadFile(string filter = "BTF Files (*.btf)|*.btf")//파일불러오기
         {
@@ -32,23 +34,29 @@ namespace BTF
               
                 using (System.IO.StreamReader sr = new System.IO.StreamReader(dlg.FileName))
                 {
-                    await Task.Run(() =>
-                    {
-                        this.reading = sr.ReadToEnd();
+                  await Task.Run(() =>
+                    { 
+                        this.reading =sr.ReadToEnd();
                         this.filePath = dlg.FileName;
-                        if (recentFilepath.Count == Qlimit)
+                   });
+                       
+                        if (!recentFilepath.Contains(dlg.FileName))
                         {
-                            recentFilepath.Dequeue();
-                            recentFilepath.Enqueue(filePath);
-                        }
-                        else if (recentFilepath.Count < Qlimit)
-                        {
-                            recentFilepath.Enqueue(filePath);
-                        }
-                    });
+                            if (recentFilepath.Count == Qlimit)
+                            {
+                                recentFilepath.Dequeue();
+                                recentFilepath.Enqueue(filePath);
+                            }
+                            else if (recentFilepath.Count < Qlimit)
+                            {
+                                recentFilepath.Enqueue(filePath);
+                            }
+                        BTFTranslator.DisplayQue(this.displayMenu);
+                    }
                 }
             }
         }
+
         public async void SaveFile(string text,bool useDialog,string fileName = "untitled", string defaultExt = ".btf", string filter = "BTF Files(*.btf)|*.btf")
         {
             if (useDialog)
@@ -66,13 +74,18 @@ namespace BTF
                     StreamWriter sw = new StreamWriter(fs);
                     await sw.WriteLineAsync(text); // 파일 저장
                     filePath = Savecode.FileName;
-                    if (recentFilepath.Count == Qlimit)
+                    if (!recentFilepath.Contains(Savecode.FileName))
                     {
-                        recentFilepath.Dequeue();
-                        recentFilepath.Enqueue(filePath);
-                    }else if (recentFilepath.Count < Qlimit)
-                    {
-                        recentFilepath.Enqueue(filePath);
+                        if (recentFilepath.Count == Qlimit)
+                        {
+                            recentFilepath.Dequeue();
+                            recentFilepath.Enqueue(filePath);
+                        }
+                        else if (recentFilepath.Count < Qlimit)
+                        {
+                            recentFilepath.Enqueue(filePath);
+                        }
+                        BTFTranslator.DisplayQue(this.displayMenu);
                     }
                     sw.Flush();
                     sw.Close();

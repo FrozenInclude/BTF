@@ -26,7 +26,7 @@ namespace BTF
     public partial class BTFTranslator : Window
     {
        static private Queue<string> FilePathQue = new Queue<string>();
-        private FileSystem file = new FileSystem(ref FilePathQue);
+        private FileSystem file;
         private string lastFileText = "";
         private string filePath = "Example.bf";
         private int lastLinenum = 0;
@@ -117,6 +117,8 @@ namespace BTF
             Paragraph s = LineNumLabel.Document.Blocks.FirstBlock as Paragraph;
             s.LineHeight = 1;
             CodeInput.Document.PageWidth = 1000;
+            file = new FileSystem(ref FilePathQue,ref recentFile);
+            recentFile.Items.Clear();
         }
         private static int GetLineNumber(RichTextBox rtb)
         {
@@ -141,6 +143,14 @@ namespace BTF
             SaveCheck(true);
         }
 
+        public static void DisplayQue(MenuItem menu)
+        {
+            menu.Items.Clear();
+            foreach (string item in FilePathQue)
+            {
+                menu.Items.Add(item);
+            }
+        }
 
         private List<Tag> m_tags = new List<Tag>();
         private void CheckWordsInRun(Run run, bool isBF)
@@ -367,226 +377,229 @@ namespace BTF
         }
         private async void 번역하기()
         {
-            TextRange textRange = new TextRange(CodeInput.Document.ContentStart, CodeInput.Document.ContentEnd);
-            if (textRange.Text != "")
+            if (comboBox.Text != "")
             {
-                if (comboBox.Text == "인간언어")
+                TextRange textRange = new TextRange(CodeInput.Document.ContentStart, CodeInput.Document.ContentEnd);
+                if (textRange.Text != "")
                 {
-                    BrainFuck = new HumanParser(textRange.Text, memsize);
-                    번역.IsEnabled = false;
-                    Stopwatch sw = new Stopwatch();
-                    sw.Reset();
-                    sw.Start();
-                    await Task.Run(() =>
+                    if (comboBox.Text == "인간언어")
                     {
-                        BrainFuck.RunCode();
-                        ButtonEnable();
-                    });
-                    sw.Stop();
-                    SetTextBoxText(CodeOutput, BrainFuck.output);
-                    TextRange rangeOfText1 = new TextRange(CodeOutput.Document.ContentEnd, CodeOutput.Document.ContentEnd);
-                    rangeOfText1.Text = "\nRun time:" + sw.ElapsedMilliseconds.ToString() + "ms";
-                    rangeOfText1.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.LightSkyBlue);
-                    GC.Collect();
+                        BrainFuck = new HumanParser(textRange.Text, memsize);
+                        번역.IsEnabled = false;
+                        Stopwatch sw = new Stopwatch();
+                        sw.Reset();
+                        sw.Start();
+                        await Task.Run(() =>
+                        {
+                            BrainFuck.RunCode();
+                            ButtonEnable();
+                        });
+                        sw.Stop();
+                        SetTextBoxText(CodeOutput, BrainFuck.output);
+                        TextRange rangeOfText1 = new TextRange(CodeOutput.Document.ContentEnd, CodeOutput.Document.ContentEnd);
+                        rangeOfText1.Text = "\nRun time:" + sw.ElapsedMilliseconds.ToString() + "ms";
+                        rangeOfText1.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.LightSkyBlue);
+                        GC.Collect();
+                    }
+                    else
+                    {
+                        BrainFuck = new HumanParser(textRange.Text, memsize);
+                        await Task.Run(() =>
+                        {
+                            BrainFuck.RunCode();
+                        });
+                        if (BrainFuck.error == true)
+                        {
+                            SetTextBoxText(CodeOutput, BrainFuck.output);
+                            return;
+                        }
+                        else if (comboBox.Text == "Ook!")
+                        {
+                            번역.IsEnabled = false;
+                            BrainFuck = new OokParser(textRange.Text, memsize);
+                            await Task.Run(() =>
+                            {
+                                BrainFuck.RunCode();
+                                ButtonEnable();
+                            });
+                            SetTextBoxText(CodeOutput, BrainFuck.output);
+                            GC.Collect();
+                        }
+                        else if (comboBox.Text == "Javascript")
+                        {
+                            번역.IsEnabled = false;
+                            BrainFuck = new JsParser(textRange.Text, memsize);
+                            await Task.Run(() =>
+                            {
+                                BrainFuck.RunCode();
+                                ButtonEnable();
+                            });
+                            SetTextBoxText(CodeOutput, BrainFuck.output);
+                            GC.Collect();
+                            highlightEvent(this.CodeOutput, false);
+                        }
+                        else if (comboBox.Text == "C#")
+                        {
+                            번역.IsEnabled = false;
+                            BrainFuck = new CsParser(textRange.Text, memsize);
+                            await Task.Run(() =>
+                            {
+                                BrainFuck.RunCode();
+                                ButtonEnable();
+                            });
+                            SetTextBoxText(CodeOutput, BrainFuck.output);
+                            GC.Collect();
+                            highlightEvent(this.CodeOutput, false);
+                        }
+                        else if (comboBox.Text == "C++")
+                        {
+                            번역.IsEnabled = false;
+                            BrainFuck = new CppParser(textRange.Text, memsize);
+                            await Task.Run(() =>
+                            {
+                                BrainFuck.RunCode();
+                                ButtonEnable();
+                            });
+                            SetTextBoxText(CodeOutput, BrainFuck.output);
+                            GC.Collect();
+                            highlightEvent(this.CodeOutput, false);
+                        }
+                        else if (comboBox.Text == "Java")
+                        {
+                            번역.IsEnabled = false;
+                            BrainFuck = new JavaParser(textRange.Text, memsize);
+                            await Task.Run(() =>
+                            {
+                                BrainFuck.RunCode();
+                                ButtonEnable();
+                            });
+                            SetTextBoxText(CodeOutput, BrainFuck.output);
+                            GC.Collect();
+                            highlightEvent(this.CodeOutput, false);
+                        }
+                        else if (comboBox.Text == "Swift")
+                        {
+                            번역.IsEnabled = false;
+                            BrainFuck = new SwiftParser(textRange.Text, memsize);
+                            await Task.Run(() =>
+                            {
+                                BrainFuck.RunCode();
+                                ButtonEnable();
+                            });
+                            SetTextBoxText(CodeOutput, BrainFuck.output);
+                            GC.Collect();
+                            highlightEvent(this.CodeOutput, false);
+                        }
+                        else if (comboBox.Text == "As3.0")
+                        {
+                            번역.IsEnabled = false;
+                            BrainFuck = new AsParser(textRange.Text, memsize);
+                            await Task.Run(() =>
+                            {
+                                BrainFuck.RunCode();
+                                ButtonEnable();
+                            });
+                            SetTextBoxText(CodeOutput, BrainFuck.output);
+                            GC.Collect();
+                            highlightEvent(this.CodeOutput, false);
+                        }
+                        else if (comboBox.Text == "Python")
+                        {
+                            번역.IsEnabled = false;
+                            BrainFuck = new PyParser(textRange.Text, memsize);
+                            await Task.Run(() =>
+                            {
+                                BrainFuck.RunCode();
+                                ButtonEnable();
+                            });
+                            SetTextBoxText(CodeOutput, BrainFuck.output);
+                            GC.Collect();
+                            highlightEvent(this.CodeOutput, false);
+                        }
+                        else if (comboBox.Text == "VB.NET")
+                        {
+                            번역.IsEnabled = false;
+                            BrainFuck = new VBParser(textRange.Text, memsize);
+                            await Task.Run(() =>
+                            {
+                                BrainFuck.RunCode();
+                                ButtonEnable();
+                            });
+                            SetTextBoxText(CodeOutput, BrainFuck.output);
+                            GC.Collect();
+                            highlightEvent(this.CodeOutput, false);
+                        }
+                        else if (comboBox.Text == "Go")
+                        {
+                            번역.IsEnabled = false;
+                            BrainFuck = new GoParser(textRange.Text, memsize);
+                            await Task.Run(() =>
+                            {
+                                BrainFuck.RunCode();
+                                ButtonEnable();
+                            });
+                            SetTextBoxText(CodeOutput, BrainFuck.output);
+                            GC.Collect();
+                            highlightEvent(this.CodeOutput, false);
+                        }
+                        else if (comboBox.Text == "F#")
+                        {
+                            번역.IsEnabled = false;
+                            BrainFuck = new FsParser(textRange.Text, memsize);
+                            await Task.Run(() =>
+                            {
+                                BrainFuck.RunCode();
+                                ButtonEnable();
+                            });
+                            SetTextBoxText(CodeOutput, BrainFuck.output);
+                            GC.Collect();
+                            highlightEvent(this.CodeOutput, false);
+                        }
+                        else if (comboBox.Text == "Lua")
+                        {
+                            번역.IsEnabled = false;
+                            BrainFuck = new LuaParser(textRange.Text, memsize);
+                            await Task.Run(() =>
+                            {
+                                BrainFuck.RunCode();
+                                ButtonEnable();
+                            });
+                            SetTextBoxText(CodeOutput, BrainFuck.output);
+                            GC.Collect();
+                            highlightEvent(this.CodeOutput, false);
+                        }
+                        else if (comboBox.Text == "Rust")
+                        {
+                            번역.IsEnabled = false;
+                            BrainFuck = new RustParser(textRange.Text, memsize);
+                            await Task.Run(() =>
+                            {
+                                BrainFuck.RunCode();
+                                ButtonEnable();
+                            });
+                            SetTextBoxText(CodeOutput, BrainFuck.output);
+                            GC.Collect();
+                            highlightEvent(this.CodeOutput, false);
+                        }
+                        else if (comboBox.Text == "Scheme")
+                        {
+                            번역.IsEnabled = false;
+                            BrainFuck = new SchemeParser(textRange.Text, memsize);
+                            await Task.Run(() =>
+                            {
+                                BrainFuck.RunCode();
+                                ButtonEnable();
+                            });
+                            SetTextBoxText(CodeOutput, BrainFuck.output);
+                            GC.Collect();
+                            highlightEvent(this.CodeOutput, false);
+                        }
+                    }
                 }
-                else
-                {
-                    BrainFuck = new HumanParser(textRange.Text, memsize);
-                    await Task.Run(() =>
-                    {
-                        BrainFuck.RunCode();
-                    });
-                    if (BrainFuck.error == true)
-                    {
-                        SetTextBoxText(CodeOutput, BrainFuck.output);
-                        return;
-                    }
-                    else if (comboBox.Text == "Ook!")
-                    {
-                        번역.IsEnabled = false;
-                        BrainFuck = new OokParser(textRange.Text, memsize);
-                        await Task.Run(() =>
-                        {
-                            BrainFuck.RunCode();
-                            ButtonEnable();
-                        });
-                        SetTextBoxText(CodeOutput, BrainFuck.output);
-                        GC.Collect();
-                    }
-                    else if (comboBox.Text == "Javascript")
-                    {
-                        번역.IsEnabled = false;
-                        BrainFuck = new JsParser(textRange.Text, memsize);
-                        await Task.Run(() =>
-                        {
-                            BrainFuck.RunCode();
-                            ButtonEnable();
-                        });
-                        SetTextBoxText(CodeOutput, BrainFuck.output);
-                        GC.Collect();
-                        highlightEvent(this.CodeOutput, false);
-                    }
-                    else if (comboBox.Text == "C#")
-                    {
-                        번역.IsEnabled = false;
-                        BrainFuck = new CsParser(textRange.Text, memsize);
-                        await Task.Run(() =>
-                        {
-                            BrainFuck.RunCode();
-                            ButtonEnable();
-                        });
-                        SetTextBoxText(CodeOutput, BrainFuck.output);
-                        GC.Collect();
-                        highlightEvent(this.CodeOutput, false);
-                    }
-                    else if (comboBox.Text == "C++")
-                    {
-                        번역.IsEnabled = false;
-                        BrainFuck = new CppParser(textRange.Text, memsize);
-                        await Task.Run(() =>
-                        {
-                            BrainFuck.RunCode();
-                            ButtonEnable();
-                        });
-                        SetTextBoxText(CodeOutput, BrainFuck.output);
-                        GC.Collect();
-                        highlightEvent(this.CodeOutput, false);
-                    }
-                    else if (comboBox.Text == "Java")
-                    {
-                        번역.IsEnabled = false;
-                        BrainFuck = new JavaParser(textRange.Text, memsize);
-                        await Task.Run(() =>
-                        {
-                            BrainFuck.RunCode();
-                            ButtonEnable();
-                        });
-                        SetTextBoxText(CodeOutput, BrainFuck.output);
-                        GC.Collect();
-                        highlightEvent(this.CodeOutput, false);
-                    }
-                    else if (comboBox.Text == "Swift")
-                    {
-                        번역.IsEnabled = false;
-                        BrainFuck = new SwiftParser(textRange.Text, memsize);
-                        await Task.Run(() =>
-                        {
-                            BrainFuck.RunCode();
-                            ButtonEnable();
-                        });
-                        SetTextBoxText(CodeOutput, BrainFuck.output);
-                        GC.Collect();
-                        highlightEvent(this.CodeOutput, false);
-                    }
-                    else if (comboBox.Text == "As3.0")
-                    {
-                        번역.IsEnabled = false;
-                        BrainFuck = new AsParser(textRange.Text, memsize);
-                        await Task.Run(() =>
-                        {
-                            BrainFuck.RunCode();
-                            ButtonEnable();
-                        });
-                        SetTextBoxText(CodeOutput, BrainFuck.output);
-                        GC.Collect();
-                        highlightEvent(this.CodeOutput, false);
-                    }
-                    else if (comboBox.Text == "Python")
-                    {
-                        번역.IsEnabled = false;
-                        BrainFuck = new PyParser(textRange.Text, memsize);
-                        await Task.Run(() =>
-                        {
-                            BrainFuck.RunCode();
-                            ButtonEnable();
-                        });
-                        SetTextBoxText(CodeOutput, BrainFuck.output);
-                        GC.Collect();
-                        highlightEvent(this.CodeOutput, false);
-                    }
-                    else if (comboBox.Text == "VB.NET")
-                    {
-                        번역.IsEnabled = false;
-                        BrainFuck = new VBParser(textRange.Text, memsize);
-                        await Task.Run(() =>
-                        {
-                            BrainFuck.RunCode();
-                            ButtonEnable();
-                        });
-                        SetTextBoxText(CodeOutput, BrainFuck.output);
-                        GC.Collect();
-                        highlightEvent(this.CodeOutput, false);
-                    }
-                    else if (comboBox.Text == "Go")
-                    {
-                        번역.IsEnabled = false;
-                        BrainFuck = new GoParser(textRange.Text, memsize);
-                        await Task.Run(() =>
-                        {
-                            BrainFuck.RunCode();
-                            ButtonEnable();
-                        });
-                        SetTextBoxText(CodeOutput, BrainFuck.output);
-                        GC.Collect();
-                        highlightEvent(this.CodeOutput, false);
-                    }
-                    else if (comboBox.Text == "F#")
-                    {
-                        번역.IsEnabled = false;
-                        BrainFuck = new FsParser(textRange.Text, memsize);
-                        await Task.Run(() =>
-                        {
-                            BrainFuck.RunCode();
-                            ButtonEnable();
-                        });
-                        SetTextBoxText(CodeOutput, BrainFuck.output);
-                        GC.Collect();
-                        highlightEvent(this.CodeOutput, false);
-                    }
-                    else if (comboBox.Text == "Lua")
-                    {
-                        번역.IsEnabled = false;
-                        BrainFuck = new LuaParser(textRange.Text, memsize);
-                        await Task.Run(() =>
-                        {
-                            BrainFuck.RunCode();
-                            ButtonEnable();
-                        });
-                        SetTextBoxText(CodeOutput, BrainFuck.output);
-                        GC.Collect();
-                        highlightEvent(this.CodeOutput, false);
-                    }
-                    else if (comboBox.Text == "Rust")
-                    {
-                        번역.IsEnabled = false;
-                        BrainFuck = new RustParser(textRange.Text, memsize);
-                        await Task.Run(() =>
-                        {
-                            BrainFuck.RunCode();
-                            ButtonEnable();
-                        });
-                        SetTextBoxText(CodeOutput, BrainFuck.output);
-                        GC.Collect();
-                        highlightEvent(this.CodeOutput, false);
-                    }
-                    else if (comboBox.Text == "Scheme")
-                    {
-                        번역.IsEnabled = false;
-                        BrainFuck = new SchemeParser(textRange.Text, memsize);
-                        await Task.Run(() =>
-                        {
-                            BrainFuck.RunCode();
-                            ButtonEnable();
-                        });
-                        SetTextBoxText(CodeOutput, BrainFuck.output);
-                        GC.Collect();
-                        highlightEvent(this.CodeOutput, false);
-                    }
-                }
+                Format(Colors.Aqua);
+                mediaElement1.Position = TimeSpan.Zero;
+                mediaElement1.Play();
             }
-            Format(Colors.Aqua);
-            mediaElement1.Position = TimeSpan.Zero;
-            mediaElement1.Play();
         }
         private void 번역_Click(object sender, RoutedEventArgs e)
         {
