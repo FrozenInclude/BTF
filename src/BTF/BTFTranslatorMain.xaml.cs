@@ -27,6 +27,7 @@ namespace BTF
     {
        static private Queue<string> FilePathQue = new Queue<string>();
         private FileSystem file;
+        private const string DatainiPath ="save.ini";
         private string lastFileText = "";
         private string filePath = "Example.bf";
         private int lastLinenum = 0;
@@ -75,6 +76,7 @@ namespace BTF
                     SaveFile();
                     if (tryExit)
                     {
+                        file.SaveQueue();
                         Environment.Exit(0);
                     }
                 }
@@ -82,6 +84,7 @@ namespace BTF
                 {
                     if (tryExit)
                     {
+                        file.SaveQueue();
                         Environment.Exit(0);
                     }
                     return;
@@ -95,6 +98,7 @@ namespace BTF
             {
                 if (tryExit)
                 {
+                    file.SaveQueue();
                     Environment.Exit(0);
                 }
             }
@@ -117,8 +121,8 @@ namespace BTF
             Paragraph s = LineNumLabel.Document.Blocks.FirstBlock as Paragraph;
             s.LineHeight = 1;
             CodeInput.Document.PageWidth = 1000;
-            file = new FileSystem(ref FilePathQue,ref recentFile);
             recentFile.Items.Clear();
+            file = new FileSystem(ref FilePathQue,ref recentFile,DatainiPath);
         }
         private static int GetLineNumber(RichTextBox rtb)
         {
@@ -695,6 +699,17 @@ namespace BTF
         private void PasteEvent(object sender, RoutedEventArgs e)
         {
             CodeInput.Paste();
+        }
+
+        private void recentFile_Click(object sender, RoutedEventArgs e)
+        {
+            TextRange textRange = new TextRange(CodeInput.Document.ContentStart, CodeInput.Document.ContentEnd);
+            MenuItem m = (MenuItem)e.OriginalSource;
+            file.LoadFileWithoutDialog(m.Header.ToString());
+            CodeInput.Focus();
+            filePath = file.GetfilePath;
+            SetTextBoxText(CodeInput, file.Getreading);
+            lastFileText = textRange.Text;
         }
     }
 }

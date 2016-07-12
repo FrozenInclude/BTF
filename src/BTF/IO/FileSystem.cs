@@ -13,33 +13,46 @@ namespace BTF
     public class FileSystem
     {
         private string filePath;
-        private Queue<string> recentFilepath=new Queue<string>();
+        private Queue<string> recentFilepath=new Queue<string>();//파일주소 저장용 큐
+        private iniSystem ini;
         private const int Qlimit=10;
         private string reading;
         private MenuItem displayMenu;
         public string Getreading { get { return this.reading; } set { value = this.reading; } }
         public string GetfilePath { get { return this.filePath; } set { value = this.filePath; } }
-        public FileSystem(ref Queue<string> fileQue,ref MenuItem displayMenu)
+        public FileSystem(ref Queue<string> fileQue,ref MenuItem displayMenu,string QueSavePath)
         {
-            fileQue=recentFilepath;
+            ini = new iniSystem(QueSavePath);
+            fileQue =recentFilepath;
             this.displayMenu = displayMenu;
+            LoadQueue();
+        }
+        public async void LoadFileWithoutDialog(string path)
+        {
+            using (System.IO.StreamReader sr = new System.IO.StreamReader(path))
+            {
+                await Task.Run(() =>
+                {
+                    this.reading = sr.ReadToEnd();
+                    this.filePath = path;
+                });
+            }
         }
         public async void LoadFile(string filter = "BTF Files (*.btf)|*.btf")//파일불러오기
         {
-            OpenFileDialog dlg = new OpenFileDialog();
-            dlg.Filter =filter;
-            bool? result = dlg.ShowDialog();
-            if (result == true)
-            {
-              
-                using (System.IO.StreamReader sr = new System.IO.StreamReader(dlg.FileName))
+                OpenFileDialog dlg = new OpenFileDialog();
+                dlg.Filter = filter;
+                bool? result = dlg.ShowDialog();
+                if (result == true)
                 {
-                  await Task.Run(() =>
-                    { 
-                        this.reading =sr.ReadToEnd();
-                        this.filePath = dlg.FileName;
-                   });
-                       
+                    using (System.IO.StreamReader sr = new System.IO.StreamReader(dlg.FileName))
+                    {
+                        await Task.Run(() =>
+                          {
+                              this.reading = sr.ReadToEnd();
+                              this.filePath = dlg.FileName;
+                          });
+
                         if (!recentFilepath.Contains(dlg.FileName))
                         {
                             if (recentFilepath.Count == Qlimit)
@@ -51,12 +64,30 @@ namespace BTF
                             {
                                 recentFilepath.Enqueue(filePath);
                             }
-                        BTFTranslator.DisplayQue(this.displayMenu);
+                            BTFTranslator.DisplayQue(this.displayMenu);
+                        }
                     }
                 }
+        }
+        public void SaveQueue()
+        {
+            for (int i = 0; i < recentFilepath.Count; i++)
+            {
+              ini.Write("Queue."+i.ToString(),recentFilepath.ElementAt(i).ToString(),"File");
             }
         }
-
+       public void LoadQueue()
+        { 
+            for (int i = 0; i < Qlimit; i++)
+            {
+               recentFilepath.Enqueue(ini.Read("Queue." + i.ToString(),"File"));
+                if (ini.Read("Queue." + i.ToString(), "File") == null)
+                {
+                    return;
+                }
+            }
+            BTFTranslator.DisplayQue(this.displayMenu);
+        }
         public async void SaveFile(string text,bool useDialog,string fileName = "untitled", string defaultExt = ".btf", string filter = "BTF Files(*.btf)|*.btf")
         {
             if (useDialog)

@@ -29,7 +29,7 @@
                     <MenuItem Header="저장"  Foreground="Black" FontWeight="Normal" FontFamily="맑은 고딕" FontSize="12" Click="Save"/>
                     <MenuItem Header="다른이름으로저장"  Foreground="#FF0A0A0A" FontFamily="맑은 고딕" FontWeight="Normal" FontSize="12" Click="OtherNameSave"/>
                     <Separator />
-                    <MenuItem Name="recentFile"  Header="최근사용한파일" Foreground="#FF080808" FontFamily="맑은 고딕" FontWeight="Normal" FontSize="12">Noto Sans CJK KR Medium
+                    <MenuItem Name="recentFile"  Header="최근사용한파일" Foreground="#FF080808" FontFamily="맑은 고딕" FontWeight="Normal" FontSize="12" Click="recentFile_Click">Noto Sans CJK KR Medium
                         <MenuItem Header="ReadMe.txt"/>
                         <MenuItem Header="Schedule.xls"/>
                     </MenuItem>
