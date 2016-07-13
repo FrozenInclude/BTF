@@ -75,15 +75,18 @@ namespace BTF
             {
               ini.Write("Queue."+i.ToString(),recentFilepath.ElementAt(i).ToString(),"File");
             }
+            ini.Write("QueueCount" , (recentFilepath.Count).ToString(), "File");
         }
        public void LoadQueue()
-        { 
-            for (int i = 0; i < Qlimit; i++)
-            {
-               recentFilepath.Enqueue(ini.Read("Queue." + i.ToString(),"File"));
-                if (ini.Read("Queue." + i.ToString(), "File") == null)
+        {
+            if (ini.Read("QueueCount", "File")!="") {
+                for (int i = 0; i < Int64.Parse(ini.Read("QueueCount", "File")); i++)
                 {
-                    return;
+                    recentFilepath.Enqueue(ini.Read("Queue." + i.ToString(), "File"));
+                    if (ini.Read("Queue." + i.ToString(), "File") == null)
+                    {
+                        return;
+                    }
                 }
             }
             BTFTranslator.DisplayQue(this.displayMenu);

@@ -598,6 +598,19 @@ namespace BTF
                             GC.Collect();
                             highlightEvent(this.CodeOutput, false);
                         }
+                        else if (comboBox.Text == "Ruby")
+                        {
+                            번역.IsEnabled = false;
+                            BrainFuck = new RubyParser(textRange.Text, memsize);
+                            await Task.Run(() =>
+                            {
+                                BrainFuck.RunCode();
+                                ButtonEnable();
+                            });
+                            SetTextBoxText(CodeOutput, BrainFuck.output);
+                            GC.Collect();
+                            highlightEvent(this.CodeOutput, false);
+                        }
                     }
                 }
                 Format(Colors.Aqua);
