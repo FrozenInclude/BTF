@@ -50,6 +50,7 @@
             <Label Content="Swift"/>
             <Label Content="Scheme"/>
             <Label Content="Python"/>
+            <Label Content="Perl"/>
             <Label Content="VB.NET"/>
             <Label Content="Go"/>
             <Label Content="Lua"/>

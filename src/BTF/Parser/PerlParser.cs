@@ -1,9 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Runtime.CompilerServices;
 
 namespace BTF
 {
-    public class RubyParser : InterPreter
+    public class PerlParser : InterPreter
     {
         private int ptrsize;
         private int plusCounter = 0;
@@ -15,7 +19,7 @@ namespace BTF
         private int minusCounters = 0;
         private int loop { get; set; }
         private string command;
-        public RubyParser(string code, int ptrsize) : base(code, ptrsize)
+        public PerlParser(string code, int ptrsize) : base(code, ptrsize)
         {
             this.ptrsize = ptrsize;
         }
@@ -26,17 +30,17 @@ namespace BTF
             {
                 if (plusCounter > 0)
                 {
-                    output += $"{들여쓰기}memory+={plusCounter + Environment.NewLine}";
+                    output += $"{들여쓰기}$memory+={plusCounter +";"+ Environment.NewLine}";
                     plusCounter = 0;
                 }
                 if (minusCounters > 0)
                 {
-                    output += $"{들여쓰기}ptr[memory]-={minusCounters + Environment.NewLine}";
+                    output += $"{들여쓰기}$ptr[$memory]-={minusCounters +";"+ Environment.NewLine}";
                     minusCounters = 0;
                 }
                 if (plusCounters > 0)
                 {
-                    output += $"{들여쓰기}ptr[memory]+={plusCounters + Environment.NewLine}";
+                    output += $"{들여쓰기}$ptr[$memory]+={plusCounters +";"+ Environment.NewLine}";
                     plusCounters = 0;
                 }
                 minusCounter++;
@@ -45,17 +49,17 @@ namespace BTF
             {
                 if (minusCounter > 0)
                 {
-                    output += $"{들여쓰기}memory-={minusCounter + Environment.NewLine}";
+                    output += $"{들여쓰기}$memory-={minusCounter +";"+ Environment.NewLine}";
                     minusCounter = 0;
                 }
                 if (minusCounters > 0)
                 {
-                    output += $"{들여쓰기}ptr[memory]-={minusCounters + Environment.NewLine}";
+                    output += $"{들여쓰기}$ptr[$memory]-={minusCounters +";"+ Environment.NewLine}";
                     minusCounters = 0;
                 }
                 if (plusCounters > 0)
                 {
-                    output += $"{들여쓰기}ptr[memory]+={plusCounters + Environment.NewLine}";
+                    output += $"{들여쓰기}$ptr[$memory]+={plusCounters +";"+ Environment.NewLine}";
                     plusCounters = 0;
                 }
                 plusCounter++;
@@ -64,17 +68,17 @@ namespace BTF
             {
                 if (plusCounter > 0)
                 {
-                    output += $"{들여쓰기}memory+={plusCounter + Environment.NewLine}";
+                    output += $"{들여쓰기}$memory+={plusCounter +";"+ Environment.NewLine}";
                     plusCounter = 0;
                 }
                 if (minusCounter > 0)
                 {
-                    output += $"{들여쓰기}memory-={minusCounter + Environment.NewLine}";
+                    output += $"{들여쓰기}$memory-={minusCounter +";"+ Environment.NewLine}";
                     minusCounter = 0;
                 }
                 if (minusCounters > 0)
                 {
-                    output += $"{들여쓰기}ptr[memory]-={minusCounter + Environment.NewLine}";
+                    output += $"{들여쓰기}$ptr[$memory]-={minusCounter +";"+ Environment.NewLine}";
                     minusCounters = 0;
                 }
                 plusCounters++;
@@ -84,17 +88,17 @@ namespace BTF
             {
                 if (plusCounter > 0)
                 {
-                    output += $"{들여쓰기}memory+={plusCounter + Environment.NewLine}";
+                    output += $"{들여쓰기}$memory+={plusCounter +";"+ Environment.NewLine}";
                     plusCounter = 0;
                 }
                 if (minusCounter > 0)
                 {
-                    output += $"{들여쓰기}memory-={minusCounter + Environment.NewLine}";
+                    output += $"{들여쓰기}$memory-={minusCounter +";"+ Environment.NewLine}";
                     minusCounter = 0;
                 }
                 if (plusCounters > 0)
                 {
-                    output += $"{들여쓰기}ptr[memory]+={plusCounters + Environment.NewLine}";
+                    output += $"{들여쓰기}$ptr[$memory]+={plusCounters +";"+ Environment.NewLine}";
                     plusCounters = 0;
                 }
                 minusCounters++;
@@ -103,57 +107,57 @@ namespace BTF
             {
                 if (plusCounter > 0)
                 {
-                    output += $"{들여쓰기}memory+={plusCounter + Environment.NewLine}";
+                    output += $"{들여쓰기}$memory+={plusCounter +";"+ Environment.NewLine}";
                     plusCounter = 0;
                 }
                 if (minusCounter > 0)
                 {
-                    output += $"{들여쓰기}memory-={minusCounter + Environment.NewLine}";
+                    output += $"{들여쓰기}$memory-={minusCounter +";"+ Environment.NewLine}";
                     minusCounter = 0;
                 }
                 if (minusCounters > 0)
                 {
-                    output += $"{들여쓰기}ptr[memory]-={minusCounters + Environment.NewLine}";
+                    output += $"{들여쓰기}$ptr[$memory]-={minusCounters +";"+ Environment.NewLine}";
                     minusCounters = 0;
                 }
                 if (plusCounters > 0)
                 {
-                    output += $"{들여쓰기}ptr[memory]+={plusCounters + Environment.NewLine}";
+                    output += $"{들여쓰기}$ptr[$memory]+={plusCounters +";"+ Environment.NewLine}";
                     plusCounters = 0;
                 }
-                output += $"{들여쓰기}printf ptr[memory].chr\n";
+                output += $"{들여쓰기}print chr($ptr[$memory]);\n";
             }
             else if (command == Opcode.Openloop)
             {
                 if (plusCounter > 0)
                 {
-                    output += $"{들여쓰기}memory+={plusCounter + Environment.NewLine}";
+                    output += $"{들여쓰기}$memory+={plusCounter +";"+ Environment.NewLine}";
                     plusCounter = 0;
                 }
                 if (minusCounter > 0)
                 {
-                    output += $"{들여쓰기}memory-={minusCounter + Environment.NewLine}";
+                    output += $"{들여쓰기}$memory-={minusCounter +";"+ Environment.NewLine}";
                     minusCounter = 0;
                 }
                 if (minusCounters > 0)
                 {
-                    output += $"{들여쓰기}ptr[memory]-={minusCounters + Environment.NewLine}";
+                    output += $"{들여쓰기}$ptr[$memory]-={minusCounters +";"+ Environment.NewLine}";
                     minusCounters = 0;
                 }
                 if (plusCounters > 0)
                 {
-                    output += $"{들여쓰기}ptr[memory]+={plusCounters + Environment.NewLine}";
+                    output += $"{들여쓰기}$ptr[$memory]+={plusCounters +";"+ Environment.NewLine}";
                     plusCounters = 0;
                 }
                 nested++;
                 if (nested == 1)
                 {
-                    output += $"while ptr[memory] != 0 {Environment.NewLine}";
+                    output += $"while($ptr[$memory] != 0){{{Environment.NewLine}";
                     last들여쓰기 = 들여쓰기;
                 }
                 else if (nested >= 1)
                 {
-                    output += $"{들여쓰기}while ptr[memory] != 0 {Environment.NewLine}";
+                    output += $"{들여쓰기}while($ptr[$memory]!=0){{{Environment.NewLine}";
                     들여쓰기 += "       ";
                 }
                 들여쓰기 += "                     ";
@@ -162,57 +166,57 @@ namespace BTF
             {
                 if (plusCounter > 0)
                 {
-                    output += $"{들여쓰기}memory+={plusCounter + Environment.NewLine}";
+                    output += $"{들여쓰기}$memory+={plusCounter +";"+ Environment.NewLine}";
                     plusCounter = 0;
                 }
                 if (minusCounter > 0)
                 {
-                    output += $"{들여쓰기}memory-={minusCounter + Environment.NewLine}";
+                    output += $"{들여쓰기}$memory-={minusCounter +";"+ Environment.NewLine}";
                     minusCounter = 0;
                 }
                 if (minusCounters > 0)
                 {
-                    output += $"{들여쓰기}ptr[memory]-={minusCounters + Environment.NewLine}";
+                    output += $"{들여쓰기}$ptr[$memory]-={minusCounters +";"+ Environment.NewLine}";
                     minusCounters = 0;
                 }
                 if (plusCounters > 0)
                 {
-                    output += $"{들여쓰기}ptr[memory]+={plusCounters + Environment.NewLine}";
+                    output += $"{들여쓰기}$ptr[$memory]+={plusCounters +";"+ Environment.NewLine}";
                     plusCounters = 0;
                 }
-                output += $@"{들여쓰기}ptr[memory]=gets";
+                output += $@"{들여쓰기}$ptr[$memory]=gets";
             }
             if (command == Opcode.Closeloop)
             {
                 if (plusCounter > 0)
                 {
-                    output += $"{들여쓰기}memory+={plusCounter + Environment.NewLine}";
+                    output += $"{들여쓰기}$memory+={plusCounter +";"+ Environment.NewLine}";
                     plusCounter = 0;
                 }
                 if (minusCounter > 0)
                 {
-                    output += $"{들여쓰기}memory-={minusCounter + Environment.NewLine}";
+                    output += $"{들여쓰기}$memory-={minusCounter +";"+ Environment.NewLine}";
                     minusCounter = 0;
                 }
                 if (minusCounters > 0)
                 {
-                    output += $"{들여쓰기}ptr[memory]-={minusCounters + Environment.NewLine}";
+                    output += $"{들여쓰기}$ptr[$memory]-={minusCounters +";"+ Environment.NewLine}";
                     minusCounters = 0;
                 }
                 if (plusCounters > 0)
                 {
-                    output += $"{들여쓰기}ptr[memory]+={plusCounters + Environment.NewLine}";
+                    output += $"{들여쓰기}$ptr[$memory]+={plusCounters +";"+ Environment.NewLine}";
                     plusCounters = 0;
                 }
                 nested--;
                 if (nested == 1)
                 {
-                    output += $"{들여쓰기}end{Environment.NewLine}";
+                    output += $"{들여쓰기}}}{Environment.NewLine}";
                     들여쓰기 = "                     " + last들여쓰기;
                 }
                 else if (nested == 0)
                 {
-                    output += $"end{Environment.NewLine}";
+                    output += $"}}{Environment.NewLine}";
                     들여쓰기 = "";
                 }
             }
@@ -220,22 +224,22 @@ namespace BTF
             {
                 if (plusCounter > 0)
                 {
-                    output += $"{들여쓰기}memory+={plusCounter + Environment.NewLine}";
+                    output += $"{들여쓰기}$memory+={plusCounter +";"+ Environment.NewLine}";
                     plusCounter = 0;
                 }
                 if (minusCounter > 0)
                 {
-                    output += $"{들여쓰기}memory-={minusCounter + Environment.NewLine}";
+                    output += $"{들여쓰기}$memory-={minusCounter +";"+ Environment.NewLine}";
                     minusCounter = 0;
                 }
                 if (minusCounters > 0)
                 {
-                    output += $"{들여쓰기}ptr[memory]-={minusCounters + Environment.NewLine}";
+                    output += $"{들여쓰기}$ptr[$memory]-={minusCounters +";"+ Environment.NewLine}";
                     minusCounters = 0;
                 }
                 if (plusCounters > 0)
                 {
-                    output += $"{들여쓰기}ptr[memory]+={plusCounters + Environment.NewLine}";
+                    output += $"{들여쓰기}$ptr[$memory]+={plusCounters +";"+ Environment.NewLine}";
                     plusCounters = 0;
                 }
             }
@@ -309,8 +313,11 @@ namespace BTF
                         return;
                     }
                 }
-                output = $@"ptr=Array.new({ptrsize},0)
-memory=0
+                output = $@"use strict; 
+use warnings;
+
+my @ptr;
+my $memory=0;
 {output}";
             }
         }

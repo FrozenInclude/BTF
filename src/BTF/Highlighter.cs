@@ -28,7 +28,7 @@ namespace highlight
                                  "Array"
                                  ,"new",
                 "String","fromCharCode","using","Write","Read","List","static","void","byte","public","class","int","char","Add","namespace","unsigned",@"#include","import","String","'%d'","byte","chr","print","Dim","New","Integer","iostream",
-                "AS","Imports","Module","Sub","List","While","Byte","Add","Char","End","Of","CByte","fn",
+                "AS","Imports","Module","Sub","List","While","Byte","Add","Char","End","Of","CByte","fn","my","$",
                 "var",
                 "trace","fmt","func","package","mutable","let","open","do","end","use","std","mut","u8","i32","match",@"""""",@"""{}""",@"""{:?}""",@"""fmt""","define","define-syntax","lambda","vector-set!","set!","display","call-with-current-continuation","make-vector","vector-ref"
              };
