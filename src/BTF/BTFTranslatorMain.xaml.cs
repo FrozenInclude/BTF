@@ -25,9 +25,9 @@ namespace BTF
 {
     public partial class BTFTranslator : Window
     {
-       static private Queue<string> FilePathQue = new Queue<string>();
+        static private Queue<string> FilePathQue = new Queue<string>();
         private FileSystem file;
-        private const string DatainiPath ="save.ini";
+        private const string DatainiPath = "save.ini";
         private string lastFileText = "";
         private string filePath = "Example.bf";
         private int lastLinenum = 0;
@@ -46,7 +46,7 @@ namespace BTF
             public string Word;
 
         }
-        CancellationTokenSource cts=new CancellationTokenSource();
+        CancellationTokenSource cts = new CancellationTokenSource();
         private async void checkStart()//파일연결
         {
             if (Environment.GetCommandLineArgs().Length == 2)
@@ -105,7 +105,7 @@ namespace BTF
         }
         private void Loade(object sender, RoutedEventArgs e)
         {
-            mediaElement1.Source=new Uri(Directory.GetCurrentDirectory()+@"\sound\complete.mp3");
+            mediaElement1.Source = new Uri(Directory.GetCurrentDirectory() + @"\sound\complete.mp3");
             Timer.Interval = TimeSpan.FromMilliseconds(1);
             Timer.Tick += new EventHandler(setTimerEvent);
             Timer.Start();
@@ -122,7 +122,7 @@ namespace BTF
             s.LineHeight = 1;
             CodeInput.Document.PageWidth = 1000;
             recentFile.Items.Clear();
-            file = new FileSystem(ref FilePathQue,ref recentFile,DatainiPath);
+            file = new FileSystem(ref FilePathQue, ref recentFile, DatainiPath);
         }
         private static int GetLineNumber(RichTextBox rtb)
         {
@@ -257,27 +257,27 @@ namespace BTF
             if (textBox.Dispatcher.CheckAccess())
                 highlightDelegate(textBox, isBF);
             else
-                textBox.Dispatcher.BeginInvoke(new Action(() => {highlightDelegate(textBox, isBF);})); 
+                textBox.Dispatcher.BeginInvoke(new Action(() => { highlightDelegate(textBox, isBF); }));
         }
         private void highlightEvent(RichTextBox textBox, bool isBF)
-        { 
-          if (textBox.Document == null)
-                    return;
+        {
+            if (textBox.Document == null)
+                return;
 
-                TextRange documentRange = new TextRange(textBox.Document.ContentStart, textBox.Document.ContentEnd);
-                documentRange.ClearAllProperties();
+            TextRange documentRange = new TextRange(textBox.Document.ContentStart, textBox.Document.ContentEnd);
+            documentRange.ClearAllProperties();
 
-                TextPointer navigator = textBox.Document.ContentStart;
-                while (navigator.CompareTo(textBox.Document.ContentEnd) < 0)
+            TextPointer navigator = textBox.Document.ContentStart;
+            while (navigator.CompareTo(textBox.Document.ContentEnd) < 0)
+            {
+                TextPointerContext context = navigator.GetPointerContext(LogicalDirection.Backward);
+                if (context == TextPointerContext.ElementStart && navigator.Parent is Run)
                 {
-                    TextPointerContext context = navigator.GetPointerContext(LogicalDirection.Backward);
-                    if (context == TextPointerContext.ElementStart && navigator.Parent is Run)
-                    {
-                        CheckWordsInRun((Run)navigator.Parent, isBF);
+                    CheckWordsInRun((Run)navigator.Parent, isBF);
 
-                    }
-                    navigator = navigator.GetNextContextPosition(LogicalDirection.Forward);
                 }
+                navigator = navigator.GetNextContextPosition(LogicalDirection.Forward);
+            }
             //Format();
         }
         private void highlightDelegate(RichTextBox textBox, bool isBF)
@@ -369,8 +369,8 @@ namespace BTF
             }
             await Task.Run(() =>
             {//하이라이팅이벤트 비동기처리
-              NumLineEvent();
-              highlightEventAsync(CodeInput,true);
+                NumLineEvent();
+                highlightEventAsync(CodeInput, true);
             });
             Format(Colors.LightSkyBlue);
         }
@@ -624,6 +624,32 @@ namespace BTF
                             GC.Collect();
                             highlightEvent(this.CodeOutput, false);
                         }
+                        else if (comboBox.Text == "php")
+                        {
+                            번역.IsEnabled = false;
+                            BrainFuck = new phpParser(textRange.Text, memsize);
+                            await Task.Run(() =>
+                            {
+                                BrainFuck.RunCode();
+                                ButtonEnable();
+                            });
+                            SetTextBoxText(CodeOutput, BrainFuck.output);
+                            GC.Collect();
+                            highlightEvent(this.CodeOutput, false);
+                        }
+                        else if (comboBox.Text == "Pascal")
+                        {
+                            번역.IsEnabled = false;
+                            BrainFuck = new PascalParser(textRange.Text, memsize);
+                            await Task.Run(() =>
+                            {
+                                BrainFuck.RunCode();
+                                ButtonEnable();
+                            });
+                            SetTextBoxText(CodeOutput, BrainFuck.output);
+                            GC.Collect();
+                            highlightEvent(this.CodeOutput, false);
+                        }
                     }
                 }
                 Format(Colors.Aqua);
@@ -692,7 +718,7 @@ namespace BTF
             filePath = file.GetfilePath;
             SetTextBoxText(CodeInput, file.Getreading);
             lastFileText = textRange.Text;
-           
+
         }
         private void OtherNameSave(object sender, RoutedEventArgs e)
         {
@@ -707,7 +733,7 @@ namespace BTF
             // MessageBox.Show(textRange.Text);
             if (filePath == "Example.bf")
             {
-                file.SaveFile(textRange.Text,true);
+                file.SaveFile(textRange.Text, true);
                 filePath = file.GetfilePath;
                 lastFileText = textRange.Text;
             }
