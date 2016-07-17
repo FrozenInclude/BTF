@@ -108,7 +108,7 @@ namespace BTF
                     }
 
                 }
-                catch (Exception E)
+                catch (Exception)
                 {
                     var backloop = loop;
                     output = $"{backloop + 1}번째  문법오류:잘못된 입력입니다.";
@@ -131,6 +131,11 @@ namespace BTF
             {
                 while (loop < code.Length)
                 {
+                    if (pause == true)
+                    {
+                        output = "번역이 중단되었습니다.";
+                        return;
+                    }
                     try
                     {
                         switch (command[loop])

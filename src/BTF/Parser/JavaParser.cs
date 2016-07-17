@@ -123,7 +123,7 @@ namespace BTF
                 }
                 output += $@"           try{{
       ptr[memory] = (char)System.in.read();
-                        }} catch (IOException e)
+                        }} catch (IOException)
                     {{
                         e.printStackTrace();
                     }}\n";
@@ -286,7 +286,7 @@ namespace BTF
                         }
                         loop++;
                     }
-                    catch (Exception E)
+                    catch (Exception)
                     {
                         output = "Overflow Error!!";
                         return;

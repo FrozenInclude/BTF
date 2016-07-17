@@ -7,11 +7,15 @@
         mc:Ignorable="d"
          Title=" 브레인퍽 번역기" Height="550.5" Width="1004"  Background="White" AllowsTransparency="true" WindowStyle="None"  BorderBrush="#FF1F1C1C" BorderThickness="1" Padding="4" Loaded="Loade" Icon="resource/brainfuck.png" AllowDrop="True">
     <Grid AllowDrop="True">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="241*"/>
+            <ColumnDefinition Width="93*"/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="20*"/>
             <RowDefinition Height="117*"/>
         </Grid.RowDefinitions>
-        <DockPanel LastChildFill="True" MouseDown="rectangle2_MouseDown" Height="252" VerticalAlignment="Top" Grid.RowSpan="2">
+        <DockPanel LastChildFill="True" MouseDown="rectangle2_MouseDown" Height="252" VerticalAlignment="Top" Grid.RowSpan="2" Grid.ColumnSpan="2">
             <Border Background="#FF1F1C1C" DockPanel.Dock="Top" Height="44" Name="BTF">
                 <TextBlock Text="{Binding Title, RelativeSource={RelativeSource FindAncestor,AncestorType=Window},FallbackValue=Title}" 
                        Margin="0,2,35,10" FontSize="16" Foreground="#FFFDFCFC" FontFamily="Noto Sans CJK KR Medium" Background="{Binding BTF}" HorizontalAlignment="Right" Width="957" />
@@ -37,8 +41,8 @@
             </Menu>
 
         </DockPanel>
-        <Label x:Name="LineNum" Content="" Height="458" VerticalAlignment="Top" Margin="0,66,961,0" Background="#FF252121" Grid.RowSpan="2"/>
-        <ComboBox x:Name="comboBox" Width="102" Height="21" Margin="0,33,384,0" VerticalAlignment="Top" HorizontalAlignment="Right" BorderBrush="#FF080808" Background="White" Style="{DynamicResource SimpleComboBox}" BorderThickness="0">
+        <Label x:Name="LineNum" Content="" Height="458" VerticalAlignment="Top" Margin="0,66,682,0" Background="#FF252121" Grid.RowSpan="2"/>
+        <ComboBox x:Name="comboBox" Width="102" Height="21" Margin="0,33,105,0" VerticalAlignment="Top" HorizontalAlignment="Right" BorderBrush="#FF080808" Background="White" Style="{DynamicResource SimpleComboBox}" BorderThickness="0">
             <Label Content="인간언어"/>
             <Label Content="Java"/>
             <Label Content="Ook!"/>
@@ -76,32 +80,32 @@
                 <Paragraph/>
             </FlowDocument>
         </RichTextBox>
-        <Label x:Name="label1" Content="Brain Fuck->" HorizontalAlignment="Right" Margin="0,0,490,29" Style="{DynamicResource SimpleLabel}" VerticalAlignment="Bottom" Width="71" Foreground="White"/>
-        <RichTextBox x:Name="CodeOutput" HorizontalAlignment="Left" Width="487" Margin="515,66,0,24" ScrollViewer.CanContentScroll="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Background="#FF2B2828" BorderThickness="0" AcceptsReturn="True" Padding="1" IsReadOnly="True" BorderBrush="#FF0B0B0C" FontFamily="Mono sans" Foreground="White" FontSize="13.333" Grid.RowSpan="2">
+        <Label x:Name="label1" Content="Brain Fuck->" HorizontalAlignment="Right" Margin="0,0,211,29" Style="{DynamicResource SimpleLabel}" VerticalAlignment="Bottom" Width="71" Foreground="White"/>
+        <RichTextBox x:Name="CodeOutput" HorizontalAlignment="Left" Width="487" Margin="515,66,0,24" ScrollViewer.CanContentScroll="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Background="#FF2B2828" BorderThickness="0" AcceptsReturn="True" Padding="1" IsReadOnly="True" BorderBrush="#FF0B0B0C" FontFamily="Mono sans" Foreground="White" FontSize="13.333" Grid.RowSpan="2" Grid.ColumnSpan="2">
             <FlowDocument>
                 <Paragraph/>
             </FlowDocument>
         </RichTextBox>
-        <Button x:Name="image" Height="17" VerticalAlignment="Top"  Margin="983,4,4,0" RenderTransformOrigin="12.75,2.353" Cursor="Hand" Click="closethis">
+        <Button x:Name="image" Height="17" VerticalAlignment="Top"  Margin="260,4,4,0" RenderTransformOrigin="12.75,2.353" Cursor="Hand" Click="closethis" Grid.Column="1">
             <Button.Template>
                 <ControlTemplate>
                     <Image Source="resource\close.png"/>
                 </ControlTemplate>
             </Button.Template>
         </Button>
-        <MediaElement Height="0" Margin="10,143,108,0" LoadedBehavior="Manual" Name="mediaElement1" VerticalAlignment="Top" Grid.Row="1" Visibility="Hidden"/>
-        <Label Name="Lineinfo" Content="줄:47   열:4   문자:500" Foreground="White" BorderBrush="#FF0B0B0C" Background="#FF252121" Margin="0,444,0,-2" FontFamily="맑은 고딕" Grid.Row="1" HorizontalAlignment="Right" Width="1002"/>
+        <MediaElement Height="0" Margin="10,143,108,0" LoadedBehavior="Manual" Name="mediaElement1" VerticalAlignment="Top" Grid.Row="1" Visibility="Hidden" Grid.ColumnSpan="2"/>
+        <Label Name="Lineinfo" Content="줄:47   열:4   문자:500" Foreground="White" BorderBrush="#FF0B0B0C" Background="#FF252121" Margin="0,444,0,-2" FontFamily="맑은 고딕" Grid.Row="1" HorizontalAlignment="Right" Width="1002" Grid.ColumnSpan="2"/>
         <Button Style="{StaticResource MyButtonStyle}" x:Name="번역" Content="" HorizontalAlignment="Left" Margin="625,32,0,0" VerticalAlignment="Top" Width="23" Click="번역_Click" BorderBrush="Black" BorderThickness="0" Foreground="Black" Height="23" RenderTransformOrigin="0.5,0.5" Cursor="Hand">
             <Button.Background>
                 <ImageBrush ImageSource="resource/Run.png"/>
             </Button.Background>
         </Button>
-        <Button Style="{StaticResource MyButtonStyle}" x:Name="번역_Copy"  HorizontalAlignment="Left" VerticalAlignment="Top"  Click="번역_Copy_Click" Margin="686,32,0,0" BorderBrush="Black" Width="23" Height="23" BorderThickness="0" Cursor="Hand">
+        <Button Style="{StaticResource MyButtonStyle}" x:Name="번역_Copy"  HorizontalAlignment="Left" VerticalAlignment="Top"  Click="번역_Copy_Click" Margin="709,32,0,0" BorderBrush="Black" Width="23" Height="23" BorderThickness="0" Cursor="Hand" Grid.ColumnSpan="2">
             <Button.Background>
                 <ImageBrush ImageSource="resource/copy.png"/>
             </Button.Background>
         </Button>
-        <RichTextBox x:Name="LineNumLabel"  Background="#FF252121" HorizontalAlignment="Center" Margin="16,0,961,24" VerticalAlignment="Bottom" Width="25" FontSize="13.333" Foreground="#FFF17648" FontFamily="Mono Sans" Height="458" HorizontalContentAlignment="Center"   IsReadOnly="True" BorderThickness="0" VerticalScrollBarVisibility="Hidden" ScrollViewer.ScrollChanged="RichTextBox_ScrollC" Grid.RowSpan="2">
+        <RichTextBox x:Name="LineNumLabel"  Background="#FF252121" HorizontalAlignment="Center" Margin="16,0,682,24" VerticalAlignment="Bottom" Width="25" FontSize="13.333" Foreground="#FFF17648" FontFamily="Mono Sans" Height="458" HorizontalContentAlignment="Center"   IsReadOnly="True" BorderThickness="0" VerticalScrollBarVisibility="Hidden" ScrollViewer.ScrollChanged="RichTextBox_ScrollC" Grid.RowSpan="2">
             <RichTextBox.Resources>
                 <Style TargetType="{x:Type Paragraph}">
                     <Setter Property="Margin" Value="0"/>
@@ -111,9 +115,14 @@
                 <Paragraph/>
             </FlowDocument>
         </RichTextBox>
-        <Button Style="{StaticResource MyButtonStyle}" x:Name="EXEoutput" HorizontalAlignment="Left" Margin="655,32,0,0" VerticalAlignment="Top" Width="23" Height="23" Click="exeOutput" BorderBrush="Black" BorderThickness="0" Foreground="Black" Cursor="Hand">
+        <Button Style="{StaticResource MyButtonStyle}" x:Name="EXEoutput" HorizontalAlignment="Left" Margin="681,32,0,0" VerticalAlignment="Top" Width="23" Height="23" Click="exeOutput" BorderBrush="Black" BorderThickness="0" Foreground="Black" Cursor="Hand">
             <Button.Background>
                 <ImageBrush ImageSource="resource/ic_computer_white_24dp_1x.png"/>
+            </Button.Background>
+        </Button>
+        <Button Style="{StaticResource MyButtonStyle}" x:Name="중단" Content="" HorizontalAlignment="Left" Margin="653,32,0,0" VerticalAlignment="Top" Width="23" Click="번역_Copy1_Click" BorderBrush="Black" BorderThickness="0" Foreground="Black" Height="23" RenderTransformOrigin="0.5,0.5" Cursor="Hand" IsEnabled="False">
+            <Button.Background>
+                <ImageBrush ImageSource="resource/pause.png"/>
             </Button.Background>
         </Button>
     </Grid>

@@ -32,7 +32,7 @@ namespace BTF
         private string filePath = "Example.bf";
         private int lastLinenum = 0;
         private const int memsize = 5000;
-
+        private bool highlightPause=false;
         private InterPreter BrainFuck;
 
         private delegate void Invoker();
@@ -46,7 +46,6 @@ namespace BTF
             public string Word;
 
         }
-        CancellationTokenSource cts = new CancellationTokenSource();
         private async void checkStart()//파일연결
         {
             if (Environment.GetCommandLineArgs().Length == 2)
@@ -291,6 +290,8 @@ namespace BTF
             TextPointer navigator = textBox.Document.ContentStart;
             while (navigator.CompareTo(textBox.Document.ContentEnd) < 0)
             {
+                if (highlightPause)
+                    return;
                 TextPointerContext context = navigator.GetPointerContext(LogicalDirection.Backward);
                 if (context == TextPointerContext.ElementStart && navigator.Parent is Run)
                 {
@@ -363,15 +364,14 @@ namespace BTF
         }
         private async void textChanged(object sender, TextChangedEventArgs e)
         {
-            if (cts != null)
-            {
-                cts.Cancel();
-            }
+           highlightPause = true;
             await Task.Run(() =>
             {//하이라이팅이벤트 비동기처리
                 NumLineEvent();
                 highlightEventAsync(CodeInput, true);
+                highlightPause = false;
             });
+            if(!highlightPause)
             Format(Colors.LightSkyBlue);
         }
         private void setTimerEvent(object sender, EventArgs e)//줄및문자수 세기용
@@ -379,17 +379,19 @@ namespace BTF
             TextRange textRange = new TextRange(CodeInput.Document.ContentStart, CodeInput.Document.ContentEnd);
             Lineinfo.Content = $"줄:{GetLineNumber(CodeInput) + 1}   문자:{textRange.Text.Length - 2}   {System.IO.Path.GetFileName(filePath)}";
         }
-        private async void 번역하기()
+        private async Task 번역하기()
         {
             if (comboBox.Text != "")
             {
                 TextRange textRange = new TextRange(CodeInput.Document.ContentStart, CodeInput.Document.ContentEnd);
                 if (textRange.Text != "")
                 {
+                    //await Task.Delay(250);
                     if (comboBox.Text == "인간언어")
                     {
                         BrainFuck = new HumanParser(textRange.Text, memsize);
                         번역.IsEnabled = false;
+                        중단.IsEnabled = true;
                         Stopwatch sw = new Stopwatch();
                         sw.Reset();
                         sw.Start();
@@ -657,9 +659,9 @@ namespace BTF
                 mediaElement1.Play();
             }
         }
-        private void 번역_Click(object sender, RoutedEventArgs e)
-        {
-            번역하기();
+        private async void 번역_Click(object sender, RoutedEventArgs e)
+        { 
+                await 번역하기();
         }
         private async void exeOutput(object sender, RoutedEventArgs e)
         {
@@ -693,6 +695,7 @@ namespace BTF
             }
             번역.IsEnabled = true;
             EXEoutput.IsEnabled = true;
+            중단.IsEnabled = false;
         }
         private void 번역_Copy_Click(object sender, RoutedEventArgs e)
         {
@@ -762,6 +765,12 @@ namespace BTF
             filePath = file.GetfilePath;
             SetTextBoxText(CodeInput, file.Getreading);
             lastFileText = textRange.Text;
+        }
+
+        private void 번역_Copy1_Click(object sender, RoutedEventArgs e)
+        {
+            BrainFuck.pause = true;
+            중단.IsEnabled = false;
         }
     }
 }

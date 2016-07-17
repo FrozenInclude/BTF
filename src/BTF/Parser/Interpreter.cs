@@ -14,6 +14,7 @@ namespace BTF
     public abstract class InterPreter
     {
         protected List<byte> ptr=new List<byte> {0};
+        public bool pause = false;
         public enum Opcode{IncreasePointer='>',DecreasePointer='<',IncreaseDataPointer='+',DecreaseDataPointer='-',Output='.',Input=',',Openloop='[',Closeloop=']',Result}
         public string code { get; set; }
         private int size;

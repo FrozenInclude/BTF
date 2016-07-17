@@ -286,7 +286,7 @@ namespace BTF
                         }
                         loop++;
                     }
-                    catch (Exception E)
+                    catch (Exception)
                     {
                         output = "Overflow Error!!";
                         return;
