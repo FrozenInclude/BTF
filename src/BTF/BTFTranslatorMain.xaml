@@ -100,7 +100,7 @@
                 <ImageBrush ImageSource="resource/Run.png"/>
             </Button.Background>
         </Button>
-        <Button Style="{StaticResource MyButtonStyle}" x:Name="번역_Copy"  HorizontalAlignment="Left" VerticalAlignment="Top"  Click="번역_Copy_Click" Margin="709,32,0,0" BorderBrush="Black" Width="23" Height="23" BorderThickness="0" Cursor="Hand" Grid.ColumnSpan="2">
+        <Button Style="{StaticResource MyButtonStyle}" x:Name="번역_Copy"  HorizontalAlignment="Left" VerticalAlignment="Top"  Click="번역_Copy_Click" Margin="706,32,0,0" BorderBrush="Black" Width="23" Height="23" BorderThickness="0" Cursor="Hand" Grid.ColumnSpan="2">
             <Button.Background>
                 <ImageBrush ImageSource="resource/copy.png"/>
             </Button.Background>
@@ -115,15 +115,45 @@
                 <Paragraph/>
             </FlowDocument>
         </RichTextBox>
-        <Button Style="{StaticResource MyButtonStyle}" x:Name="EXEoutput" HorizontalAlignment="Left" Margin="681,32,0,0" VerticalAlignment="Top" Width="23" Height="23" Click="exeOutput" BorderBrush="Black" BorderThickness="0" Foreground="Black" Cursor="Hand">
+        <Button Style="{StaticResource MyButtonStyle}" x:Name="EXEoutput" Margin="679,32,21,0" VerticalAlignment="Top" Height="23" Click="exeOutput" BorderBrush="Black" BorderThickness="0" Foreground="Black" Cursor="Hand">
             <Button.Background>
                 <ImageBrush ImageSource="resource/ic_computer_white_24dp_1x.png"/>
             </Button.Background>
         </Button>
-        <Button Style="{StaticResource MyButtonStyle}" x:Name="중단" Content="" HorizontalAlignment="Left" Margin="653,32,0,0" VerticalAlignment="Top" Width="23" Click="번역_Copy1_Click" BorderBrush="Black" BorderThickness="0" Foreground="Black" Height="23" RenderTransformOrigin="0.5,0.5" Cursor="Hand" IsEnabled="False">
+        <Button Style="{StaticResource MyButtonStyle}" x:Name="중단" Content="" HorizontalAlignment="Left" Margin="652,32,0,0" VerticalAlignment="Top" Width="23" Click="번역_Copy1_Click" BorderBrush="Black" BorderThickness="0" Foreground="Black" Height="23" RenderTransformOrigin="0.5,0.5" Cursor="Hand" IsEnabled="False">
             <Button.Background>
                 <ImageBrush ImageSource="resource/pause.png"/>
             </Button.Background>
         </Button>
+        <Button Style="{StaticResource MyButtonStyle}" x:Name="설정"  HorizontalAlignment="Left" VerticalAlignment="Top"  Click="설정_Click" Margin="10,32,0,0" BorderBrush="Black" Width="23" Height="23" BorderThickness="0" Cursor="Hand" Grid.Column="1" IsHitTestVisible="True">
+            <Button.Background>
+                <ImageBrush x:Name="optionImage"  ImageSource="resource/option.png">
+                    <ImageBrush.RelativeTransform>
+                        <TransformGroup>
+                            <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                            <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                            <RotateTransform x:Name="rot" CenterY="0.5" CenterX="0.5"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </ImageBrush.RelativeTransform>
+                </ImageBrush>
+            </Button.Background>
+        </Button>
+        <Rectangle x:Name="Opback" HorizontalAlignment="Left" Height="192" Margin="5,60,0,0" VerticalAlignment="Top" Width="209" Fill="#FF1B1B1B" Opacity="0.85" Grid.RowSpan="2" Grid.Column="1" Visibility="Hidden" />
+        <Label x:Name="labels" Content="인간언어 번역 설정" Grid.Column="1" HorizontalAlignment="Left" Margin="9,58,0,0" VerticalAlignment="Top" Grid.RowSpan="2" Height="28" Visibility="Hidden" FontFamily="Malgun Gothic" Foreground="White" FontSize="13.333"/>
+        <Label x:Name="dynamicMem" Content="가변메모리:" Grid.Column="1" HorizontalAlignment="Left" Margin="41,45,0,0" VerticalAlignment="Top" Height="24" Grid.Row="1" Width="71" Background="{x:Null}" Foreground="White" Visibility="Hidden"/>
+        <Separator x:Name="selep"  Grid.Column="1" HorizontalAlignment="Left" Height="19" Margin="11,79,0,0" VerticalAlignment="Top" Width="193" Background="#FFA8A4A4" Grid.RowSpan="2" Visibility="Hidden"/>
+        <CheckBox x:Name="DynamicList" Content="" Grid.Column="1" HorizontalAlignment="Left" Margin="114,51,0,0" Grid.Row="1" VerticalAlignment="Top" IsChecked="True"  Visibility="Hidden"/>
+        <Label x:Name="label2" Content="메모리 크기:" Grid.Column="1" HorizontalAlignment="Left" Margin="8,15,0,0" Grid.Row="1" VerticalAlignment="Top" Foreground="#FFFDFDFD" Visibility="Hidden"/>
+        <TextBox x:Name="textBox" Grid.Column="1" HorizontalAlignment="Left" Height="19 
+                 " Margin="85,18,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top"  Width="120" Visibility="Hidden"/>
+        <Label x:Name="labelt1" Content="Instructions 표시:" Grid.Column="1" HorizontalAlignment="Left" Margin="9,73,0,0" VerticalAlignment="Top" Height="24" Grid.Row="1" Width="103" Background="{x:Null}" Foreground="White" Visibility="Hidden"/>
+        <CheckBox x:Name="CoutingPointer" Content="" Grid.Column="1" HorizontalAlignment="Left" Margin="114,79,0,0" Grid.Row="1" VerticalAlignment="Top" IsChecked="True" Visibility="Hidden"/>
+        <Label x:Name="labelt2" Content="소요시간 표시:" Grid.Column="1" HorizontalAlignment="Left" Margin="24,103,0,0" VerticalAlignment="Top" Height="24" Grid.Row="1" Width="103" Background="{x:Null}" Foreground="White" Visibility="Hidden"/>
+        <CheckBox x:Name="runningTime" Content="" Grid.Column="1" HorizontalAlignment="Left" Margin="114,109,0,0" Grid.Row="1" VerticalAlignment="Top" IsChecked="True" Visibility="Hidden"/>
+        <Label x:Name="lab" Content="cell:" Grid.Column="1" HorizontalAlignment="Left" Margin="9,133,0,0" VerticalAlignment="Top" Height="24" Grid.Row="1" Width="103" Background="{x:Null}" Foreground="White" Visibility="Hidden"/>
+        <RadioButton x:Name="bit8" Content="8 Bit" Grid.Column="1" HorizontalAlignment="Left" Margin="40,139,0,0" Grid.Row="1" VerticalAlignment="Top" Foreground="#FFECECEC" IsChecked="True" Visibility="Hidden"/>
+        <RadioButton x:Name="bit16" Content="16 Bit" Grid.Column="1" HorizontalAlignment="Left" Margin="91,139,0,0" Grid.Row="1" VerticalAlignment="Top" Foreground="#FFECECEC" IsChecked="False" Visibility="Hidden"/>
+        <RadioButton x:Name="bit32" Content="32 Bit" Grid.Column="1" HorizontalAlignment="Left" Margin="149,139,0,0" Grid.Row="1" VerticalAlignment="Top" Foreground="#FFECECEC" Visibility="Hidden"/>
     </Grid>
 </Window>

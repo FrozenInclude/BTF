@@ -169,6 +169,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="resource\complete.mp3" />
+    <Resource Include="resource\option.png" />
     <Resource Include="resource\pause.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

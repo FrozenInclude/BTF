@@ -10,9 +10,11 @@ namespace BTF
     public class HumanParser : InterPreter
     {
         private int ptrsize;
+        private CellSize cell = CellSize.bit8;
         private int loop { get; set; }
         private int memory=0;
         private string command;
+        private bool? DisplayIns = false;
         public int Loop(string str, int start, bool boo=true)
         {
             if (boo == true)
@@ -63,64 +65,196 @@ namespace BTF
             }
             return 0;
         }
-        public HumanParser(string code, int ptrsize) : base(code, ptrsize)
+        public HumanParser(string code, CellSize cell,bool? Displayins,int ptrsize=0) : base(code, ptrsize)
         {
             this.ptrsize = ptrsize;
+            this.cell = cell;
+            this.DisplayIns = Displayins;
+            if (this.ptrsize != 0)
+            {
+                if (this.cell == CellSize.bit8)
+                {
+                    ptr = new List<byte>(ptrsize){0 };
+                }
+                else if (this.cell == CellSize.bit16)
+                {
+                    ptr16 = new List<ushort>(ptrsize) { 0 };
+                }
+                else if (this.cell == CellSize.bit32)
+                {
+                    ptr32 = new List<uint>(ptrsize) { 0 };
+                }
+            }
         }
+     
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected override void Action(Opcode command)
         {
-            if (command == Opcode.DecreasePointer)
+            if (cell == CellSize.bit8)
             {
-                --memory;
-            }
-            else if (command == Opcode.IncreasePointer)
-            {
-                ++memory;
-                ptr.Add(0);
-            }
-            else if (command == Opcode.IncreaseDataPointer)
-            {
-                if (memory > -1)
+                if (command == Opcode.DecreasePointer)
                 {
-                    ++ptr[memory];
+                    --memory;
                 }
-            }
-            else if (command == Opcode.DecreaseDataPointer)
-            {
-                if (memory > -1)
+                else if (command == Opcode.IncreasePointer)
                 {
-                    --ptr[memory];
+                    ++memory;
+                    ptr.Add(0);
                 }
-            }
-            else if (command == Opcode.Input)
-            {
-                try
+                else if (command == Opcode.IncreaseDataPointer)
                 {
-                    char[] part = Microsoft.VisualBasic.Interaction.InputBox(@"INPUT(첫번째 첫문자로 짤립니다.) 입력종료는 '0'을써주세요", "포인터 입력", "").ToCharArray();
-                    if (part[0] == '0')
+                    if (memory > -1)
                     {
-                        ptr[memory] = 0;
+                        ++ptr[memory];
                     }
-                    else
+                }
+                else if (command == Opcode.DecreaseDataPointer)
+                {
+                    if (memory > -1)
                     {
-                        ptr[memory] = (byte)part[0];
+                        --ptr[memory];
                     }
+                }
+                else if (command == Opcode.Input)
+                {
+                    try
+                    {
+                        char[] part = Microsoft.VisualBasic.Interaction.InputBox(@"INPUT(첫번째 첫문자로 짤립니다.) 입력종료는 '0'을써주세요", "포인터 입력", "").ToCharArray();
+                        if (part[0] == '0')
+                        {
+                            ptr[memory] = 0;
+                        }
+                        else
+                        {
+                            ptr[memory] = (byte)part[0];
+                        }
 
+                    }
+                    catch (Exception)
+                    {
+                        var backloop = loop;
+                        output = $"{backloop + 1}번째  문법오류:잘못된 입력입니다.";
+                        return;
+                    }
                 }
-                catch (Exception)
+                else if (command == Opcode.Output)
                 {
-                    var backloop = loop;
-                    output = $"{backloop + 1}번째  문법오류:잘못된 입력입니다.";
-                    return;
+                    if (memory >= 0)
+                    {
+                        char st = (char)ptr.ElementAt(memory);
+                        output += st.ToString();
+                    }
+                }
+            }else if (cell == CellSize.bit16)
+            {
+                if (command == Opcode.DecreasePointer)
+                {
+                    --memory;
+                }
+                else if (command == Opcode.IncreasePointer)
+                {
+                    ++memory;
+                    ptr16.Add(0);
+                }
+                else if (command == Opcode.IncreaseDataPointer)
+                {
+                    if (memory > -1)
+                    {
+                        ++ptr16[memory];
+                    }
+                }
+                else if (command == Opcode.DecreaseDataPointer)
+                {
+                    if (memory > -1)
+                    {
+                        --ptr16[memory];
+                    }
+                }
+                else if (command == Opcode.Input)
+                {
+                    try
+                    {
+                        char[] part = Microsoft.VisualBasic.Interaction.InputBox(@"INPUT(첫번째 첫문자로 짤립니다.) 입력종료는 '0'을써주세요", "포인터 입력", "").ToCharArray();
+                        if (part[0] == '0')
+                        {
+                            ptr16[memory] = 0;
+                        }
+                        else
+                        {
+                            ptr16[memory] = (ushort)part[0];
+                        }
+
+                    }
+                    catch (Exception)
+                    {
+                        var backloop = loop;
+                        output = $"{backloop + 1}번째  문법오류:잘못된 입력입니다.";
+                        return;
+                    }
+                }
+                else if (command == Opcode.Output)
+                {
+                    if (memory >= 0)
+                    {
+                        char st = (char)ptr16.ElementAt(memory);
+                        output += st.ToString();
+                    }
                 }
             }
-            else if (command == Opcode.Output)
+            else if (cell == CellSize.bit32)
             {
-                if (memory >= 0)
+                if (command == Opcode.DecreasePointer)
                 {
-                    char st = (char)ptr.ElementAt(memory);
-                    output += st.ToString();
+                    --memory;
+                }
+                else if (command == Opcode.IncreasePointer)
+                {
+                    ++memory;
+                    ptr32.Add(0);
+                }
+                else if (command == Opcode.IncreaseDataPointer)
+                {
+                    if (memory > -1)
+                    {
+                        ++ptr32[memory];
+                    }
+                }
+                else if (command == Opcode.DecreaseDataPointer)
+                {
+                    if (memory > -1)
+                    {
+                        --ptr32[memory];
+                    }
+                }
+                else if (command == Opcode.Input)
+                {
+                    try
+                    {
+                        char[] part = Microsoft.VisualBasic.Interaction.InputBox(@"INPUT(첫번째 첫문자로 짤립니다.) 입력종료는 '0'을써주세요", "포인터 입력", "").ToCharArray();
+                        if (part[0] == '0')
+                        {
+                            ptr32[memory] = 0;
+                        }
+                        else
+                        {
+                            ptr32[memory] = (uint)part[0];
+                        }
+
+                    }
+                    catch (Exception)
+                    {
+                        var backloop = loop;
+                        output = $"{backloop + 1}번째  문법오류:잘못된 입력입니다.";
+                        return;
+                    }
+                }
+                else if (command == Opcode.Output)
+                {
+                    if (memory >= 0)
+                    {
+                        char st = (char)ptr32.ElementAt(memory);
+                        output += st.ToString();
+                    }
                 }
             }
         }
@@ -159,28 +293,90 @@ namespace BTF
                                 Action(Opcode.Input);
                                 break;
                             case (char)Opcode.Openloop://반복문은 따로생각.
-                                if (ptr[memory] == 0)
+                                if (cell == CellSize.bit8)
                                 {
-                                    var backloop = loop;
-                                    loop = Loop(code, loop);
-                                    if (loop == -1)
+                                    if (ptr[memory] == 0)
                                     {
-                                        output = $"{backloop + 1}번째  문법오류:']'가필요합니다.";
-                                        error = true;
-                                        return;
+                                        var backloop = loop;
+                                        loop = Loop(code, loop);
+                                        if (loop == -1)
+                                        {
+                                            output = $"{backloop + 1}번째  문법오류:']'가필요합니다.";
+                                            error = true;
+                                            return;
+                                        }
+                                    }
+                                }
+                                else if (cell == CellSize.bit16)
+                                {
+                                    if (ptr16[memory] == 0)
+                                    {
+                                        var backloop = loop;
+                                        loop = Loop(code, loop);
+                                        if (loop == -1)
+                                        {
+                                            output = $"{backloop + 1}번째  문법오류:']'가필요합니다.";
+                                            error = true;
+                                            return;
+                                        }
+                                    }
+                                }
+                                else if (cell == CellSize.bit32)
+                                {
+                                    if (ptr32[memory] == 0)
+                                    {
+                                        var backloop = loop;
+                                        loop = Loop(code, loop);
+                                        if (loop == -1)
+                                        {
+                                            output = $"{backloop + 1}번째  문법오류:']'가필요합니다.";
+                                            error = true;
+                                            return;
+                                        }
                                     }
                                 }
                                 break;
                             case (char)Opcode.Closeloop:
-                                if (ptr[memory] != 0)
+                                if (cell == CellSize.bit8)
                                 {
-                                    var backloop = loop;
-                                    loop = Loop(code, loop, false);
-                                    if (loop == -1)
+                                    if (ptr[memory] != 0)
                                     {
-                                        output = $"{backloop}번째  문법오류:'['가필요합니다.";
-                                        error = true;
-                                        return;
+                                        var backloop = loop;
+                                        loop = Loop(code, loop, false);
+                                        if (loop == -1)
+                                        {
+                                            output = $"{backloop}번째  문법오류:'['가필요합니다.";
+                                            error = true;
+                                            return;
+                                        }
+                                    }
+                                }
+                                else if (cell == CellSize.bit16)
+                                {
+                                    if (ptr16[memory] != 0)
+                                    {
+                                        var backloop = loop;
+                                        loop = Loop(code, loop, false);
+                                        if (loop == -1)
+                                        {
+                                            output = $"{backloop}번째  문법오류:'['가필요합니다.";
+                                            error = true;
+                                            return;
+                                        }
+                                    }
+                                }
+                               else if (cell == CellSize.bit32)
+                                {
+                                    if (ptr32[memory] != 0)
+                                    {
+                                        var backloop = loop;
+                                        loop = Loop(code, loop, false);
+                                        if (loop == -1)
+                                        {
+                                            output = $"{backloop}번째  문법오류:'['가필요합니다.";
+                                            error = true;
+                                            return;
+                                        }
                                     }
                                 }
                                 break;
@@ -193,7 +389,8 @@ namespace BTF
                         return;
                     }
                 }
-                output += $"\n\n\nInstruction pointer:{loop}";
+                if(DisplayIns==true)
+                output += $"\n\n\nInstruction pointer:{loop-2}";
             }
         }
     }

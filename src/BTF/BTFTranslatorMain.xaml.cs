@@ -34,7 +34,7 @@ namespace BTF
         private const int memsize = 5000;
         private bool highlightPause=false;
         private InterPreter BrainFuck;
-
+        private bool optionshow = false;
         private delegate void Invoker();
         private delegate void HilightDelegate(RichTextBox codeinput, bool isBF);
 
@@ -376,20 +376,60 @@ namespace BTF
         }
         private void setTimerEvent(object sender, EventArgs e)//줄및문자수 세기용
         {
+            if (DynamicList.IsChecked==true)
+            {
+                textBox.IsEnabled = false;
+            }else
+            {
+                textBox.IsEnabled = true;
+            }
             TextRange textRange = new TextRange(CodeInput.Document.ContentStart, CodeInput.Document.ContentEnd);
             Lineinfo.Content = $"줄:{GetLineNumber(CodeInput) + 1}   문자:{textRange.Text.Length - 2}   {System.IO.Path.GetFileName(filePath)}";
+            if (설정.IsMouseOver)
+                rot.Angle += 2;
+            else
+                rot.Angle = 0;
         }
         private async Task 번역하기()
         {
+        
             if (comboBox.Text != "")
             {
                 TextRange textRange = new TextRange(CodeInput.Document.ContentStart, CodeInput.Document.ContentEnd);
                 if (textRange.Text != "")
                 {
+                    SetTextBoxText(CodeOutput, "번역중...");
                     //await Task.Delay(250);
                     if (comboBox.Text == "인간언어")
                     {
-                        BrainFuck = new HumanParser(textRange.Text, memsize);
+                        try {
+                            if (bit8.IsChecked == true)
+                            {
+                                if (DynamicList.IsChecked==false)
+                                    BrainFuck = new HumanParser(textRange.Text, InterPreter.CellSize.bit8, CoutingPointer.IsChecked, int.Parse(textBox.Text));
+                                else if (DynamicList.IsChecked==true)
+                                    BrainFuck = new HumanParser(textRange.Text, InterPreter.CellSize.bit8, CoutingPointer.IsChecked);
+                            }
+                            else if (bit16.IsChecked == true)
+                            {
+                                if (DynamicList.IsChecked==false)
+                                    BrainFuck = new HumanParser(textRange.Text, InterPreter.CellSize.bit16, CoutingPointer.IsChecked, int.Parse(textBox.Text));
+                                else if (DynamicList.IsChecked==true)
+                                    BrainFuck = new HumanParser(textRange.Text, InterPreter.CellSize.bit16, CoutingPointer.IsChecked);
+                            }
+                            else if (bit32.IsChecked == true)
+                            {
+                                if (DynamicList.IsChecked==false)
+                                    BrainFuck = new HumanParser(textRange.Text, InterPreter.CellSize.bit32, CoutingPointer.IsChecked, int.Parse(textBox.Text));
+                                else if (DynamicList.IsChecked==true)
+                                    BrainFuck = new HumanParser(textRange.Text, InterPreter.CellSize.bit32, CoutingPointer.IsChecked);
+                            }
+                        }
+                        catch (Exception)
+                        {
+                            SetTextBoxText(CodeOutput, "포인터 메모리 크기 설정이 잘못되었습니다.");
+                            return;
+                        }
                         번역.IsEnabled = false;
                         중단.IsEnabled = true;
                         Stopwatch sw = new Stopwatch();
@@ -402,14 +442,17 @@ namespace BTF
                         });
                         sw.Stop();
                         SetTextBoxText(CodeOutput, BrainFuck.output);
-                        TextRange rangeOfText1 = new TextRange(CodeOutput.Document.ContentEnd, CodeOutput.Document.ContentEnd);
-                        rangeOfText1.Text = "\nRun time:" + sw.ElapsedMilliseconds.ToString() + "ms";
-                        rangeOfText1.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.LightSkyBlue);
+                        if (runningTime.IsChecked == true)
+                        {
+                            TextRange rangeOfText1 = new TextRange(CodeOutput.Document.ContentEnd, CodeOutput.Document.ContentEnd);
+                            rangeOfText1.Text = "\nRun time:" + sw.ElapsedMilliseconds.ToString() + "ms";
+                            rangeOfText1.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.LightSkyBlue);
+                        }
                         GC.Collect();
                     }
                     else
                     {
-                        BrainFuck = new HumanParser(textRange.Text, memsize);
+                        BrainFuck = new HumanParser(textRange.Text,InterPreter.CellSize.bit8,false, memsize);
                         await Task.Run(() =>
                         {
                             BrainFuck.RunCode();
@@ -750,7 +793,7 @@ namespace BTF
         {
             SaveFile();
         }
-
+       
         private void PasteEvent(object sender, RoutedEventArgs e)
         {
             CodeInput.Paste();
@@ -771,6 +814,51 @@ namespace BTF
         {
             BrainFuck.pause = true;
             중단.IsEnabled = false;
+        }
+
+        private void 번역_Copy1_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void 설정_Click(object sender, RoutedEventArgs e)
+        {
+            if (optionshow == false)
+            {
+                runningTime.Visibility = Visibility.Visible;
+                Opback.Visibility = Visibility.Visible;
+                labels.Visibility = Visibility.Visible;
+                bit16.Visibility = Visibility.Visible;
+                bit8.Visibility = Visibility.Visible;
+                bit32.Visibility = Visibility.Visible;
+                lab.Visibility = Visibility.Visible;
+                textBox.Visibility = Visibility.Visible;
+                labelt1.Visibility = Visibility.Visible;
+                labelt2.Visibility = Visibility.Visible;
+                label2.Visibility = Visibility.Visible;
+                dynamicMem.Visibility = Visibility.Visible;
+                selep.Visibility = Visibility = Visibility.Visible;
+                DynamicList.Visibility = Visibility.Visible;
+                CoutingPointer.Visibility = Visibility.Visible;
+            }else if (optionshow == true)
+            {
+             runningTime.Visibility = Visibility.Hidden;
+               Opback.Visibility = Visibility.Hidden;
+                labels.Visibility = Visibility.Hidden;
+             bit16.Visibility = Visibility.Hidden;
+              bit8.Visibility = Visibility.Hidden;
+              bit32.Visibility = Visibility.Hidden;
+               lab.Visibility = Visibility.Hidden;
+               textBox.Visibility = Visibility.Hidden;
+               labelt1.Visibility = Visibility.Hidden;
+             labelt2.Visibility = Visibility.Hidden;
+               label2.Visibility = Visibility.Hidden;
+                dynamicMem.Visibility = Visibility.Hidden;
+            selep.Visibility =  Visibility.Hidden;
+                DynamicList.Visibility = Visibility.Hidden;
+                CoutingPointer.Visibility = Visibility.Hidden;
+            }
+            optionshow = !optionshow;
         }
     }
 }
