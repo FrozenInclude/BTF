@@ -60,6 +60,35 @@ namespace BTF
                 }
             }
         }
+        private void saveCheckBoxData()
+        {
+            iniSystem a = new iniSystem(DatainiPath);
+            a.Write("DynamicMemory", DynamicList.IsChecked.Value.ToString(), "CheckBox");
+            a.Write("RunningTime", runningTime.IsChecked.Value.ToString(), "CheckBox");
+            a.Write("memoryView", memoryView.IsChecked.Value.ToString(), "CheckBox");
+            a.Write("countingView", CoutingPointer.IsChecked.Value.ToString(), "CheckBox");
+            a.Write("8bit", bit8.IsChecked.Value.ToString(), "CheckBox");
+            a.Write("16bit",bit16.IsChecked.Value.ToString(), "CheckBox");
+            a.Write("32bit", bit32.IsChecked.Value.ToString(), "CheckBox");
+    }
+        private void loadCheckBoxData()
+        {
+            iniSystem a = new iniSystem(DatainiPath);
+            try {
+                DynamicList.IsChecked = Convert.ToBoolean(a.Read("DynamicMemory", "CheckBox"));
+                runningTime.IsChecked = Convert.ToBoolean(a.Read("RunningTime", "CheckBox"));
+                memoryView.IsChecked = Convert.ToBoolean(a.Read("memoryView", "CheckBox"));
+                CoutingPointer.IsChecked = Convert.ToBoolean(a.Read("countingView", "CheckBox"));
+                bit8.IsChecked = Convert.ToBoolean(a.Read("8bit", "CheckBox"));
+                bit16.IsChecked = Convert.ToBoolean(a.Read("16bit", "CheckBox"));
+                bit32.IsChecked = Convert.ToBoolean(a.Read("32bit", "CheckBox"));
+            }
+            catch (Exception)
+            {
+                bit8.IsChecked = true;
+                return;
+            }
+        }
         private void SaveCheck(bool tryExit)
         {
             TextRange textRange = new TextRange(CodeInput.Document.ContentStart, CodeInput.Document.ContentEnd);
@@ -75,6 +104,7 @@ namespace BTF
                     SaveFile();
                     if (tryExit)
                     {
+                        saveCheckBoxData();
                         file.SaveQueue();
                         Environment.Exit(0);
                     }
@@ -83,6 +113,7 @@ namespace BTF
                 {
                     if (tryExit)
                     {
+                        saveCheckBoxData();
                         file.SaveQueue();
                         Environment.Exit(0);
                     }
@@ -97,6 +128,7 @@ namespace BTF
             {
                 if (tryExit)
                 {
+                    saveCheckBoxData();
                     file.SaveQueue();
                     Environment.Exit(0);
                 }
@@ -109,6 +141,7 @@ namespace BTF
             Timer.Tick += new EventHandler(setTimerEvent);
             Timer.Start();
             checkStart();
+            loadCheckBoxData();
         }
         public BTFTranslator()
         {
@@ -138,7 +171,13 @@ namespace BTF
         }
         private void rectangle2_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            this.DragMove();
+            try {
+                this.DragMove();
+            }
+            catch (Exception)
+            {
+                return;
+            }
         }
 
         private void closethis(object sender, RoutedEventArgs e)
@@ -406,23 +445,23 @@ namespace BTF
                             if (bit8.IsChecked == true)
                             {
                                 if (DynamicList.IsChecked==false)
-                                    BrainFuck = new HumanParser(textRange.Text, InterPreter.CellSize.bit8, CoutingPointer.IsChecked, int.Parse(textBox.Text));
+                                    BrainFuck = new HumanParser(textRange.Text, InterPreter.CellSize.bit8, CoutingPointer.IsChecked, int.Parse(textBox.Text),memoryView.IsChecked.Value);
                                 else if (DynamicList.IsChecked==true)
-                                    BrainFuck = new HumanParser(textRange.Text, InterPreter.CellSize.bit8, CoutingPointer.IsChecked);
+                                    BrainFuck = new HumanParser(textRange.Text, InterPreter.CellSize.bit8, CoutingPointer.IsChecked,0,memoryView.IsChecked.Value);
                             }
                             else if (bit16.IsChecked == true)
                             {
                                 if (DynamicList.IsChecked==false)
-                                    BrainFuck = new HumanParser(textRange.Text, InterPreter.CellSize.bit16, CoutingPointer.IsChecked, int.Parse(textBox.Text));
+                                    BrainFuck = new HumanParser(textRange.Text, InterPreter.CellSize.bit16, CoutingPointer.IsChecked, int.Parse(textBox.Text), memoryView.IsChecked.Value);
                                 else if (DynamicList.IsChecked==true)
-                                    BrainFuck = new HumanParser(textRange.Text, InterPreter.CellSize.bit16, CoutingPointer.IsChecked);
+                                    BrainFuck = new HumanParser(textRange.Text, InterPreter.CellSize.bit16, CoutingPointer.IsChecked, 0, memoryView.IsChecked.Value);
                             }
                             else if (bit32.IsChecked == true)
                             {
                                 if (DynamicList.IsChecked==false)
-                                    BrainFuck = new HumanParser(textRange.Text, InterPreter.CellSize.bit32, CoutingPointer.IsChecked, int.Parse(textBox.Text));
+                                    BrainFuck = new HumanParser(textRange.Text, InterPreter.CellSize.bit32, CoutingPointer.IsChecked, int.Parse(textBox.Text), memoryView.IsChecked.Value);
                                 else if (DynamicList.IsChecked==true)
-                                    BrainFuck = new HumanParser(textRange.Text, InterPreter.CellSize.bit32, CoutingPointer.IsChecked);
+                                    BrainFuck = new HumanParser(textRange.Text, InterPreter.CellSize.bit32, CoutingPointer.IsChecked, 0, memoryView.IsChecked.Value);
                             }
                         }
                         catch (Exception)
@@ -452,7 +491,7 @@ namespace BTF
                     }
                     else
                     {
-                        BrainFuck = new HumanParser(textRange.Text,InterPreter.CellSize.bit8,false, memsize);
+                        BrainFuck = new HumanParser(textRange.Text,InterPreter.CellSize.bit8,false, memsize,false,true);
                         await Task.Run(() =>
                         {
                             BrainFuck.RunCode();
@@ -840,6 +879,8 @@ namespace BTF
                 selep.Visibility = Visibility = Visibility.Visible;
                 DynamicList.Visibility = Visibility.Visible;
                 CoutingPointer.Visibility = Visibility.Visible;
+                memoryView.Visibility = Visibility.Visible;
+                Memorylabel.Visibility = Visibility.Visible;
             }else if (optionshow == true)
             {
              runningTime.Visibility = Visibility.Hidden;
@@ -857,8 +898,16 @@ namespace BTF
             selep.Visibility =  Visibility.Hidden;
                 DynamicList.Visibility = Visibility.Hidden;
                 CoutingPointer.Visibility = Visibility.Hidden;
+                memoryView.Visibility = Visibility.Hidden;
+                Memorylabel.Visibility = Visibility.Hidden;
             }
             optionshow = !optionshow;
+        }
+
+        private void 도움말열기(object sender, RoutedEventArgs e)
+        {
+            Helper a = new Helper();
+            a.Show();
         }
     }
 }

@@ -1,0 +1,67 @@
+﻿<Window x:Class="BTF.Helper"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BTF"
+        mc:Ignorable="d"
+        Title="도움말" Height="820.231" Width="843.538" Background="#FF1F1F1F" ShowInTaskbar="False" WindowStyle="ToolWindow">
+    <Grid Margin="0,0,2,-3">
+        <Label x:Name="label" Content="BTF 번역기는" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="#FFFFFBFB" FontSize="24"/>
+        <Label x:Name="label_Copy" Content="난해한언어로 유명하게 알려져있는 브레인퍽을 18개의 프로그래밍 언어들로 번역시키주는 유틸입니다.&#10;다른언어로 변환하는 기능뿐만아니라 브레인퍽을 해석해서 출력할수도있으며&#10;결과를 exe(실행파일)의형태로 추출할수있습니다." HorizontalAlignment="Left" Margin="10,49,0,0" VerticalAlignment="Top" Foreground="#FFFFFBFB" FontSize="14.667"/>
+        <Label x:Name="label_Copy1" Content="브레인퍽의 명령어" HorizontalAlignment="Left" Margin="10,131,0,0" VerticalAlignment="Top" Foreground="#FFFFFBFB" FontSize="24"/>
+        <Label x:Name="label_Copy2" Content="브레인퍽은 오직 8개의 명령어로만 구성되어있습니다." HorizontalAlignment="Left" Margin="10,174,0,0" VerticalAlignment="Top" Foreground="#FFFFFBFB" FontSize="14.667"/>
+        <Label x:Name="label_Copy4" Content="+:포인터가 가르키고있는곳에 바이트값을 증가시킵니다.
+               " HorizontalAlignment="Left" Margin="14,203,0,0" VerticalAlignment="Top" Foreground="#FF46D4DA" Background="{x:Null}" FontSize="16"/>
+        <Label x:Name="label_Copy3" Content=">:포인터를 증가시킵니다."  HorizontalAlignment="Left" Margin="14,269,0,0" VerticalAlignment="Top" Foreground="#FF46D4DA" Background="{x:Null}" FontSize="16"/>
+        <Label x:Name="label_Copy5" Content="&lt;:포인터를 감소시킵니다."  HorizontalAlignment="Left" Margin="14,304,0,0" VerticalAlignment="Top" Foreground="#FF46D4DA" Background="{x:Null}" FontSize="16"/>
+        <Label x:Name="label_Copy6" Content="-:포인터가 가르키고있는곳에 바이트값을 감소시킵니다.                " HorizontalAlignment="Left" Margin="14,236,0,0" VerticalAlignment="Top" Foreground="#FF46D4DA" Background="{x:Null}" FontSize="16"/>
+        <Label x:Name="label_Copy7" Content="[ :포인터가 가리키는 바이트의 값이 0이 되면 ']'로 이동합니다"  HorizontalAlignment="Left" Margin="15,339,0,0" VerticalAlignment="Top" Foreground="#FF46D4DA" Background="{x:Null}" FontSize="16"/>
+        <Label x:Name="label_Copy8" Content="] :포인터가 가리키는 바이트의 값이 0이 아니면 '['로 이동합니다."  HorizontalAlignment="Left" Margin="15,376,0,0" VerticalAlignment="Top" Foreground="#FF46D4DA" Background="{x:Null}" FontSize="16"/>
+        <Label x:Name="label_Copy9" Content=". :포인터가 가리키는 바이트 값을 아스키 코드 문자로 출력합니다."  HorizontalAlignment="Left" Margin="15,417,0,0" VerticalAlignment="Top" Foreground="#FF46D4DA" Background="{x:Null}" FontSize="16"/>
+        <Label x:Name="label_Copy10" Content=", :포인터가 가리키는 바이트에 아스키 코드 값을 입력합니다.
+               "  HorizontalAlignment="Left" Margin="15,457,0,0" VerticalAlignment="Top" Foreground="#FF46D4DA" Background="{x:Null}" FontSize="16"/>
+        <Label x:Name="label_Copy11" Content="Hello, World! 예제" HorizontalAlignment="Left" Margin="37,493,0,0" VerticalAlignment="Top" Foreground="#FFFFFBFB" FontSize="18.667"/>
+        <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="39" Margin="43,529,0,0" TextWrapping="Wrap" Text="++++++++++[&gt;+++++++&gt;++++++++++&gt;+++&gt;+&lt;&lt;&lt;&lt;-]&gt;++.&gt;+.+++++++..+++.&gt;++.&lt;&lt;+++++++++++++++.&gt;.+++.------.--------.&gt;+.&gt;." VerticalAlignment="Top" Width="532" BorderThickness="0" FontFamily="Mono sans" Background="DarkCyan" BorderBrush="White" Foreground="White" FontSize="16" IsReadOnly="True" SelectionBrush="#FFAAB1B8"/>
+        <Label x:Name="label_Copy12" Content="BTF 번역기 기능" HorizontalAlignment="Left" Margin="10,599,0,0" VerticalAlignment="Top" Foreground="#FFFFFBFB" FontSize="24"/>
+        <Separator HorizontalAlignment="Left" Height="15" Margin="15,584,0,0" VerticalAlignment="Top" Width="802" Background="#FF494646"/>
+        <Button Style="{StaticResource MyButtonStyle}" x:Name="번역" Content="" HorizontalAlignment="Left" Margin="15,645,0,0" VerticalAlignment="Top" Width="23" Click="번역_Click" BorderBrush="Black" BorderThickness="0" Foreground="Black" Height="23" RenderTransformOrigin="0.5,0.5" Cursor="Hand">
+            <Button.Background>
+                <ImageBrush ImageSource="resource/Run.png"/>
+            </Button.Background>
+        </Button>
+        <Label x:Name="label1" Content="브레인퍽 코드를 선택된언어로 번역해 출력합니다.&#xD;&#xA;" HorizontalAlignment="Left" Margin="41,640,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" FontSize="16" Height="34"/>
+        <Button Style="{StaticResource MyButtonStyle}" x:Name="중단" Content="" HorizontalAlignment="Left" Margin="15,676,0,0" VerticalAlignment="Top" Width="23" BorderBrush="Black" BorderThickness="0" Foreground="Black" Height="23" RenderTransformOrigin="0.5,0.5" Cursor="Hand" IsEnabled="False">
+            <Button.Background>
+                <ImageBrush ImageSource="resource/pause.png"/>
+            </Button.Background>
+        </Button>
+        <Label x:Name="label1_Copy" Content="번역을 중단시킵니다.&#xA;" HorizontalAlignment="Left" Margin="41,672,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" FontSize="16" Height="34"/>
+
+        <Label x:Name="label1_Copy1" Content="번역한결과를 exe실행파일로 출력합니다.&#xA;" HorizontalAlignment="Left" Margin="41,703,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" FontSize="16" Height="34"/>
+        <Button Style="{StaticResource MyButtonStyle}" x:Name="번역_Copy"  HorizontalAlignment="Left" VerticalAlignment="Top"   Margin="15,739,0,0" BorderBrush="Black" Width="23" Height="23" BorderThickness="0" Cursor="Hand">
+            <Button.Background>
+                <ImageBrush ImageSource="resource/copy.png"/>
+            </Button.Background>
+        </Button>
+        <Label x:Name="label1_Copy2" Content="번역결과를 클립보드에 복사합니다.&#xA;" HorizontalAlignment="Left" Margin="41,734,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" FontSize="16" Height="34"/>
+        <Button Style="{StaticResource MyButtonStyle}" x:Name="번역_Copy1"  HorizontalAlignment="Left" VerticalAlignment="Top"   Margin="15,706,0,0" BorderBrush="Black" Width="23" Height="23" BorderThickness="0" Cursor="Hand">
+            <Button.Background>
+                <ImageBrush ImageSource="resource/ic_computer_white_24dp_1x.png"/>
+            </Button.Background>
+        </Button>
+        <Button Style="{StaticResource MyButtonStyle}" x:Name="번역_Copy2" Content="" HorizontalAlignment="Left" Margin="426,645,0,0" VerticalAlignment="Top" Width="23" Click="번역_Click" BorderBrush="Black" BorderThickness="0" Foreground="Black" Height="23" RenderTransformOrigin="0.5,0.5" Cursor="Hand">
+            <Button.Background>
+                <ImageBrush ImageSource="resource/option.png"/>
+            </Button.Background>
+        </Button>
+        <Label x:Name="label1_Copy3" Content="기본인터프리팅(인간언어)에관한 설정메뉴입니다.&#xA;" HorizontalAlignment="Left" Margin="452,640,-1,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" FontSize="16" Height="34"/>
+        <Button Style="{StaticResource MyButtonStyle}" x:Name="번역_Copy3" Content="" HorizontalAlignment="Left" Margin="426,679,0,0" VerticalAlignment="Top" Width="23" Click="번역_Click" BorderBrush="Black" BorderThickness="0" Foreground="Black" Height="23" RenderTransformOrigin="0.5,0.5" Cursor="Hand">
+            <Button.Background>
+                <ImageBrush ImageSource="resource/file.png"/>
+            </Button.Background>
+        </Button>
+        <Label x:Name="label1_Copy4" Content="소스파일을 저장하거나 불러올수있습니다.&#xA;" HorizontalAlignment="Left" Margin="452,674,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" FontSize="16" Height="34"/>
+
+    </Grid>
+</Window>

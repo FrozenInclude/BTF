@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BTF"
         mc:Ignorable="d"
-         Title=" 브레인퍽 번역기" Height="550.5" Width="1004"  Background="White" AllowsTransparency="true" WindowStyle="None"  BorderBrush="#FF1F1C1C" BorderThickness="1" Padding="4" Loaded="Loade" Icon="resource/brainfuck.png" AllowDrop="True">
+         Title=" BTF  번역기" Height="550.5" Width="1004"  Background="White" AllowsTransparency="true" WindowStyle="None"  BorderBrush="#FF1F1C1C" BorderThickness="1" Padding="4" Loaded="Loade" Icon="resource/brainfuck.png" AllowDrop="True">
     <Grid AllowDrop="True">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="241*"/>
@@ -139,7 +139,7 @@
                 </ImageBrush>
             </Button.Background>
         </Button>
-        <Rectangle x:Name="Opback" HorizontalAlignment="Left" Height="192" Margin="5,60,0,0" VerticalAlignment="Top" Width="209" Fill="#FF1B1B1B" Opacity="0.85" Grid.RowSpan="2" Grid.Column="1" Visibility="Hidden" />
+        <Rectangle x:Name="Opback" HorizontalAlignment="Left" Height="212" Margin="5,60,0,0" VerticalAlignment="Top" Width="209" Fill="#FF1B1B1B" Opacity="0.85" Grid.RowSpan="2" Grid.Column="1" Visibility="Hidden" />
         <Label x:Name="labels" Content="인간언어 번역 설정" Grid.Column="1" HorizontalAlignment="Left" Margin="9,58,0,0" VerticalAlignment="Top" Grid.RowSpan="2" Height="28" Visibility="Hidden" FontFamily="Malgun Gothic" Foreground="White" FontSize="13.333"/>
         <Label x:Name="dynamicMem" Content="가변메모리:" Grid.Column="1" HorizontalAlignment="Left" Margin="41,45,0,0" VerticalAlignment="Top" Height="24" Grid.Row="1" Width="71" Background="{x:Null}" Foreground="White" Visibility="Hidden"/>
         <Separator x:Name="selep"  Grid.Column="1" HorizontalAlignment="Left" Height="19" Margin="11,79,0,0" VerticalAlignment="Top" Width="193" Background="#FFA8A4A4" Grid.RowSpan="2" Visibility="Hidden"/>
@@ -155,5 +155,10 @@
         <RadioButton x:Name="bit8" Content="8 Bit" Grid.Column="1" HorizontalAlignment="Left" Margin="40,139,0,0" Grid.Row="1" VerticalAlignment="Top" Foreground="#FFECECEC" IsChecked="True" Visibility="Hidden"/>
         <RadioButton x:Name="bit16" Content="16 Bit" Grid.Column="1" HorizontalAlignment="Left" Margin="91,139,0,0" Grid.Row="1" VerticalAlignment="Top" Foreground="#FFECECEC" IsChecked="False" Visibility="Hidden"/>
         <RadioButton x:Name="bit32" Content="32 Bit" Grid.Column="1" HorizontalAlignment="Left" Margin="149,139,0,0" Grid.Row="1" VerticalAlignment="Top" Foreground="#FFECECEC" Visibility="Hidden"/>
+        <CheckBox x:Name="memoryView" Content="" Grid.Column="1" HorizontalAlignment="Left" Margin="114,164,0,0" Grid.Row="1" VerticalAlignment="Top" IsChecked="True" Visibility="Hidden"/>
+        <Label x:Name="Memorylabel" Content="메모리뷰:" Grid.Column="1" HorizontalAlignment="Left" Margin="53,158,0,0" Grid.Row="1" VerticalAlignment="Top" Width="60" Foreground="White" Visibility="Hidden"/>
+        <Button Style="{StaticResource MyButtonStyle}" x:Name="도움말"  HorizontalAlignment="Left" VerticalAlignment="Top"  Click="도움말열기" Margin="37,32,0,0" BorderBrush="Black" Width="23" Height="23" BorderThickness="0" Cursor="Hand" Grid.Column="1" IsHitTestVisible="True" Content="?" Foreground="White" FontSize="16" FontFamily="HYgsrB">
+          
+        </Button>
     </Grid>
 </Window>
