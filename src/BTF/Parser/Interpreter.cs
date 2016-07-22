@@ -13,9 +13,10 @@ namespace BTF
 {
     public abstract class InterPreter
     {
-        protected List<byte> ptr=new List<byte>{0};
-        protected List<ushort> ptr16 = new List<ushort>{0};
-        protected List<uint> ptr32 = new List<uint>{0};
+     //  protected byte[]ptr=new byte[];
+     protected byte[] ptr=new byte[1];
+        protected ushort[] ptr16 = new ushort[1];
+        protected uint[] ptr32 = new uint[1];
         public bool pause = false;
         public enum Opcode{IncreasePointer='>',DecreasePointer='<',IncreaseDataPointer='+',DecreaseDataPointer='-',Output='.',Input=',',Openloop='[',Closeloop=']',Result}
         public enum CellSize { bit8,bit16,bit32}
@@ -27,7 +28,7 @@ namespace BTF
         {
             this.code = code;
             this.size = ptrsize;
-        //    ptr = new byte[size];
+            //    ptr = new byte[size];
         }
         public abstract void RunCode();
         protected abstract void Action(Opcode command);

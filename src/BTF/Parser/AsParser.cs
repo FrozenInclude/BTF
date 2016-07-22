@@ -256,19 +256,27 @@ namespace BTF
                                 break;
                             case (char)Opcode.Output:
                                 Action(Opcode.Output);
+                                if (loop == code.Length - 3)
+                                    Action(Opcode.Result);
                                 break;
                             case (char)Opcode.Input:
                                 Action(Opcode.Input);
+                                if (loop == code.Length - 3)
+                                    Action(Opcode.Result);
                                 break;
                             case (char)Opcode.Openloop:
                                 Action(Opcode.Openloop);
+                                if (loop == code.Length - 3)
+                                    Action(Opcode.Result);
                                 break;
                             case (char)Opcode.Closeloop:
                                 Action(Opcode.Closeloop);
+                                if (loop == code.Length - 3)
+                                    Action(Opcode.Result);
                                 break;
                             case ' ':
                                 Action(Opcode.Result);
-                                return;
+                                break;
                         }
                         loop++;
                     }

@@ -121,12 +121,13 @@ namespace BTF
                     output += $"          ptr[memory]+={plusCounters + ";" + Environment.NewLine}";
                     plusCounters = 0;
                 }
-                output += $@"           try{{
-      ptr[memory] = (char)System.in.read();
-                        }} catch (IOException)
-                    {{
-                        e.printStackTrace();
-                    }}\n";
+                output += $@"           try
+           {{
+           ptr[memory] = (char)System.in.read();
+           }} catch (IOException)
+           {{
+           e.printStackTrace();
+           }}{Environment.NewLine}";
             }
             else if (command == Opcode.Output)
             {
@@ -282,7 +283,7 @@ namespace BTF
                                 break;
                             case ' ':
                                 Action(Opcode.Result);
-                                return;
+                                break;
                         }
                         loop++;
                     }

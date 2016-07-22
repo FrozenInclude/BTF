@@ -516,7 +516,7 @@ namespace BTF
                         else if (comboBox.Text == "Javascript")
                         {
                             번역.IsEnabled = false;
-                            BrainFuck = new JsParser(textRange.Text, memsize);
+                           BrainFuck = new JsParser(textRange.Text, memsize);
                             await Task.Run(() =>
                             {
                                 BrainFuck.RunCode();
@@ -734,7 +734,7 @@ namespace BTF
                             GC.Collect();
                             highlightEvent(this.CodeOutput, false);
                         }
-                    }
+                   }
                 }
                 Format(Colors.Aqua);
                 mediaElement1.Position = TimeSpan.Zero;

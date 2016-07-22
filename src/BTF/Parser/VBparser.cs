@@ -278,7 +278,7 @@ namespace BTF
                                 break;
                             case ' ':
                                 Action(Opcode.Result);
-                                return;
+                                break;
                         }
                         loop++;
                     }
@@ -299,7 +299,7 @@ Module BTF
     Dim memory As Integer = 0
 {output}
     End Sub
-End Module";
+End Module ";
             }
         }
     }

@@ -284,7 +284,7 @@ namespace BTF
                                 break;
                             case ' ':
                                 Action(Opcode.Result);
-                                return;
+                                break;
                         }
                         loop++;
                     }
