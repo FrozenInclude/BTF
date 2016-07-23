@@ -826,10 +826,16 @@ namespace BTF
             SaveCheck(false);
             CodeInput.Focus();
             file.LoadFile();
-            filePath = file.GetfilePath;
-            SetTextBoxText(CodeInput, file.Getreading);
-            lastFileText = textRange.Text;
-
+            if (!file.loaderr)
+            {
+                filePath = file.GetfilePath;
+                SetTextBoxText(CodeInput, file.Getreading);
+                lastFileText = textRange.Text;
+            }
+            else
+            {
+                return;
+            }
         }
         private void OtherNameSave(object sender, RoutedEventArgs e)
         {
@@ -868,6 +874,10 @@ namespace BTF
         {
             TextRange textRange = new TextRange(CodeInput.Document.ContentStart, CodeInput.Document.ContentEnd);
             MenuItem m = (MenuItem)e.OriginalSource;
+            if (m.Header.ToString()=="최근사용한파일")
+            {
+                return;
+            }
             file.LoadFileWithoutDialog(m.Header.ToString());
             CodeInput.Focus();
             filePath = file.GetfilePath;

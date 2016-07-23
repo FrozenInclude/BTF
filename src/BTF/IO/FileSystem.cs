@@ -13,6 +13,7 @@ namespace BTF
     public class FileSystem
     {
         private string filePath;
+        public bool loaderr = false;
         private Queue<string> recentFilepath=new Queue<string>();//파일주소 저장용 큐
         private iniSystem ini;
         private const int Qlimit=10;
@@ -29,17 +30,26 @@ namespace BTF
         }
         public async void LoadFileWithoutDialog(string path)
         {
-            using (System.IO.StreamReader sr = new System.IO.StreamReader(path))
-            {
-                await Task.Run(() =>
+            loaderr = false;
+            try {
+                using (System.IO.StreamReader sr = new System.IO.StreamReader(path))
                 {
-                    this.reading = sr.ReadToEnd();
-                    this.filePath = path;
-                });
+                    await Task.Run(() =>
+                    {
+                        this.reading = sr.ReadToEnd();
+                        this.filePath = path;
+                    });
+                }
+            }
+            catch (FileNotFoundException)
+            {
+                loaderr = true;
+                return;
             }
         }
         public async void LoadFile(string filter = "BTF Files (*.btf)|*.btf")//파일불러오기
         {
+            loaderr = false;
                 OpenFileDialog dlg = new OpenFileDialog();
                 dlg.Filter = filter;
                 bool? result = dlg.ShowDialog();
@@ -67,7 +77,11 @@ namespace BTF
                             BTFTranslator.DisplayQue(this.displayMenu);
                         }
                     }
-                }
+            }
+            else 
+            {
+                loaderr = true;
+            }
         }
         public void SaveQueue()
         {
@@ -80,12 +94,24 @@ namespace BTF
        public void LoadQueue()
         {
             if (ini.Read("QueueCount", "File")!="") {
+                bool cannadd;
                 for (int i = 0; i < Int64.Parse(ini.Read("QueueCount", "File")); i++)
                 {
-                    recentFilepath.Enqueue(ini.Read("Queue." + i.ToString(), "File"));
-                    if (ini.Read("Queue." + i.ToString(), "File") == null)
+                    cannadd = true;
+                    try
                     {
-                        return;
+                        System.IO.StreamReader sr = new System.IO.StreamReader(ini.Read("Queue." + i.ToString(), "File"));
+                    }
+                    catch (FileNotFoundException)
+                    {
+                        cannadd = false;
+                    }
+                     if (cannadd) {
+                        recentFilepath.Enqueue(ini.Read("Queue." + i.ToString(), "File"));
+                        if (ini.Read("Queue." + i.ToString(), "File") == null)
+                        {
+                            return;
+                        }
                     }
                 }
             }
