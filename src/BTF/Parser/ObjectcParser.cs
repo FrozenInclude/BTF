@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 
 namespace BTF
 {
-    public class CppParser : InterPreter
+    public class ObjCParser : InterPreter
     {
         private int ptrsize;
         private int plusCounter = 0;
@@ -16,7 +16,7 @@ namespace BTF
         private int minusCounters = 0;
         private int loop { get; set; }
         private string command;
-        public CppParser(string code, int ptrsize) : base(code, ptrsize)
+        public ObjCParser(string code, int ptrsize) : base(code, ptrsize)
         {
             this.ptrsize = ptrsize;
         }
@@ -129,7 +129,7 @@ namespace BTF
                     output += $"          *ptr+={plusCounters + ";" + Environment.NewLine}";
                     plusCounters = 0;
                 }
-                output += $"          cin>>*ptr;\n";
+                output += $"          *ptr = getchar();\n";
             }
             else if (command == Opcode.Output)
             {
@@ -153,30 +153,32 @@ namespace BTF
                     output += $"          *ptr+={plusCounters + ";" + Environment.NewLine}";
                     plusCounters = 0;
                 }
-                output += $"          cout<<*ptr;\n";
-            } else if (command == Opcode.Openloop) { 
+                output += $"          NSLog(@\"%s\",ptr);\n";
+            }
+            else if (command == Opcode.Openloop)
+            {
                 if (plusCounter > 0)
                 {
                     output += $"          ptr+={plusCounter + ";" + Environment.NewLine}";
                     plusCounter = 0;
                 }
-            if (minusCounter > 0)
-            {
-                output += $"          ptr-={minusCounter + ";" + Environment.NewLine}";
-                minusCounter = 0;
+                if (minusCounter > 0)
+                {
+                    output += $"          ptr-={minusCounter + ";" + Environment.NewLine}";
+                    minusCounter = 0;
+                }
+                if (minusCounters > 0)
+                {
+                    output += $"          *ptr-={minusCounters + ";" + Environment.NewLine}";
+                    minusCounters = 0;
+                }
+                if (plusCounters > 0)
+                {
+                    output += $"          *ptr+={plusCounters + ";" + Environment.NewLine}";
+                    plusCounters = 0;
+                }
+                output += $"             while(*ptr){{\n";
             }
-            if (minusCounters > 0)
-            {
-                output += $"          *ptr-={minusCounters + ";" + Environment.NewLine}";
-                minusCounters = 0;
-            }
-            if (plusCounters > 0)
-            {
-                output += $"          *ptr+={plusCounters + ";" + Environment.NewLine}";
-                plusCounters = 0;
-            }
-            output += $"             while(*ptr){{\n";
-        }
             if (command == Opcode.Closeloop)
             {
                 if (plusCounter > 0)
@@ -239,45 +241,45 @@ namespace BTF
                         {
                             case (char)Opcode.DecreasePointer:
                                 Action(Opcode.DecreasePointer);
-                                if (loop == code.Length-3)
+                                if (loop == code.Length - 3)
                                     Action(Opcode.Result);
                                 //  output += "--memory;\n";
                                 break;
                             case (char)Opcode.IncreasePointer://>
                                 Action(Opcode.IncreasePointer);
-                                if (loop == code.Length-3 )
+                                if (loop == code.Length - 3)
                                     Action(Opcode.Result);
                                 break;
                             case (char)Opcode.IncreaseDataPointer://+    
                                 Action(Opcode.IncreaseDataPointer);
-                                if (loop == code.Length-3 )
+                                if (loop == code.Length - 3)
                                     Action(Opcode.Result);
                                 //output +="ptr[memory]++;\n";
                                 break;
                             case (char)Opcode.DecreaseDataPointer://-  
                                 Action(Opcode.DecreaseDataPointer);
-                                if (loop == code.Length-3 )
+                                if (loop == code.Length - 3)
                                     Action(Opcode.Result);
                                 // output +=" *ptr--;\n";
                                 break;
                             case (char)Opcode.Output:
                                 Action(Opcode.Output);
-                                if (loop == code.Length-3 )
+                                if (loop == code.Length - 3)
                                     Action(Opcode.Result);
                                 break;
                             case (char)Opcode.Input:
                                 Action(Opcode.Input);
-                                if (loop == code.Length-3 )
+                                if (loop == code.Length - 3)
                                     Action(Opcode.Result);
                                 break;
                             case (char)Opcode.Openloop:
                                 Action(Opcode.Openloop);
-                                if (loop == code.Length-3 )
+                                if (loop == code.Length - 3)
                                     Action(Opcode.Result);
                                 break;
                             case (char)Opcode.Closeloop:
                                 Action(Opcode.Closeloop);
-                                if (loop == code.Length-3 )
+                                if (loop == code.Length - 3)
                                     Action(Opcode.Result);
                                 break;
                             case ' ':
@@ -292,14 +294,15 @@ namespace BTF
                         return;
                     }
                 }
-                output = $@"#include<iostream>
-using namespace std;
-     int main(void)
-        {{
-         unsigned char * ptr=(unsigned char*)calloc('%d',1);
-            {output}
-         return 0;
-        }}";
+                output = $@"#import <Foundation/Foundation.h>
+
+int main (int argc, const char * argv[]) {{
+   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+   unsigned char * ptr=(unsigned char*)calloc('%d',1);
+    {output}
+   [pool drain];
+    return 0;
+}}";
             }
         }
     }

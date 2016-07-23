@@ -46,11 +46,13 @@
             <Label Content="인간언어"/>
             <Label Content="Java"/>
             <Label Content="Ook!"/>
+            <Label Content="Object-c"/>
             <Label Content="C++"/>
             <Label Content="C#"/>
             <Label Content="F#"/>
             <Label Content="Javascript"/>
             <Label Content="As3.0"/>
+            <Label Content="awk"/>
             <Label Content="Swift"/>
             <Label Content="Scheme"/>
             <Label Content="Python"/>
@@ -146,7 +148,7 @@
         <CheckBox x:Name="DynamicList" Content="" Grid.Column="1" HorizontalAlignment="Left" Margin="114,51,0,0" Grid.Row="1" VerticalAlignment="Top" IsChecked="True"  Visibility="Hidden"/>
         <Label x:Name="label2" Content="메모리 크기:" Grid.Column="1" HorizontalAlignment="Left" Margin="8,15,0,0" Grid.Row="1" VerticalAlignment="Top" Foreground="#FFFDFDFD" Visibility="Hidden"/>
         <TextBox x:Name="textBox" Grid.Column="1" HorizontalAlignment="Left" Height="19 
-                 " Margin="85,18,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top"  Width="120" Visibility="Hidden"/>
+                 " Margin="85,18,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top"  Width="120" Visibility="Hidden" Text="100"/>
         <Label x:Name="labelt1" Content="Instructions 표시:" Grid.Column="1" HorizontalAlignment="Left" Margin="9,73,0,0" VerticalAlignment="Top" Height="24" Grid.Row="1" Width="103" Background="{x:Null}" Foreground="White" Visibility="Hidden"/>
         <CheckBox x:Name="CoutingPointer" Content="" Grid.Column="1" HorizontalAlignment="Left" Margin="114,79,0,0" Grid.Row="1" VerticalAlignment="Top" IsChecked="True" Visibility="Hidden"/>
         <Label x:Name="labelt2" Content="소요시간 표시:" Grid.Column="1" HorizontalAlignment="Left" Margin="24,103,0,0" VerticalAlignment="Top" Height="24" Grid.Row="1" Width="103" Background="{x:Null}" Foreground="White" Visibility="Hidden"/>

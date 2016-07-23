@@ -734,7 +734,33 @@ namespace BTF
                             GC.Collect();
                             highlightEvent(this.CodeOutput, false);
                         }
-                   }
+                        else if (comboBox.Text == "Object-c")
+                        {
+                            번역.IsEnabled = false;
+                            BrainFuck = new ObjCParser(textRange.Text, memsize);
+                            await Task.Run(() =>
+                            {
+                                BrainFuck.RunCode();
+                                ButtonEnable();
+                            });
+                            SetTextBoxText(CodeOutput, BrainFuck.output);
+                            GC.Collect();
+                            highlightEvent(this.CodeOutput, false);
+                        }
+                        else if (comboBox.Text == "awk")
+                        {
+                            번역.IsEnabled = false;
+                            BrainFuck = new awkParser(textRange.Text, memsize);
+                            await Task.Run(() =>
+                            {
+                                BrainFuck.RunCode();
+                                ButtonEnable();
+                            });
+                            SetTextBoxText(CodeOutput, BrainFuck.output);
+                            GC.Collect();
+                            highlightEvent(this.CodeOutput, false);
+                        }
+                    }
                 }
                 Format(Colors.Aqua);
                 mediaElement1.Position = TimeSpan.Zero;

@@ -87,10 +87,12 @@
     </Compile>
     <Compile Include="IO\FileSystem.cs" />
     <Compile Include="IO\iniSysyem.cs" />
+    <Compile Include="Parser\awkParser.cs" />
     <Compile Include="Parser\LuaParser.cs" />
     <Compile Include="Parser\AsParser.cs" />
     <Compile Include="Parser\FsParser.cs" />
     <Compile Include="Parser\GoParser.cs" />
+    <Compile Include="Parser\ObjectcParser.cs" />
     <Compile Include="Parser\PascalParser.cs" />
     <Compile Include="Parser\PerlParser.cs" />
     <Compile Include="Parser\phpParser.cs" />
