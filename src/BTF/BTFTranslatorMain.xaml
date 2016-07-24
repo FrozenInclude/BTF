@@ -65,7 +65,12 @@
             <Label Content="Rust"/>
             <Label Content="Ruby"/>
         </ComboBox>
-        <RichTextBox Name="CodeInput" HorizontalAlignment="Left" Width="474" Margin="41,66,0,24" ScrollViewer.CanContentScroll="True" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto" BorderThickness="0"  AcceptsReturn="True" Background="#FF1F1C1C"  TextChanged="textChanged" BorderBrush="#FF0B0B0C" FontFamily="Mono sans" Foreground="White" FontSize="13.333"  ScrollViewer.ScrollChanged="RichTextBox_ScrollC" Grid.RowSpan="2">
+        <RichTextBox Name="CodeInput" HorizontalAlignment="Left" Width="474" Margin="41,66,0,24" ScrollViewer.CanContentScroll="True" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto" BorderThickness="0"   AcceptsReturn="True" Background="#FF1F1C1C"  TextChanged="textChanged" BorderBrush="#FF0B0B0C" FontFamily="Mono sans" Foreground="White" FontSize="13.333"  ScrollViewer.ScrollChanged="RichTextBox_ScrollC" Grid.RowSpan="2">
+            <RichTextBox.Resources>
+                <Style TargetType="{x:Type Paragraph}">
+                    <Setter Property="Margin" Value="0"/>
+                </Style>
+            </RichTextBox.Resources>
             <RichTextBox.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="잘라내기" Command="ApplicationCommands.Cut"/>
@@ -73,11 +78,6 @@
                     <MenuItem Header="붙여넣기" Click="PasteEvent"/>
                 </ContextMenu>
             </RichTextBox.ContextMenu>
-            <RichTextBox.Resources>
-                <Style TargetType="{x:Type Paragraph}">
-                    <Setter Property="Margin" Value="0"/>
-                </Style>
-            </RichTextBox.Resources>
             <FlowDocument>
                 <Paragraph/>
             </FlowDocument>
@@ -107,13 +107,13 @@
                 <ImageBrush ImageSource="resource/copy.png"/>
             </Button.Background>
         </Button>
-        <RichTextBox x:Name="LineNumLabel"  Background="#FF252121" HorizontalAlignment="Center" Margin="16,0,682,24" VerticalAlignment="Bottom" Width="25" FontSize="13.333" Foreground="#FFF17648" FontFamily="Mono Sans" Height="458" HorizontalContentAlignment="Center"   IsReadOnly="True" BorderThickness="0" VerticalScrollBarVisibility="Hidden" ScrollViewer.ScrollChanged="RichTextBox_ScrollC" Grid.RowSpan="2">
+        <RichTextBox x:Name="LineNumLabel"  Background="{x:Null}" HorizontalAlignment="Center" Margin="0,0,682,25" VerticalAlignment="Bottom" Width="41" FontSize="13.333" Foreground="#FFF17648" FontFamily="Mono Sans" Height="458" HorizontalContentAlignment="Center"   IsReadOnly="True" BorderThickness="0" VerticalScrollBarVisibility="Hidden" ScrollViewer.ScrollChanged="RichTextBox_ScrollC" Grid.RowSpan="2">
             <RichTextBox.Resources>
                 <Style TargetType="{x:Type Paragraph}">
                     <Setter Property="Margin" Value="0"/>
                 </Style>
             </RichTextBox.Resources>
-            <FlowDocument>
+            <FlowDocument TextAlignment="Right">
                 <Paragraph/>
             </FlowDocument>
         </RichTextBox>
@@ -160,7 +160,7 @@
         <CheckBox x:Name="memoryView" Content="" Grid.Column="1" HorizontalAlignment="Left" Margin="114,164,0,0" Grid.Row="1" VerticalAlignment="Top" IsChecked="True" Visibility="Hidden"/>
         <Label x:Name="Memorylabel" Content="메모리뷰:" Grid.Column="1" HorizontalAlignment="Left" Margin="53,158,0,0" Grid.Row="1" VerticalAlignment="Top" Width="60" Foreground="White" Visibility="Hidden"/>
         <Button Style="{StaticResource MyButtonStyle}" x:Name="도움말"  HorizontalAlignment="Left" VerticalAlignment="Top"  Click="도움말열기" Margin="37,32,0,0" BorderBrush="Black" Width="23" Height="23" BorderThickness="0" Cursor="Hand" Grid.Column="1" IsHitTestVisible="True" Content="?" Foreground="White" FontSize="16" FontFamily="HYgsrB">
-          
+
         </Button>
     </Grid>
 </Window>

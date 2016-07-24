@@ -313,7 +313,7 @@ namespace BTF
                         return;
                     }
                 }
-                output = $@"BEGIN{{
+                output = $@"BEGIN {{
 ptr[{ptrsize}]=0;
 memory=0;
 {output}

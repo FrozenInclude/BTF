@@ -296,7 +296,7 @@ namespace BTF
 {{
     public class Brainfuck
     {{
- static void Main()
+        static void Main()
         {{
             List<byte> ptr=new List<byte>(); 
             ptr.Add(0);

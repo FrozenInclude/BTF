@@ -26,7 +26,7 @@ namespace highlight
                             "for",
                                 "while",
                                  "Array"
-                                 ,"new","Foundation/Foundation.h","@\"%s\"",
+                                 ,"new","@\"%s\"",@"""%c""",
                 "String","fromCharCode","using","Write","Read","List","static","void","byte","public","class","int","char","Add","namespace","unsigned",@"#include","import","String","'%d'","byte","chr","print","Dim","New","Integer","iostream","\"%d\"",
                 "AS","Imports","Module","Sub","List","While","Byte","Add","Char","End","Of","CByte","fn","my","$","echo","Program","type","begin","catch","try","IOException","true","return","drain","NSLog","#import","NSAutoreleasePool","alloc","calloc",
                 "var",
@@ -67,7 +67,7 @@ namespace highlight
                 '>',
                 '*',
                 ',',
-                '{',
+              //  '{',
                 ']',
                 ':'
             };

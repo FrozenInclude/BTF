@@ -167,7 +167,7 @@ namespace BTF
             int lineMoved, currentLineNumber;
             rtb.Selection.Start.GetLineStartPosition(-someBigNumber, out lineMoved);
             currentLineNumber = -lineMoved;
-            return currentLineNumber;
+            return currentLineNumber+1;
         }
         private void rectangle2_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -347,20 +347,16 @@ namespace BTF
                 Dispatcher.Invoke(new Invoker(NumLineEvent));
                 return;
             }
-            TextRange textRange = new TextRange(CodeInput.Document.ContentStart, CodeInput.Document.ContentEnd);
-            String[] Elines = textRange.Text.Split(new[] { Environment.NewLine }
-                          , StringSplitOptions.RemoveEmptyEntries);
-            if (Elines.Length != lastLinenum)
+            if (GetLineNumber(CodeInput) != lastLinenum)
             {
-                String[] lines = textRange.Text.Split(new[] { Environment.NewLine }
-                       , StringSplitOptions.RemoveEmptyEntries);
                 LineNumLabel.Document.Blocks.Clear();
-                for (int line = 1; line < lines.Length + 1; line++)
+                for (int line = 1; line < GetLineNumber(CodeInput)+1; line++)
                 {
-                    LineNumLabel.Document.Blocks.Add(new Paragraph(new Run(line.ToString())));
+                   
+                    LineNumLabel.Document.Blocks.Add(new Paragraph(new Run(line.ToString()+".")));
                 }
-                lastLinenum = lines.Length;
             }
+            lastLinenum = GetLineNumber(CodeInput);
         }
         private void SetTextBoxText(RichTextBox textbox, string appendText)
         {
@@ -407,11 +403,11 @@ namespace BTF
             await Task.Run(() =>
             {//하이라이팅이벤트 비동기처리
                 NumLineEvent();
-                highlightEventAsync(CodeInput, true);
+               highlightEventAsync(CodeInput, true);
                 highlightPause = false;
             });
-            if(!highlightPause)
-            Format(Colors.LightSkyBlue);
+          if(!highlightPause)
+           Format(Colors.LightSkyBlue);
         }
         private void setTimerEvent(object sender, EventArgs e)//줄및문자수 세기용
         {
@@ -423,7 +419,7 @@ namespace BTF
                 textBox.IsEnabled = true;
             }
             TextRange textRange = new TextRange(CodeInput.Document.ContentStart, CodeInput.Document.ContentEnd);
-            Lineinfo.Content = $"줄:{GetLineNumber(CodeInput) + 1}   문자:{textRange.Text.Length - 2}   {System.IO.Path.GetFileName(filePath)}";
+            Lineinfo.Content = $"줄:{GetLineNumber(CodeInput)}   문자:{textRange.Text.Length - 2}   {System.IO.Path.GetFileName(filePath)}";
             if (설정.IsMouseOver)
                 rot.Angle += 2;
             else
@@ -945,5 +941,6 @@ namespace BTF
             Helper a = new Helper();
             a.Show();
         }
+
     }
 }

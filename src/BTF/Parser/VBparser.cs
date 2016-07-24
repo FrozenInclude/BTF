@@ -293,10 +293,10 @@ Imports System.Text
 Imports System.Threading.Tasks
 
 Module BTF
-	Sub Main()
-	Dim ptr As New List(Of Byte)()
-    ptr.Add(0)
-    Dim memory As Integer = 0
+   Sub Main()
+    Dim ptr As New List(Of Byte)()
+       ptr.Add(0)
+          Dim memory As Integer = 0
 {output}
     End Sub
 End Module ";

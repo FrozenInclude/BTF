@@ -175,7 +175,7 @@ namespace BTF
                     output += $"          ptr[memory]+={plusCounters + ";" + Environment.NewLine}";
                     plusCounters = 0;
                 }
-                output += $"              while(ptr[memory]!=0){{\n";
+                output += $"          while(ptr[memory]!=0){{\n";
             }
             if (command == Opcode.Closeloop)
             {
@@ -299,12 +299,12 @@ import java.io.*;
 
 class BTF
 {{
-	public static void main (String [] args) 
-	{{
-      char []ptr=new char[{ptrsize}];
-      int memory=0;
+    public static void main (String [] args) 
+    {{
+           char []ptr=new char[{ptrsize}];
+           int memory=0;
       {output}
-	}}
+     }}
 }}
 ";
             }

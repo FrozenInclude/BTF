@@ -18,9 +18,9 @@
         <Label x:Name="label_Copy6" Content="-:포인터가 가르키고있는곳에 바이트값을 감소시킵니다.                " HorizontalAlignment="Left" Margin="14,236,0,0" VerticalAlignment="Top" Foreground="#FF46D4DA" Background="{x:Null}" FontSize="16"/>
         <Label x:Name="label_Copy7" Content="[ :포인터가 가리키는 바이트의 값이 0이 되면 ']'로 이동합니다"  HorizontalAlignment="Left" Margin="15,339,0,0" VerticalAlignment="Top" Foreground="#FF46D4DA" Background="{x:Null}" FontSize="16"/>
         <Label x:Name="label_Copy8" Content="] :포인터가 가리키는 바이트의 값이 0이 아니면 '['로 이동합니다."  HorizontalAlignment="Left" Margin="15,376,0,0" VerticalAlignment="Top" Foreground="#FF46D4DA" Background="{x:Null}" FontSize="16"/>
-        <Label x:Name="label_Copy9" Content=". :포인터가 가리키는 바이트 값을 아스키 코드 문자로 출력합니다."  HorizontalAlignment="Left" Margin="15,417,0,0" VerticalAlignment="Top" Foreground="#FF46D4DA" Background="{x:Null}" FontSize="16"/>
+        <Label x:Name="label_Copy9" Content=". :포인터가 가리키는 바이트 값을 아스키 코드 문자로 출력합니다."  HorizontalAlignment="Left" Margin="15,413,0,0" VerticalAlignment="Top" Foreground="#FF46D4DA" Background="{x:Null}" FontSize="16"/>
         <Label x:Name="label_Copy10" Content=", :포인터가 가리키는 바이트에 아스키 코드 값을 입력합니다.
-               "  HorizontalAlignment="Left" Margin="15,457,0,0" VerticalAlignment="Top" Foreground="#FF46D4DA" Background="{x:Null}" FontSize="16"/>
+               "  HorizontalAlignment="Left" Margin="15,448,0,0" VerticalAlignment="Top" Foreground="#FF46D4DA" Background="{x:Null}" FontSize="16"/>
         <Label x:Name="label_Copy11" Content="Hello, World! 예제" HorizontalAlignment="Left" Margin="17,493,0,0" VerticalAlignment="Top" Foreground="#FFFFFBFB" FontSize="18.667"/>
         <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="39" Margin="23,529,0,0" TextWrapping="Wrap" Text="++++++++++[&gt;+++++++&gt;++++++++++&gt;+++&gt;+&lt;&lt;&lt;&lt;-]&gt;++.&gt;+.+++++++..+++.&gt;++.&lt;&lt;+++++++++++++++.&gt;.+++.------.--------.&gt;+.&gt;." VerticalAlignment="Top" Width="526" BorderThickness="0" FontFamily="Mono sans" Background="DarkCyan" BorderBrush="White" Foreground="White" FontSize="16" IsReadOnly="True" SelectionBrush="#FFAAB1B8"/>
         <Label x:Name="label_Copy12" Content="BTF 번역기 기능" HorizontalAlignment="Left" Margin="10,599,0,0" VerticalAlignment="Top" Foreground="#FFFFFBFB" FontSize="24"/>
