@@ -30,17 +30,17 @@ namespace BTF
             {
                 if (plusCounter > 0)
                 {
-                    output += $"{들여쓰기}memory+={plusCounter + ";" + Environment.NewLine}";
+                    output += $"memory+={plusCounter + ";" + Environment.NewLine}";
                     plusCounter = 0;
                 }
                 if (minusCounters > 0)
                 {
-                    output += $"{들여쓰기}ptr[memory]-={minusCounters + ";" + Environment.NewLine}";
+                    output += $"ptr[memory]-={minusCounters + ";" + Environment.NewLine}";
                     minusCounters = 0;
                 }
                 if (plusCounters > 0)
                 {
-                    output += $"{들여쓰기}ptr[memory]+={plusCounters + ";" + Environment.NewLine}";
+                    output += $"ptr[memory]+={plusCounters + ";" + Environment.NewLine}";
                     plusCounters = 0;
                 }
                 minusCounter++;
@@ -49,17 +49,17 @@ namespace BTF
             {
                 if (minusCounter > 0)
                 {
-                    output += $"{들여쓰기}memory-={minusCounter + ";" + Environment.NewLine}";
+                    output += $"memory-={minusCounter + ";" + Environment.NewLine}";
                     minusCounter = 0;
                 }
                 if (minusCounters > 0)
                 {
-                    output += $"{들여쓰기}ptr[memory]-={minusCounters + ";" + Environment.NewLine}";
+                    output += $"ptr[memory]-={minusCounters + ";" + Environment.NewLine}";
                     minusCounters = 0;
                 }
                 if (plusCounters > 0)
                 {
-                    output += $"{들여쓰기}ptr[memory]+={plusCounters + ";" + Environment.NewLine}";
+                    output += $"ptr[memory]+={plusCounters + ";" + Environment.NewLine}";
                     plusCounters = 0;
                 }
                 plusCounter++;
@@ -68,17 +68,17 @@ namespace BTF
             {
                 if (plusCounter > 0)
                 {
-                    output += $"{들여쓰기}memory+={plusCounter + ";" + Environment.NewLine}";
+                    output += $"memory+={plusCounter + ";" + Environment.NewLine}";
                     plusCounter = 0;
                 }
                 if (minusCounter > 0)
                 {
-                    output += $"{들여쓰기}memory-={minusCounter + ";" + Environment.NewLine}";
+                    output += $"memory-={minusCounter + ";" + Environment.NewLine}";
                     minusCounter = 0;
                 }
                 if (minusCounters > 0)
                 {
-                    output += $"{들여쓰기}ptr[memory]-={minusCounter + ";" + Environment.NewLine}";
+                    output += $"ptr[memory]-={minusCounter + ";" + Environment.NewLine}";
                     minusCounters = 0;
                 }
                 plusCounters++;
@@ -88,17 +88,17 @@ namespace BTF
             {
                 if (plusCounter > 0)
                 {
-                    output += $"{들여쓰기}memory+={plusCounter + ";" + Environment.NewLine}";
+                    output += $"memory+={plusCounter + ";" + Environment.NewLine}";
                     plusCounter = 0;
                 }
                 if (minusCounter > 0)
                 {
-                    output += $"{들여쓰기}memory-={minusCounter + ";" + Environment.NewLine}";
+                    output += $"memory-={minusCounter + ";" + Environment.NewLine}";
                     minusCounter = 0;
                 }
                 if (plusCounters > 0)
                 {
-                    output += $"{들여쓰기}ptr[memory]+={plusCounters + ";" + Environment.NewLine}";
+                    output += $"ptr[memory]+={plusCounters + ";" + Environment.NewLine}";
                     plusCounters = 0;
                 }
                 minusCounters++;
@@ -107,46 +107,46 @@ namespace BTF
             {
                 if (plusCounter > 0)
                 {
-                    output += $"{들여쓰기}memory+={plusCounter + ";" + Environment.NewLine}";
+                    output += $"memory+={plusCounter + ";" + Environment.NewLine}";
                     plusCounter = 0;
                 }
                 if (minusCounter > 0)
                 {
-                    output += $"{들여쓰기}memory-={minusCounter + ";" + Environment.NewLine}";
+                    output += $"memory-={minusCounter + ";" + Environment.NewLine}";
                     minusCounter = 0;
                 }
                 if (minusCounters > 0)
                 {
-                    output += $"{들여쓰기}ptr[memory]-={minusCounters + ";" + Environment.NewLine}";
+                    output += $"ptr[memory]-={minusCounters + ";" + Environment.NewLine}";
                     minusCounters = 0;
                 }
                 if (plusCounters > 0)
                 {
-                    output += $"{들여쓰기}ptr[memory]+={plusCounters + ";" + Environment.NewLine}";
+                    output += $"ptr[memory]+={plusCounters + ";" + Environment.NewLine}";
                     plusCounters = 0;
                 }
-                output += $"{들여쓰기}write(chr(ptr[memory]));\n";
+                output += $"write(chr(ptr[memory]));\n";
             }
             else if (command == Opcode.Openloop)
             {
                 if (plusCounter > 0)
                 {
-                    output += $"{들여쓰기}memory+={plusCounter + ";" + Environment.NewLine}";
+                    output += $"memory+={plusCounter + ";" + Environment.NewLine}";
                     plusCounter = 0;
                 }
                 if (minusCounter > 0)
                 {
-                    output += $"{들여쓰기}memory-={minusCounter + ";" + Environment.NewLine}";
+                    output += $"memory-={minusCounter + ";" + Environment.NewLine}";
                     minusCounter = 0;
                 }
                 if (minusCounters > 0)
                 {
-                    output += $"{들여쓰기}ptr[memory]-={minusCounters + ";" + Environment.NewLine}";
+                    output += $"ptr[memory]-={minusCounters + ";" + Environment.NewLine}";
                     minusCounters = 0;
                 }
                 if (plusCounters > 0)
                 {
-                    output += $"{들여쓰기}ptr[memory]+={plusCounters + ";" + Environment.NewLine}";
+                    output += $"ptr[memory]+={plusCounters + ";" + Environment.NewLine}";
                     plusCounters = 0;
                 }
                 nested++;
@@ -157,7 +157,7 @@ namespace BTF
                 }
                 else if (nested >= 1)
                 {
-                    output += $"{들여쓰기}while ptr[memory] <> 0 do{Environment.NewLine}{들여쓰기}begin{Environment.NewLine}";
+                    output += $"while ptr[memory] <> 0 do{Environment.NewLine}begin{Environment.NewLine}";
                     들여쓰기 += "       ";
                 }
                 들여쓰기 += "                     ";
@@ -166,53 +166,53 @@ namespace BTF
             {
                 if (plusCounter > 0)
                 {
-                    output += $"{들여쓰기}memory+={plusCounter + ";" + Environment.NewLine}";
+                    output += $"memory+={plusCounter + ";" + Environment.NewLine}";
                     plusCounter = 0;
                 }
                 if (minusCounter > 0)
                 {
-                    output += $"{들여쓰기}memory-={minusCounter + ";" + Environment.NewLine}";
+                    output += $"memory-={minusCounter + ";" + Environment.NewLine}";
                     minusCounter = 0;
                 }
                 if (minusCounters > 0)
                 {
-                    output += $"{들여쓰기}ptr[memory]-={minusCounters + ";" + Environment.NewLine}";
+                    output += $"ptr[memory]-={minusCounters + ";" + Environment.NewLine}";
                     minusCounters = 0;
                 }
                 if (plusCounters > 0)
                 {
-                    output += $"{들여쓰기}ptr[memory]+={plusCounters + ";" + Environment.NewLine}";
+                    output += $"ptr[memory]+={plusCounters + ";" + Environment.NewLine}";
                     plusCounters = 0;
                 }
-                output += $@"{들여쓰기}ptr[memory]=gets{Environment.NewLine}";
+                output += $@"ptr[memory]=gets{Environment.NewLine}";
             }
             if (command == Opcode.Closeloop)
             {
                 if (plusCounter > 0)
                 {
-                    output += $"{들여쓰기}memory+={plusCounter + ";" + Environment.NewLine}";
+                    output += $"memory+={plusCounter + ";" + Environment.NewLine}";
                     plusCounter = 0;
                 }
                 if (minusCounter > 0)
                 {
-                    output += $"{들여쓰기}memory-={minusCounter + ";" + Environment.NewLine}";
+                    output += $"memory-={minusCounter + ";" + Environment.NewLine}";
                     minusCounter = 0;
                 }
                 if (minusCounters > 0)
                 {
-                    output += $"{들여쓰기}ptr[memory]-={minusCounters + ";" + Environment.NewLine}";
+                    output += $"ptr[memory]-={minusCounters + ";" + Environment.NewLine}";
                     minusCounters = 0;
                 }
                 if (plusCounters > 0)
                 {
-                    output += $"{들여쓰기}ptr[memory]+={plusCounters + ";" + Environment.NewLine}";
+                    output += $"ptr[memory]+={plusCounters + ";" + Environment.NewLine}";
                     plusCounters = 0;
                 }
                 nested--;
                 if (nested == 1)
                 {
-                    output += $"{들여쓰기}end;{Environment.NewLine}";
-                    들여쓰기 = "                     " + last들여쓰기;
+                    output += $"end;{Environment.NewLine}";
+                    들여쓰기 = "    " + last들여쓰기;
                 }
                 else if (nested == 0)
                 {
@@ -224,22 +224,22 @@ namespace BTF
             {
                 if (plusCounter > 0)
                 {
-                    output += $"{들여쓰기}memory+={plusCounter + ";" + Environment.NewLine}";
+                    output += $"memory+={plusCounter + ";" + Environment.NewLine}";
                     plusCounter = 0;
                 }
                 if (minusCounter > 0)
                 {
-                    output += $"{들여쓰기}memory-={minusCounter + ";" + Environment.NewLine}";
+                    output += $"memory-={minusCounter + ";" + Environment.NewLine}";
                     minusCounter = 0;
                 }
                 if (minusCounters > 0)
                 {
-                    output += $"{들여쓰기}ptr[memory]-={minusCounters + ";" + Environment.NewLine}";
+                    output += $"ptr[memory]-={minusCounters + ";" + Environment.NewLine}";
                     minusCounters = 0;
                 }
                 if (plusCounters > 0)
                 {
-                    output += $"{들여쓰기}ptr[memory]+={plusCounters + ";" + Environment.NewLine}";
+                    output += $"ptr[memory]+={plusCounters + ";" + Environment.NewLine}";
                     plusCounters = 0;
                 }
             }

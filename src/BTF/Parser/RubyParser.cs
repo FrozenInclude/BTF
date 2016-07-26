@@ -208,7 +208,7 @@ namespace BTF
                 if (nested == 1)
                 {
                     output += $"{들여쓰기}end{Environment.NewLine}";
-                    들여쓰기 = "                     " + last들여쓰기;
+                    들여쓰기 = "    " + last들여쓰기;
                 }
                 else if (nested == 0)
                 {

@@ -15,8 +15,10 @@ namespace BTF
         private bool memoryView;
         private bool syntaxCheck = false;
         private int TimeoutCount = 0;
+        private char[] inputList = null;
         private string traceLog;
         private string inputLog;
+        private int inputIndex = 0;
         private int memory=0;
         private string command;
         private bool? DisplayIns = false;
@@ -70,8 +72,12 @@ namespace BTF
             }
             return 0;
         }
-        public HumanParser(string code, CellSize cell,bool? Displayins,int ptrsize=0,bool memoryview=false,bool checkOnlySyntax=false) : base(code, ptrsize)
+        public HumanParser(string code, CellSize cell,bool? Displayins,int ptrsize=0,bool memoryview=false,bool checkOnlySyntax=false,string input="") : base(code, ptrsize)
         {
+            if (input != null)
+            {
+                inputList= input.ToCharArray();
+            }
             this.ptrsize = ptrsize;
             this.cell = cell;
             this.DisplayIns = Displayins;
@@ -115,27 +121,26 @@ namespace BTF
                         if (memory > -1)
                         {
                             ++ptr[memory];
-                        }
+                       }
                     }
                     else if (command == Opcode.DecreaseDataPointer)
                     {
-                        if (memory > -1)
-                        {
+                       if (memory > -1)
+                      {
                             --ptr[memory];
-                        }
+                      }
                     }
                     else if (command == Opcode.Input)
                     {
-                        try
-                        {
-                            char[] part = Microsoft.VisualBasic.Interaction.InputBox(@"INPUT(첫문자만 입력됩니다.) ", "포인터 입력", "").ToCharArray();
-                                ptr[memory] = (byte)part[0];
-                        inputLog += $"(pointer.{memory}) 지점에  '{part[0]}' 입력\n";
-                    }
-                        catch (Exception)
-                        {
-                        ptr[memory] = 0;
-                    }
+                  if (inputList.Length==0)
+                      return;
+                        if (inputIndex == inputList.Length) {
+                            ptr[memory] = 0;
+                            return;
+                        }
+                   ptr[memory] =(byte)inputList[inputIndex];//(byte)(int)part[0];  
+                    inputLog += $"(pointer.{memory}) 지점에  '{inputList[inputIndex]}' 입력\n";          
+                   inputIndex++;
                     }
                     else if (command == Opcode.Output)
                     {
@@ -173,17 +178,17 @@ namespace BTF
                     }
                     else if (command == Opcode.Input)
                     {
-                        try
-                        {
-                            char[] part = Microsoft.VisualBasic.Interaction.InputBox(@"INPUT(첫문자만 입력됩니다.)", "포인터 입력", "").ToCharArray();
-                            ptr16[memory] = (ushort)part[0];
-                        inputLog += $"(pointer.{memory}) 지점에  '{part[0]}' 입력\n";
+                    if (inputList[inputIndex] == '\0')
+                        return;
+                    ptr16[memory] = (ushort)inputList[inputIndex];//(byte)(int)part[0];
+                    if (inputIndex == inputList.Length)
+                    {
+                        ptr32[memory] = 0;
+                        return;
                     }
-                        catch (Exception)
-                        {
-                        ptr16[memory] = 0;
-                    }
-                    }
+                    inputIndex++;
+                    inputLog += $"(pointer.{memory}) 지점에  '{inputList[inputIndex]}' 입력\n";
+                }
                     else if (command == Opcode.Output)
                     {
                         if (memory >= 0)
@@ -221,17 +226,17 @@ namespace BTF
                     }
                     else if (command == Opcode.Input)
                     {
-                        try
-                        {
-                            char[] part = Microsoft.VisualBasic.Interaction.InputBox(@"INPUT(첫문자만 입력됩니다.) ", "포인터 입력").ToCharArray();
-                                ptr32[memory] = (uint)part[0];
-                        inputLog += $"(pointer.{memory}) 지점에  '{part[0]}' 입력\n";
-                    }
-                        catch (Exception)
-                        {
+                    if (inputList[inputIndex] == '\0')
+                        return;
+                    ptr32[memory] = (uint)inputList[inputIndex];//(byte)(int)part[0];
+                    if (inputIndex == inputList.Length)
+                    {
                         ptr32[memory] = 0;
+                        return;
                     }
-                    }
+                    inputIndex++;
+                    inputLog += $"(pointer.{memory}) 지점에  '{inputList[inputIndex]}' 입력\n";
+                }
                     else if (command == Opcode.Output)
                     {
                         if (memory >= 0)
@@ -253,7 +258,7 @@ namespace BTF
                 {
                     if (pause == true)
                     {
-                        output = "번역이 중단되었습니다.";
+                        output = output+"\n\n번역이 중단되었습니다.";
                         return;
                     }
                         switch (command[loop])
@@ -274,11 +279,16 @@ namespace BTF
                                 Action(Opcode.Output);
                                 break;
                             case (char)Opcode.Input:
-                                if(!syntaxCheck)
-                                Action(Opcode.Input);
-                                break;
+                    if(!syntaxCheck)
+                    Action(Opcode.Input);
+                    break;
                             case (char)Opcode.Openloop://반복문은 따로생각.
-                                if (cell == CellSize.bit8)
+                            if (pause == true)
+                            {
+                                output = output + "\n\n번역이 중단되었습니다.";
+                                return;
+                            }
+                            if (cell == CellSize.bit8)
                                 {
                                     if (syntaxCheck)
                                     {
@@ -288,17 +298,17 @@ namespace BTF
                                             return;
                                         }
                                     }
-                                 if (ptr[memory] == 0)
-                                   {
-                                       var backloop = loop;
-                                       loop = Loop(code, loop);
-                                       if (loop == -1)
-                                       {
-                                           output = $"{backloop + 1}번째  문법오류:']'가필요합니다.";
-                                           error = true;
-                                           return;
-                                       }
-                                   }
+                                if (ptr[memory] == 0)
+                                {
+                                    var backloop = loop;
+                                    loop = Loop(code, loop);
+                                    if (loop == -1)
+                                    {
+                                        output = $"{backloop + 1}번째  문법오류:']'가필요합니다.";
+                                        error = true;
+                                        return;
+                                    }
+                                }
                             }
                                 else if (cell == CellSize.bit16)
                                 {
@@ -346,7 +356,12 @@ namespace BTF
                                 }
                                 break;
                             case (char)Opcode.Closeloop:
-                                if (cell == CellSize.bit8)
+                            if (pause == true)
+                            {
+                                output = output + "\n\n번역이 중단되었습니다.";
+                                return;
+                            }
+                            if (cell == CellSize.bit8)
                                 {
                                 if (syntaxCheck)
                                 {
@@ -356,17 +371,17 @@ namespace BTF
                                         return;
                                     }
                                 }
-                                 if (ptr[memory] != 0)
-                                   {
-                                       var backloop = loop;
-                                       loop = Loop(code, loop, false);
-                                       if (loop == -1)
-                                       {
-                                           output = $"{backloop}번째  문법오류:'['가필요합니다.";
-                                           error = true;
-                                           return;
-                                       }
-                                   }
+                                if (ptr[memory] != 0)
+                                {
+                                    var backloop = loop;
+                                    loop = Loop(code, loop, false);
+                                    if (loop == -1)
+                                    {
+                                        output = $"{backloop}번째  문법오류:'['가필요합니다.";
+                                        error = true;
+                                        return;
+                                    }
+                                }
                             }
                                 else if (cell == CellSize.bit16)
                                 {

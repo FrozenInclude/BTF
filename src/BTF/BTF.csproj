@@ -149,6 +149,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="ClassDiagram1.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -172,9 +173,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="resource\copy.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="resource\ic_computer_white_24dp_1x.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="resource\BTFCapture.png" />

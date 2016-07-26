@@ -149,18 +149,7 @@ namespace BTF
                 output += $"{들여쓰기}ptr[memory]=ptr[memory]+{plusCounters + Environment.NewLine}";
                 plusCounters = 0;
             }
-            nested++;
-            if (nested == 1)
-            {
                 output += $"while ptr[memory] ~= 0 do{Environment.NewLine}";
-                last들여쓰기 = 들여쓰기;
-            }
-            else if (nested >= 1)
-            {
-                output += $"{들여쓰기}while ptr[memory] ~= 0 do{Environment.NewLine}";
-                들여쓰기 += "       ";
-            }
-            들여쓰기 += "                     ";
         }
         else if (command == Opcode.Input)
         {
@@ -207,13 +196,6 @@ namespace BTF
             {
                 output += $"{들여쓰기}ptr[memory]=ptr[memory]+{plusCounters + Environment.NewLine}";
                 plusCounters = 0;
-            }
-            nested--;
-            if (nested == 1)
-                들여쓰기 = "                     " + last들여쓰기;
-            else if (nested == 0)
-            {
-                들여쓰기 = "";
             }
                 output += $"{들여쓰기}end{Environment.NewLine}";
             }

@@ -12,7 +12,6 @@ namespace highlight
 {
     class Highlighter
     {
-        static List<string> tags = new List<string>();
         static List<string> tag = new List<string>();
         static List<char> specials = new List<char>();
         static List<char> special = new List<char>();
@@ -20,7 +19,7 @@ namespace highlight
         static Highlighter()
         {
             string[] str = {
-                "Anchor",
+                "Anchor",@"""fmt""",
                     "console",
                         "log",
                             "for",
@@ -30,30 +29,21 @@ namespace highlight
                 "String","fromCharCode","using","Write","Read","List","static","void","byte","public","class","int","char","Add","namespace","unsigned",@"#include","import","String","'%d'","byte","chr","print","Dim","New","Integer","iostream","\"%d\"",
                 "AS","Imports","Module","Sub","List","While","Byte","Add","Char","End","Of","CByte","fn","my","$","echo","Program","type","begin","catch","try","IOException","true","return","drain","NSLog","#import","NSAutoreleasePool","alloc","calloc",
                 "var",
-                "trace","fmt","func","package","mutable","let","open","do","end","use","std","mut","u8","i32","match",@"""""",@"""{}""","\"{:?}\"",@"""fmt""","define","define-syntax","lambda","vector-set!","set!","display","call-with-current-continuation","make-vector","vector-ref","Foundation/Foundation.h"
+                "trace","fmt","func","package","mutable","let","open","do","end","use","std","mut","u8","i32","match",@"""""",@"""{}""","\"{:?}\"","define","define-syntax","lambda","vector-set!","set!","display","call-with-current-continuation","make-vector","vector-ref","Foundation/Foundation.h"
              };
-            string[] strs = {
-                @".",
-                @"[",
-                @"]",
-                @",",
-
-             };
-            tags = new List<string>(strs);
             tag = new List<string>(str);
             char[] chrs = {
-                '(',
-                '=',
-                '*',
+  
+                '.',
+                ' ',
+                ',',
                 '<',
                 '>',
                 '+',
                 '-',
-                '.',
                 '\n',
-                '\t',
-                ',',
-                ')'
+                '\t'
+                ,
 
             };
             char[] chr = {
@@ -68,7 +58,6 @@ namespace highlight
                 '*',
                 ',',
               //  '{',
-                ']',
                 ':'
             };
             specials = new List<char>(chrs);
@@ -84,21 +73,11 @@ namespace highlight
         {
             get { return special; }
         }
-        public static List<string> GetTags
-        {
-            get { return tags; }
-        }
-        public static bool IsKnownTag(string tag)
-        {
-            return tags.Exists(delegate (string s) { return s.ToLower().Equals(tag.ToLower()); });
-        }
+    
         public static bool IsKnown(string tag)
         {
             return Highlighter.tag.Exists(delegate (string s) { return s.ToLower().Equals(tag.ToLower()); });
         }
-        public static List<string> GetJSProvider(string tag)
-        {
-            return tags.FindAll(delegate (string s) { return s.ToLower().StartsWith(tag.ToLower()); });
-        }
+        
     }
 }

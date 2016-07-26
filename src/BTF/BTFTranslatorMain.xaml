@@ -44,6 +44,7 @@
         <Label x:Name="LineNum" Content="" Height="458" VerticalAlignment="Top" Margin="0,66,682,0" Background="#FF252121" Grid.RowSpan="2"/>
         <ComboBox x:Name="comboBox" Width="102" Height="21" Margin="0,33,105,0" VerticalAlignment="Top" HorizontalAlignment="Right" BorderBrush="#FF080808" Background="White" Style="{DynamicResource SimpleComboBox}" BorderThickness="0">
             <Label Content="인간언어"/>
+            <Label Content="인간언어(EXE)"/>
             <Label Content="Java"/>
             <Label Content="Ook!"/>
             <Label Content="Object-c"/>
@@ -65,7 +66,7 @@
             <Label Content="Rust"/>
             <Label Content="Ruby"/>
         </ComboBox>
-        <RichTextBox Name="CodeInput" HorizontalAlignment="Left" Width="474" Margin="41,66,0,24" ScrollViewer.CanContentScroll="True" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto" BorderThickness="0"   AcceptsReturn="True" Background="#FF1F1C1C"  TextChanged="textChanged" BorderBrush="#FF0B0B0C" FontFamily="Mono sans" Foreground="White" FontSize="13.333"  ScrollViewer.ScrollChanged="RichTextBox_ScrollC" Grid.RowSpan="2">
+        <RichTextBox Name="CodeInput" HorizontalAlignment="Left" IsUndoEnabled="False" Width="474" Margin="41,66,0,24" ScrollViewer.CanContentScroll="True" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Hidden" BorderThickness="0"   AcceptsReturn="True" Background="#FF1F1C1C"  TextChanged="textChanged" BorderBrush="#FF0B0B0C" FontFamily="Mono sans" Foreground="White" FontSize="13.333"  ScrollViewer.ScrollChanged="RichTextBox_ScrollC" Grid.RowSpan="2">
             <RichTextBox.Resources>
                 <Style TargetType="{x:Type Paragraph}">
                     <Setter Property="Margin" Value="0"/>
@@ -83,7 +84,7 @@
             </FlowDocument>
         </RichTextBox>
         <Label x:Name="label1" Content="Brain Fuck->" HorizontalAlignment="Right" Margin="0,0,211,29" Style="{DynamicResource SimpleLabel}" VerticalAlignment="Bottom" Width="71" Foreground="White"/>
-        <RichTextBox x:Name="CodeOutput" HorizontalAlignment="Left" Width="487" Margin="515,66,0,24" ScrollViewer.CanContentScroll="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Background="#FF2B2828" BorderThickness="0" AcceptsReturn="True" Padding="1" IsReadOnly="True" BorderBrush="#FF0B0B0C" FontFamily="Mono sans" Foreground="White" FontSize="13.333" Grid.RowSpan="2" Grid.ColumnSpan="2">
+        <RichTextBox x:Name="CodeOutput" HorizontalAlignment="Left" Width="487" Margin="515,66,0,44" ScrollViewer.CanContentScroll="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Background="#FF2B2828" BorderThickness="0" AcceptsReturn="True" Padding="1" IsReadOnly="True" BorderBrush="#FF0B0B0C" FontFamily="Mono sans" Foreground="White" FontSize="13.333" Grid.RowSpan="2" Grid.ColumnSpan="2">
             <FlowDocument>
                 <Paragraph/>
             </FlowDocument>
@@ -102,12 +103,12 @@
                 <ImageBrush ImageSource="resource/Run.png"/>
             </Button.Background>
         </Button>
-        <Button Style="{StaticResource MyButtonStyle}" x:Name="번역_Copy"  HorizontalAlignment="Left" VerticalAlignment="Top"  Click="번역_Copy_Click" Margin="706,32,0,0" BorderBrush="Black" Width="23" Height="23" BorderThickness="0" Cursor="Hand" Grid.ColumnSpan="2">
+        <Button Style="{StaticResource MyButtonStyle}" x:Name="번역_Copy"  HorizontalAlignment="Left" VerticalAlignment="Top"  Click="번역_Copy_Click" Margin="679,32,0,0" BorderBrush="Black" Width="23" Height="23" BorderThickness="0" Cursor="Hand">
             <Button.Background>
                 <ImageBrush ImageSource="resource/copy.png"/>
             </Button.Background>
         </Button>
-        <RichTextBox x:Name="LineNumLabel"  Background="{x:Null}" HorizontalAlignment="Center" Margin="0,0,682,25" VerticalAlignment="Bottom" Width="41" FontSize="13.333" Foreground="#FFF17648" FontFamily="Mono Sans" Height="458" HorizontalContentAlignment="Center"   IsReadOnly="True" BorderThickness="0" VerticalScrollBarVisibility="Hidden" ScrollViewer.ScrollChanged="RichTextBox_ScrollC" Grid.RowSpan="2">
+        <RichTextBox x:Name="LineNumLabel"  Background="{x:Null}" IsUndoEnabled="False" HorizontalAlignment="Center" Margin="0,0,682,44" VerticalAlignment="Bottom" Width="41" FontSize="13.333" Foreground="#FFF17648" FontFamily="Mono Sans" Height="439" HorizontalContentAlignment="Center"   IsReadOnly="True" BorderThickness="0" VerticalScrollBarVisibility="Hidden" ScrollViewer.ScrollChanged="RichTextBox_ScrollC" Grid.RowSpan="2">
             <RichTextBox.Resources>
                 <Style TargetType="{x:Type Paragraph}">
                     <Setter Property="Margin" Value="0"/>
@@ -117,17 +118,13 @@
                 <Paragraph/>
             </FlowDocument>
         </RichTextBox>
-        <Button Style="{StaticResource MyButtonStyle}" x:Name="EXEoutput" Margin="679,32,21,0" VerticalAlignment="Top" Height="23" Click="exeOutput" BorderBrush="Black" BorderThickness="0" Foreground="Black" Cursor="Hand">
-            <Button.Background>
-                <ImageBrush ImageSource="resource/ic_computer_white_24dp_1x.png"/>
-            </Button.Background>
-        </Button>
+
         <Button Style="{StaticResource MyButtonStyle}" x:Name="중단" Content="" HorizontalAlignment="Left" Margin="652,32,0,0" VerticalAlignment="Top" Width="23" Click="번역_Copy1_Click" BorderBrush="Black" BorderThickness="0" Foreground="Black" Height="23" RenderTransformOrigin="0.5,0.5" Cursor="Hand" IsEnabled="False">
             <Button.Background>
                 <ImageBrush ImageSource="resource/pause.png"/>
             </Button.Background>
         </Button>
-        <Button Style="{StaticResource MyButtonStyle}" x:Name="설정"  HorizontalAlignment="Left" VerticalAlignment="Top"  Click="설정_Click" Margin="10,32,0,0" BorderBrush="Black" Width="23" Height="23" BorderThickness="0" Cursor="Hand" Grid.Column="1" IsHitTestVisible="True">
+        <Button Style="{StaticResource MyButtonStyle}" x:Name="설정"  HorizontalAlignment="Left" VerticalAlignment="Top"  Click="설정_Click" Margin="706,32,0,0" BorderBrush="Black" Width="23" Height="23" BorderThickness="0" Cursor="Hand" IsHitTestVisible="True" Grid.ColumnSpan="2">
             <Button.Background>
                 <ImageBrush x:Name="optionImage"  ImageSource="resource/option.png">
                     <ImageBrush.RelativeTransform>
@@ -157,10 +154,27 @@
         <RadioButton x:Name="bit8" Content="8 Bit" Grid.Column="1" HorizontalAlignment="Left" Margin="40,139,0,0" Grid.Row="1" VerticalAlignment="Top" Foreground="#FFECECEC" IsChecked="True" Visibility="Hidden"/>
         <RadioButton x:Name="bit16" Content="16 Bit" Grid.Column="1" HorizontalAlignment="Left" Margin="91,139,0,0" Grid.Row="1" VerticalAlignment="Top" Foreground="#FFECECEC" IsChecked="False" Visibility="Hidden"/>
         <RadioButton x:Name="bit32" Content="32 Bit" Grid.Column="1" HorizontalAlignment="Left" Margin="149,139,0,0" Grid.Row="1" VerticalAlignment="Top" Foreground="#FFECECEC" Visibility="Hidden"/>
-        <CheckBox x:Name="memoryView" Content="" Grid.Column="1" HorizontalAlignment="Left" Margin="114,164,0,0" Grid.Row="1" VerticalAlignment="Top" IsChecked="True" Visibility="Hidden"/>
-        <Label x:Name="Memorylabel" Content="메모리뷰:" Grid.Column="1" HorizontalAlignment="Left" Margin="53,158,0,0" Grid.Row="1" VerticalAlignment="Top" Width="60" Foreground="White" Visibility="Hidden"/>
-        <Button Style="{StaticResource MyButtonStyle}" x:Name="도움말"  HorizontalAlignment="Left" VerticalAlignment="Top"  Click="도움말열기" Margin="37,32,0,0" BorderBrush="Black" Width="23" Height="23" BorderThickness="0" Cursor="Hand" Grid.Column="1" IsHitTestVisible="True" Content="?" Foreground="White" FontSize="16" FontFamily="HYgsrB">
+        <CheckBox x:Name="memoryView" Content="" Grid.Column="1" HorizontalAlignment="Left" Margin="154,164,0,0" Grid.Row="1" VerticalAlignment="Top" IsChecked="True" Visibility="Hidden"/>
+        <Label x:Name="Memorylabel" Content="메모리뷰(퍼모먼스 저하):" HorizontalAlignment="Left" Margin="9,158,0,0" Grid.Row="1" VerticalAlignment="Top" Width="144" Foreground="White" Visibility="Hidden" Grid.Column="1"/>
+        <Button Style="{StaticResource MyButtonStyle}" x:Name="도움말"  HorizontalAlignment="Left" VerticalAlignment="Top"  Click="도움말열기" Margin="10,32,0,0" BorderBrush="Black" Width="23" Height="23" BorderThickness="0" Cursor="Hand" Grid.Column="1" IsHitTestVisible="True" Content="?" Foreground="White" FontSize="16" FontFamily="HYgsrB">
 
         </Button>
+        <TextBox x:Name="InputBox" HorizontalAlignment="Left" Width="453" Margin="549,424,0,24"  VerticalScrollBarVisibility="Auto" Background="#FF1F1C1C" BorderThickness="0" Padding="1"  BorderBrush="#FF0B0B0C" FontFamily="Mono sans" Foreground="White" FontSize="13.333" Grid.ColumnSpan="2" Grid.Row="1">
+
+        </TextBox>
+        <Label x:Name="label" Content="입력" Margin="515,424,174,24" Grid.Row="1" Background="#FF3A3838" Foreground="White" FontFamily="Mono sans" FontSize="10.533"/>
+        <ComboBox x:Name="comboBox_Copy" Width="102" Height="21" Margin="0,33,289,0" VerticalAlignment="Top" HorizontalAlignment="Right" BorderBrush="#FF080808" Background="White" Style="{DynamicResource SimpleComboBox}" BorderThickness="0">
+            <Label Content="reverse input" MouseEnter="Label_MouseDoubleClick"/>
+            <Label Content="삼각형" MouseEnter="Label_MouseDown_1" />
+            <Label Content="구구단 2단" MouseEnter="Label_MouseDown_2"/>
+            <Label Content="TEXT TO BF" MouseEnter="Label_MouseDown"/>
+            <Label Content="Hello, World!" MouseEnter="Label_MouseDown_3"/>
+            <Label Content="Random Byte" MouseEnter="Label_MouseDown_4"/>
+            <Label Content="피보나치 수열" MouseEnter="Label_MouseDown_5"/>
+            <Label Content="BF to C" MouseEnter="Label_MouseDown_6"/>
+            <Label Content="99병의 맥주" MouseEnter="Label_MouseDown_7"/>
+            <Label Content="numwarp" MouseEnter="Label_MouseDown_8"/>
+        </ComboBox>
+        <Label x:Name="label1_Copy" Content="코드 조각-&gt;" HorizontalAlignment="Right" Margin="0,0,392,29" Style="{DynamicResource SimpleLabel}" VerticalAlignment="Bottom" Width="71" Foreground="White"/>
     </Grid>
 </Window>

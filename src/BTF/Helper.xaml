@@ -38,7 +38,7 @@
         </Button>
         <Label x:Name="label1_Copy" Content="번역을 중단시킵니다.&#xA;" HorizontalAlignment="Left" Margin="41,672,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" FontSize="16" Height="34"/>
 
-        <Label x:Name="label1_Copy1" Content="번역한결과를 exe실행파일로 출력합니다.&#xA;" HorizontalAlignment="Left" Margin="41,703,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" FontSize="16" Height="34"/>
+        <Label x:Name="label1_Copy1" Content="exe모드로 인터프리팅할시에는 퍼모먼스가 더빠릅니다.&#xA;" HorizontalAlignment="Left" Margin="41,703,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" FontSize="16" Height="34"/>
         <Button Style="{StaticResource MyButtonStyle}" x:Name="번역_Copy"  HorizontalAlignment="Left" VerticalAlignment="Top"   Margin="15,739,0,0" BorderBrush="Black" Width="23" Height="23" BorderThickness="0" Cursor="Hand">
             <Button.Background>
                 <ImageBrush ImageSource="resource/copy.png"/>
@@ -47,7 +47,7 @@
         <Label x:Name="label1_Copy2" Content="번역결과를 클립보드에 복사합니다.&#xA;" HorizontalAlignment="Left" Margin="41,734,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" FontSize="16" Height="34"/>
         <Button Style="{StaticResource MyButtonStyle}" x:Name="번역_Copy1"  HorizontalAlignment="Left" VerticalAlignment="Top"   Margin="15,706,0,0" BorderBrush="Black" Width="23" Height="23" BorderThickness="0" Cursor="Hand">
             <Button.Background>
-                <ImageBrush ImageSource="resource/ic_computer_white_24dp_1x.png"/>
+                <ImageBrush ImageSource="resource\Run.png"/>
             </Button.Background>
         </Button>
         <Button Style="{StaticResource MyButtonStyle}" x:Name="번역_Copy2" Content="" HorizontalAlignment="Left" Margin="426,645,0,0" VerticalAlignment="Top" Width="23" Click="번역_Click" BorderBrush="Black" BorderThickness="0" Foreground="Black" Height="23" RenderTransformOrigin="0.5,0.5" Cursor="Hand">

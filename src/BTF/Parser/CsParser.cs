@@ -235,45 +235,45 @@ namespace BTF
                         {
                             case (char)Opcode.DecreasePointer:
                                 Action(Opcode.DecreasePointer);
-                                if (loop == code.Length-3)
+                                if (loop == code.Length - 3)
                                     Action(Opcode.Result);
                                 //  output += "--memory;\n";
                                 break;
                             case (char)Opcode.IncreasePointer://>
                                 Action(Opcode.IncreasePointer);
-                                if (loop == code.Length-3 )
+                                if (loop == code.Length - 3)
                                     Action(Opcode.Result);
                                 break;
                             case (char)Opcode.IncreaseDataPointer://+    
                                 Action(Opcode.IncreaseDataPointer);
-                                if (loop == code.Length-3 )
+                                if (loop == code.Length - 3)
                                     Action(Opcode.Result);
                                 //output +="ptr[memory]++;\n";
                                 break;
                             case (char)Opcode.DecreaseDataPointer://-  
                                 Action(Opcode.DecreaseDataPointer);
-                                if (loop == code.Length-3 )
+                                if (loop == code.Length - 3)
                                     Action(Opcode.Result);
                                 // output +=" *ptr--;\n";
                                 break;
                             case (char)Opcode.Output:
                                 Action(Opcode.Output);
-                                if (loop == code.Length-3 )
+                                if (loop == code.Length - 3)
                                     Action(Opcode.Result);
                                 break;
                             case (char)Opcode.Input:
                                 Action(Opcode.Input);
-                                if (loop == code.Length-3 )
+                                if (loop == code.Length - 3)
                                     Action(Opcode.Result);
                                 break;
                             case (char)Opcode.Openloop:
                                 Action(Opcode.Openloop);
-                                if (loop == code.Length-3 )
+                                if (loop == code.Length - 3)
                                     Action(Opcode.Result);
                                 break;
                             case (char)Opcode.Closeloop:
                                 Action(Opcode.Closeloop);
-                                if (loop == code.Length-3 )
+                                if (loop == code.Length - 3)
                                     Action(Opcode.Result);
                                 break;
                             case ' ':

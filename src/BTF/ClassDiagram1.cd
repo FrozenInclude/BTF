@@ -1,0 +1,231 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="BTF.App" Collapsed="true">
+    <Position X="48" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>App.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BTF.BTFTranslator" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="49.75" Y="0.5" Width="1.5" />
+    <NestedTypes>
+      <Delegate Name="BTF.BTFTranslator.Invoker" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>BTFTranslatorMain.xaml.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="BTF.BTFTranslator.HilightDelegate" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>BTFTranslatorMain.xaml.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Struct Name="BTF.BTFTranslator.Tag" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>BTFTranslatorMain.xaml.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>KADIhIUEAAEgkCA0OEAAQAIQQghGAlANJAAiKYEEEQI=</HashCode>
+      <FileName>BTFTranslatorMain.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="BTF.Helper" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="48" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAA=</HashCode>
+      <FileName>Helper.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="BTF.FileSystem" Collapsed="true">
+    <Position X="51.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIACEAAAAAAAAAAAAAAAIAAIAQEAABAAAAAEEBMA=</HashCode>
+      <FileName>IO\FileSystem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BTF.iniSystem" Collapsed="true">
+    <Position X="51.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAkAIQAAAAAAAgAACgAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>IO\iniSysyem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BTF.AsParser" Collapsed="true">
+    <Position X="48.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAEAAACAAAAQAAAAAAAAwAAAIAAAAAAAAAAAQ=</HashCode>
+      <FileName>Parser\AsParser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BTF.awkParser" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAQAAAEAAACAAAAQAAAQAAACwAAAIAAAAAAAAAAAQ=</HashCode>
+      <FileName>Parser\awkParser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BTF.CppParser" Collapsed="true">
+    <Position X="7.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EgAAAAAAEAAACAAAAQAAAAAAAAwAAAIAAAAAAAAAAAQ=</HashCode>
+      <FileName>Parser\CppParser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BTF.CsParser" Collapsed="true">
+    <Position X="16.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAEAAACAAAAQAAAAAAAAwAAAIAAAAAAAAAAAQ=</HashCode>
+      <FileName>Parser\CsParser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BTF.FsParser" Collapsed="true">
+    <Position X="51.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAQAAAEAAACAAAAQAAAQAAACwAAAIAAAAAAAAAAAQ=</HashCode>
+      <FileName>Parser\FsParser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BTF.GoParser" Collapsed="true">
+    <Position X="50" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EgAAAAAAEAAACAAAAQAAAAAAAAwAAAIAAAAAAAAAAAQ=</HashCode>
+      <FileName>Parser\GoParser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BTF.HumanParser" Collapsed="true">
+    <Position X="46.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEABAAYEAAACEgAIAAAAAAAAAwABQAAAAAAAAJAAAQ=</HashCode>
+      <FileName>Parser\HumanParser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BTF.InterPreter" Collapsed="true">
+    <Position X="48" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAEAAAAAAAAIEAAAAAKAAAAEAAgAgAAAAAIAQ=</HashCode>
+      <FileName>Parser\Interpreter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BTF.JavaParser" Collapsed="true">
+    <Position X="9.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAEAAACAAAAQAAAAAAAAwAAAIAAAAAAAAAAAQ=</HashCode>
+      <FileName>Parser\JavaParser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BTF.JsParser" Collapsed="true">
+    <Position X="18.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAEAAACAAAAQAAAAAAAAwAAAIAAAAAAAAAAAQ=</HashCode>
+      <FileName>Parser\JsParser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BTF.LuaParser" Collapsed="true">
+    <Position X="50" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAQAAAEAAACAAAAQAAAQAAACwAAAIAAAAAAAAAAAQ=</HashCode>
+      <FileName>Parser\LuaParser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BTF.ObjCParser" Collapsed="true">
+    <Position X="46.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EgAAAAAAEAAACAAAAQAAAAAAAAwAAAIAAAAAAAAAAAQ=</HashCode>
+      <FileName>Parser\ObjectcParser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BTF.OokParser" Collapsed="true">
+    <Position X="46.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAEAAACAAAAAAAAAAAAAQAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>Parser\OokParser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BTF.PascalParser" Collapsed="true">
+    <Position X="2.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAQAAAEAAACAAAAQAAAQAAACwAAAIAAAAAAAAAAAQ=</HashCode>
+      <FileName>Parser\PascalParser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BTF.PerlParser" Collapsed="true">
+    <Position X="11.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAQAAAEAAACAAAAQAAAQAAACwAAAIAAAAAAAAAAAQ=</HashCode>
+      <FileName>Parser\PerlParser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BTF.phpParser" Collapsed="true">
+    <Position X="51.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAQAAAEAAACAAAAQAAAQAAACwAAAIAAAAAAAAAAAQ=</HashCode>
+      <FileName>Parser\phpParser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BTF.PyParser" Collapsed="true">
+    <Position X="50" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAQAAAEAAACAAAAQAAAQAAACwAAAIAAAAAAAAAAAQ=</HashCode>
+      <FileName>Parser\PyParser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BTF.RubyParser" Collapsed="true">
+    <Position X="48.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAQAAAEAAACAAAAQAAAQAAACwAAAIAAAAAAAAAAAQ=</HashCode>
+      <FileName>Parser\RubyParser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BTF.RustParser" Collapsed="true">
+    <Position X="48.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EgAAAAAAEAAACAAAAQAAAAAAAAwAAAIAAAAAAAAAAAQ=</HashCode>
+      <FileName>Parser\RustParser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BTF.SchemeParser" Collapsed="true">
+    <Position X="5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAQAAAEAAACAAAAQAAAQAAACwAAAIAAAAAAAAAAAQ=</HashCode>
+      <FileName>Parser\SchemeParser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BTF.SwiftParser" Collapsed="true">
+    <Position X="14" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAEAAACAAAAQAAAAAAAAwAAAIAAAAAAAAAAAQ=</HashCode>
+      <FileName>Parser\SwiftParser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BTF.VBParser" Collapsed="true">
+    <Position X="51.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAEAAACAAAAQAAAAAAAAwAAAIAAAAAAAAAAAQ=</HashCode>
+      <FileName>Parser\VBparser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="highlight.Highlighter" Collapsed="true">
+    <Position X="49.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAACAAAQAAAAAAAAIAAAAAAAAAAAAQAAAAAAAAAAA=</HashCode>
+      <FileName>Highlighter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BTF.Properties.Resources" Collapsed="true">
+    <Position X="49.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABEAAAAQAAAAAAAAAAAAAAAIA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BTF.Properties.Settings" Collapsed="true">
+    <Position X="51.5" Y="2.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAABAAAAAAAAAABAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="맑은 고딕" Size="9" />
+</ClassDiagram>
