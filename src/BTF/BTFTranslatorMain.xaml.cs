@@ -1063,7 +1063,7 @@ namespace BTF
 
         private void Label_MouseDown_3(object sender, MouseEventArgs e)
         {
-            SetTextBoxText(CodeInput, "#Hello, World!를 출력시킵니다\n++++++++++[> +++++++> ++++++++++> +++> +<<<< -] > ++.> +.++++++ +..++ +.> ++.<< +++++\n++++++++++.>.++ +.------.--------.> +.>.");
+            SetTextBoxText(CodeInput, "#Hello World!를 출력시킵니다\n++++++++++[> +++++++> ++++++++++> +++> +<<<< -] > ++.> +.++++++ +..++ +.> ++.<< +++++\n++++++++++.>.++ +.------.--------.> +.>.");
         }
 
         private void Label_MouseDown_4(object sender, MouseEventArgs e)

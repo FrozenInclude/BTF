@@ -184,7 +184,7 @@ namespace BTF
                     output += $"{들여쓰기}ptr[memory]+={plusCounters + Environment.NewLine}";
                     plusCounters = 0;
                 }
-                output += $@"{들여쓰기}ptr[memory]=input()";
+                output += $@"{들여쓰기}ptr[memory]=input(){Environment.NewLine}";
             }
             if (command == Opcode.Closeloop)
             {

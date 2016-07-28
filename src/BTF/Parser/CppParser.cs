@@ -39,7 +39,7 @@ namespace BTF
                 }
                 if (minusCounters > 0)
                 {
-                    output += $"          *ptr-={minusCounters + ";" + Environment.NewLine})";
+                    output += $"          *ptr-={minusCounters + ";" + Environment.NewLine}";
                     minusCounters = 0;
                 }
                 if (plusCounters > 0)
